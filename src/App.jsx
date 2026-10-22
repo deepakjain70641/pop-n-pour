@@ -3,7 +3,7 @@ import {
   ShoppingCart, Coffee, Lock, Plus, Minus, Trash2, 
   ChefHat, BarChart3, Package, Volume2, Edit3, LogOut, 
   History, RotateCcw, Check, Clock, TrendingUp, AlertCircle, Tag, Ticket,
-  Award, Sparkles, Heart, Flame, ShieldCheck
+  Award, Sparkles, Heart
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -80,43 +80,43 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF7F5] text-[#2D1517] font-sans selection:bg-[#801B38] selection:text-white">
-      {/* Premium QSR Header */}
-      <header className="bg-white/95 backdrop-blur-md border-b border-rose-100 sticky top-0 z-40 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center gap-4">
+    <div className="min-h-screen bg-[#FAF3F0] text-[#4A2E2B] font-sans selection:bg-[#E88D82] selection:text-white">
+      {/* Poster Soft Cream Header */}
+      <header className="bg-[#FAF3F0]/95 backdrop-blur-md border-b border-[#EED7CE] sticky top-0 z-40 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-[#801B38] text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-md shadow-rose-200">
+            <div className="w-11 h-11 bg-[#4A2E2B] text-[#FAF3F0] rounded-2xl flex items-center justify-center font-black text-xl shadow-md">
               P&P
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-[#801B38] flex items-center gap-1.5">
-                Pop & Pour <Sparkles className="w-4 h-4 text-amber-500 fill-amber-400" />
+              <h1 className="text-2xl font-black tracking-tight text-[#4A2E2B] flex items-center gap-1.5 font-serif">
+                Pop & Pour
               </h1>
-              <p className="text-[10px] text-[#801B38]/70 font-black uppercase tracking-widest">CRAFT BEVERAGE LAB • EST. 2026</p>
+              <p className="text-[10px] text-[#A66E63] font-bold uppercase tracking-widest">SIP HAPPY • STAY HAPPY ♡</p>
             </div>
           </div>
 
-          <div className="flex items-center bg-[#FFF2F0] p-1.5 rounded-2xl gap-1 border border-rose-100 shadow-inner">
+          <div className="flex items-center bg-[#FCEEEA] p-1.5 rounded-2xl gap-1 border border-[#EED7CE]">
             <button
               onClick={() => handleRoleSwitch('customer')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
-                activeRole === 'customer' ? 'bg-[#801B38] text-white shadow-md' : 'text-[#801B38] hover:bg-rose-100/50'
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                activeRole === 'customer' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
               }`}
             >
               🥤 Customer Kiosk
             </button>
             <button
               onClick={() => handleRoleSwitch('shopkeeper')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
-                activeRole === 'shopkeeper' ? 'bg-[#801B38] text-white shadow-md' : 'text-[#801B38] hover:bg-rose-100/50'
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                activeRole === 'shopkeeper' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
               }`}
             >
               <ChefHat className="w-4 h-4" /> Barista KDS
             </button>
             <button
               onClick={() => handleRoleSwitch('owner')}
-              className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
-                activeRole === 'owner' ? 'bg-[#801B38] text-white shadow-md' : 'text-[#801B38] hover:bg-rose-100/50'
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+                activeRole === 'owner' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
               }`}
             >
               <BarChart3 className="w-4 h-4" /> Executive MIS
@@ -125,7 +125,7 @@ export default function App() {
             {authenticatedRole && activeRole !== 'customer' && (
               <button
                 onClick={handleLogout}
-                className="ml-2 px-3 py-2 bg-rose-100/80 text-rose-800 hover:bg-rose-200 rounded-xl text-xs font-black transition flex items-center gap-1 border border-rose-200"
+                className="ml-2 px-3 py-2 bg-rose-100/80 text-rose-800 hover:bg-rose-200 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-200"
                 title="Logout Staff Session"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -135,26 +135,26 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main App Container */}
+      {/* Main Container */}
       <main className="max-w-7xl mx-auto p-4 md:p-6">
         {activeRole === 'customer' && <CustomerKiosk />}
         {activeRole === 'shopkeeper' && <ShopkeeperKDS />}
         {activeRole === 'owner' && <ExecutiveMIS />}
       </main>
 
-      {/* Security Modal */}
+      {/* Security Protection Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 bg-[#2D1517]/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-rose-100 text-[#2D1517]">
+        <div className="fixed inset-0 bg-[#4A2E2B]/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FAF3F0] rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-[#EED7CE] text-[#4A2E2B]">
             <div className="text-center mb-5">
-              <div className="w-12 h-12 bg-rose-50 text-[#801B38] rounded-2xl flex items-center justify-center mx-auto mb-3 border border-rose-100">
+              <div className="w-12 h-12 bg-[#FCEEEA] text-[#4A2E2B] rounded-2xl flex items-center justify-center mx-auto mb-3 border border-[#EED7CE]">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-black">
-                {targetRole === 'owner' ? 'Executive Password' : 'Barista Staff Access'}
+              <h3 className="text-lg font-bold">
+                {targetRole === 'owner' ? 'Owner MIS Password' : 'Barista KDS Access'}
               </h3>
-              <p className="text-xs text-rose-700 font-medium mt-1">
-                {targetRole === 'owner' ? 'Enter master owner credentials.' : 'Enter 4-digit terminal PIN (Default: 2468).'}
+              <p className="text-xs text-[#A66E63] font-medium mt-1">
+                {targetRole === 'owner' ? 'Enter master owner password.' : 'Enter 4-digit staff PIN (Default: 2468).'}
               </p>
             </div>
 
@@ -165,7 +165,7 @@ export default function App() {
                 placeholder={targetRole === 'shopkeeper' ? "••••" : "Password"}
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                className="w-full text-center text-2xl tracking-widest py-3 border-2 border-rose-200 rounded-2xl focus:border-[#801B38] focus:outline-none bg-rose-50/30 text-[#2D1517] font-black"
+                className="w-full text-center text-2xl tracking-widest py-3 border border-[#EED7CE] rounded-2xl focus:outline-none bg-white text-[#4A2E2B] font-bold"
                 autoFocus
               />
               {authError && <p className="text-xs text-rose-600 text-center font-bold">{authError}</p>}
@@ -174,13 +174,13 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setShowPinModal(false)}
-                  className="flex-1 py-3 border border-rose-200 text-[#801B38] font-bold rounded-2xl hover:bg-rose-50 text-sm transition"
+                  className="flex-1 py-3 border border-[#EED7CE] text-[#4A2E2B] font-bold rounded-2xl hover:bg-[#FCEEEA] text-sm transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-[#801B38] text-white font-black rounded-2xl hover:bg-rose-900 shadow-md text-sm transition"
+                  className="flex-1 py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] shadow-md text-sm transition"
                 >
                   Authenticate
                 </button>
@@ -193,7 +193,7 @@ export default function App() {
   );
 }
 
-// =================== 1. CUSTOMER KIOSK & 8-STAMP LOYALTY ===================
+// =================== 1. CUSTOMER KIOSK & 8-STAMP CARD ===================
 function CustomerKiosk() {
   const [customer, setCustomer] = useState({ name: '', phone: '', tableNo: 'Table 1', orderType: 'Dine-In' });
   const [isIdentified, setIsIdentified] = useState(false);
@@ -411,7 +411,7 @@ function CustomerKiosk() {
     { label: '☕ Milk Tea', id: 'Milk Tea Series' },
     { label: '🥤 Milk Boba', id: 'Milk Boba Series' },
     { label: '🍵 Matcha Series', id: 'Matcha Series' },
-    { label: '⚡ No Added Sugar', id: 'No Added Sugar Specials' },
+    { label: '⚡ Sugar Free', id: 'No Added Sugar Specials' },
     { label: '➕ Add-Ons', id: 'Add-Ons' }
   ];
 
@@ -419,59 +419,49 @@ function CustomerKiosk() {
     ? menu 
     : menu.filter(item => item.category === activeCategory);
 
-  const getBadgeStyle = (cat) => {
-    switch (cat) {
-      case 'Matcha Series': return 'bg-emerald-100 text-emerald-900 border-emerald-200';
-      case 'Milk Tea Series':
-      case 'Milk Boba Series': return 'bg-purple-100 text-purple-900 border-purple-200';
-      case 'No Added Sugar Specials': return 'bg-amber-100 text-amber-900 border-amber-200';
-      default: return 'bg-rose-100 text-[#801B38] border-rose-200';
-    }
-  };
-
   if (!isIdentified) {
     return (
-      <div className="max-w-md mx-auto mt-8 bg-white rounded-3xl p-8 border-2 border-rose-100 shadow-xl text-[#2D1517]">
+      <div className="max-w-md mx-auto mt-8 bg-[#FAF3F0] rounded-3xl p-8 border-2 border-[#EED7CE] shadow-xl text-[#4A2E2B]">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-[#801B38] text-white rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg shadow-rose-200">
+          <div className="w-16 h-16 bg-[#4A2E2B] text-[#FAF3F0] rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg">
             🧋
           </div>
-          <h2 className="text-2xl font-black text-[#801B38]">Pop & Pour Kiosk</h2>
-          <p className="text-xs text-rose-700 font-bold mt-1">Sip Happy • Stay Happy • Collect 8 Stamps for Free Soda 🌸</p>
+          <h2 className="text-2xl font-black text-[#4A2E2B] font-serif">Welcome to Pop & Pour</h2>
+          <p className="text-xs text-[#A66E63] font-bold mt-1">SIP HAPPY • STAY HAPPY ♡ Collect 8 Stamps for Free Soda</p>
         </div>
 
         <form onSubmit={handleStartSession} className="space-y-4">
           <div>
-            <label className="block text-xs font-black uppercase mb-1 text-[#801B38]">Your Name</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Your Name</label>
             <input
               type="text"
               required
               placeholder="e.g. Vikram Sharma"
               value={customer.name}
               onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-rose-100 rounded-2xl text-sm focus:border-[#801B38] focus:outline-none bg-rose-50/20 font-bold"
+              className="w-full px-4 py-3 border border-[#EED7CE] rounded-2xl text-sm focus:outline-none bg-white text-[#4A2E2B] font-bold"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-black uppercase mb-1 text-[#801B38]">Mobile Number</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Mobile Number</label>
             <input
               type="tel"
               required
               placeholder="e.g. 9876543210"
               value={customer.phone}
               onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-rose-100 rounded-2xl text-sm focus:border-[#801B38] focus:outline-none bg-rose-50/20 font-bold"
+              className="w-full px-4 py-3 border border-[#EED7CE] rounded-2xl text-sm focus:outline-none bg-white text-[#4A2E2B] font-bold"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-xs font-black uppercase mb-1 text-[#801B38]">Channel</label>
+              <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Channel</label>
               <select
                 value={customer.orderType}
                 onChange={(e) => setCustomer({ ...customer, orderType: e.target.value })}
-                className="w-full px-3 py-3 border-2 border-rose-100 rounded-2xl text-xs font-black bg-rose-50/20 text-[#2D1517]"
+                className="w-full px-3 py-3 border border-[#EED7CE] rounded-2xl text-xs font-bold bg-white text-[#4A2E2B]"
               >
                 <option value="Dine-In">Dine-In</option>
                 <option value="Takeaway">Takeaway</option>
@@ -480,11 +470,11 @@ function CustomerKiosk() {
 
             {customer.orderType === 'Dine-In' && (
               <div>
-                <label className="block text-xs font-black uppercase mb-1 text-[#801B38]">Table</label>
+                <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Table</label>
                 <select
                   value={customer.tableNo}
                   onChange={(e) => setCustomer({ ...customer, tableNo: e.target.value })}
-                  className="w-full px-3 py-3 border-2 border-rose-100 rounded-2xl text-xs font-black bg-rose-50/20 text-[#2D1517]"
+                  className="w-full px-3 py-3 border border-[#EED7CE] rounded-2xl text-xs font-bold bg-white text-[#4A2E2B]"
                 >
                   <option value="Table 1">Table 1</option>
                   <option value="Table 2">Table 2</option>
@@ -498,7 +488,7 @@ function CustomerKiosk() {
 
           <button
             type="submit"
-            className="w-full py-4 bg-[#801B38] text-white font-black rounded-2xl hover:bg-rose-900 transition shadow-lg shadow-rose-200 text-sm tracking-wide mt-2"
+            className="w-full py-4 bg-[#4A2E2B] text-[#FAF3F0] font-black rounded-2xl hover:bg-[#2D1517] transition shadow-lg text-sm tracking-wide mt-2"
           >
             Start Crafting Order 🍹
           </button>
@@ -510,38 +500,38 @@ function CustomerKiosk() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-5">
-        {/* Banner */}
-        <div className="bg-[#801B38] rounded-3xl p-6 text-white shadow-lg flex justify-between items-center relative overflow-hidden">
+        {/* Poster Soft Banner */}
+        <div className="bg-[#4A2E2B] rounded-3xl p-6 text-[#FAF3F0] shadow-lg flex justify-between items-center relative overflow-hidden">
           <div className="relative z-10">
-            <span className="bg-white/20 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="bg-[#FAF3F0]/20 text-[#FAF3F0] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
               {customer.name} • {customer.orderType === 'Dine-In' ? customer.tableNo : 'Takeaway'}
             </span>
-            <h2 className="text-2xl font-black mt-2 tracking-tight">Handcrafted Sips & Bobas 🧋</h2>
-            <p className="text-rose-200 text-xs mt-0.5 font-medium">Boba teas, ceremonial matchas & sparkling sodas brewed fresh</p>
+            <h2 className="text-2xl font-black mt-2 font-serif">Bubbles • Good Mood 🧋</h2>
+            <p className="text-[#EED7CE] text-xs mt-0.5 font-medium">Sips that spark joy • Handcrafted Fresh Daily</p>
           </div>
-          <button onClick={() => setIsIdentified(false)} className="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl font-bold backdrop-blur-md z-10 border border-white/20">
+          <button onClick={() => setIsIdentified(false)} className="text-xs bg-[#FAF3F0]/10 hover:bg-[#FAF3F0]/20 px-3 py-1.5 rounded-xl font-bold backdrop-blur-md z-10 border border-[#FAF3F0]/20 text-[#FAF3F0]">
             Switch User
           </button>
         </div>
 
         {/* 🌸 Digital Loyalty Stamp Card (8 Drinks System) */}
-        <div className="bg-white rounded-3xl p-5 border-2 border-rose-100 shadow-xs flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#801B38]" />
-              <h3 className="text-sm font-black text-[#801B38] uppercase tracking-wide">8-Drink Loyalty Stamp Card</h3>
+              <Award className="w-5 h-5 text-[#4A2E2B]" />
+              <h3 className="text-sm font-black text-[#4A2E2B] uppercase tracking-wide">8-Drink Stamp Card</h3>
             </div>
-            <p className="text-xs text-rose-800 font-bold mt-1">Buy 8 drinks and unlock 1 FREE Sparkling Soda voucher!</p>
+            <p className="text-xs text-[#A66E63] font-bold mt-1">Buy 8 drinks and unlock 1 FREE Sparkling Soda on your next visit!</p>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 bg-rose-50/60 p-2.5 rounded-2xl border border-rose-100 justify-center">
+          <div className="flex flex-wrap gap-1.5 bg-[#FCEEEA] p-2.5 rounded-2xl border border-[#EED7CE] justify-center">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((stIndex) => (
               <div
                 key={stIndex}
-                className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs border transition ${
+                className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs border transition ${
                   stIndex <= stamps
-                    ? 'bg-[#801B38] text-white border-[#801B38] shadow-md scale-105'
-                    : 'bg-white text-rose-300 border-rose-200'
+                    ? 'bg-[#4A2E2B] text-[#FAF3F0] border-[#4A2E2B] shadow-md scale-105'
+                    : 'bg-white text-[#D9A59B] border-[#EED7CE]'
                 }`}
               >
                 {stIndex <= stamps ? '🍹' : stIndex === 8 ? '🎁' : stIndex}
@@ -552,23 +542,23 @@ function CustomerKiosk() {
 
         {/* Favorites Memory Drawer */}
         {pastOrders.length > 0 && (
-          <div className="bg-white rounded-3xl p-4 border border-rose-100 shadow-xs">
-            <h3 className="text-xs font-black text-[#801B38] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-              <History className="w-4 h-4 text-[#801B38]" /> Quick Re-Order Favorites
+          <div className="bg-white rounded-3xl p-4 border border-[#EED7CE] shadow-xs">
+            <h3 className="text-xs font-black text-[#4A2E2B] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-[#4A2E2B]" /> Your Favorites Memory
             </h3>
             <div className="flex gap-3 overflow-x-auto pb-1">
               {pastOrders.map((pOrd) => (
-                <div key={pOrd.id} className="min-w-[200px] bg-rose-50/40 p-3 rounded-2xl border border-rose-100 flex flex-col justify-between">
+                <div key={pOrd.id} className="min-w-[200px] bg-[#FCEEEA]/50 p-3 rounded-2xl border border-[#EED7CE] flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-mono font-black text-rose-700">{pOrd.token_no || pOrd.id}</span>
-                    <p className="text-xs font-extrabold text-[#2D1517] line-clamp-1 mt-0.5">
+                    <span className="text-[10px] font-mono font-bold text-[#A66E63]">{pOrd.token_no || pOrd.id}</span>
+                    <p className="text-xs font-extrabold text-[#4A2E2B] line-clamp-1 mt-0.5">
                       {pOrd.items?.map(i => `${i.name} (${i.qty})`).join(', ')}
                     </p>
-                    <p className="text-xs font-black text-[#801B38] mt-0.5">₹{pOrd.total_payable}</p>
+                    <p className="text-xs font-black text-[#4A2E2B] mt-0.5">₹{pOrd.total_payable}</p>
                   </div>
                   <button
                     onClick={() => reorderPastItems(pOrd.items)}
-                    className="mt-2 py-1.5 bg-[#801B38] text-white rounded-xl text-[11px] font-black hover:bg-rose-900 transition flex items-center justify-center gap-1 shadow-xs"
+                    className="mt-2 py-1.5 bg-[#4A2E2B] text-[#FAF3F0] rounded-xl text-[11px] font-bold hover:bg-[#2D1517] transition flex items-center justify-center gap-1 shadow-xs"
                   >
                     <RotateCcw className="w-3 h-3" /> Re-order
                   </button>
@@ -578,16 +568,16 @@ function CustomerKiosk() {
           </div>
         )}
 
-        {/* Horizontal Category Navigation Bar */}
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none sticky top-16 bg-[#FFF7F5] py-2 z-20">
+        {/* Category Filter Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none sticky top-16 bg-[#FAF3F0] py-2 z-20">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-2xl text-xs font-black whitespace-nowrap transition border ${
+              className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition border ${
                 activeCategory === cat.id 
-                  ? 'bg-[#801B38] text-white border-[#801B38] shadow-md' 
-                  : 'bg-white text-[#801B38] border-rose-100 hover:bg-rose-50'
+                  ? 'bg-[#4A2E2B] text-[#FAF3F0] border-[#4A2E2B] shadow-sm' 
+                  : 'bg-white text-[#4A2E2B] border-[#EED7CE] hover:bg-[#FCEEEA]'
               }`}
             >
               {cat.label}
@@ -595,36 +585,36 @@ function CustomerKiosk() {
           ))}
         </div>
 
-        {/* Crisp Menu Grid */}
+        {/* Poster Styled Menu Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {filteredMenu.map((item) => (
             <div 
               key={item.id} 
-              className={`bg-white rounded-3xl p-5 border-2 border-rose-100 shadow-xs flex flex-col justify-between transition hover:border-[#801B38] ${
-                item.is_sold_out ? 'opacity-40 bg-rose-50/10' : ''
+              className={`bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs flex flex-col justify-between transition hover:border-[#4A2E2B] ${
+                item.is_sold_out ? 'opacity-40 bg-pink-50/10' : ''
               }`}
             >
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border uppercase tracking-wider ${getBadgeStyle(item.category)}`}>
+                  <span className="text-[10px] font-bold px-2.5 py-1 bg-[#FCEEEA] text-[#4A2E2B] rounded-full border border-[#EED7CE] uppercase tracking-wider">
                     {item.category}
                   </span>
                   {item.is_sold_out ? (
-                    <span className="text-xs font-black px-2.5 py-1 bg-rose-100 text-rose-700 rounded-xl">SOLD OUT</span>
+                    <span className="text-xs font-bold px-2.5 py-1 bg-rose-100 text-rose-700 rounded-xl">SOLD OUT</span>
                   ) : (
-                    <span className="text-base font-black text-[#801B38]">
+                    <span className="text-base font-black text-[#4A2E2B]">
                       ₹{item.price} {item.large_price ? ` / ₹${item.large_price}` : ''}
                     </span>
                   )}
                 </div>
-                <h3 className="font-black text-[#2D1517] text-base mb-1">{item.name}</h3>
+                <h3 className="font-bold text-[#4A2E2B] text-base mb-1 font-serif">{item.name}</h3>
               </div>
 
               <div className="mt-4 flex gap-2">
                 <button
                   disabled={item.is_sold_out}
                   onClick={() => addToCart(item, 'Regular')}
-                  className="flex-1 py-2.5 bg-rose-50 hover:bg-[#801B38] hover:text-white text-[#801B38] rounded-2xl font-black text-xs transition border border-rose-200 flex items-center justify-center gap-1"
+                  className="flex-1 py-2.5 bg-[#FCEEEA] hover:bg-[#4A2E2B] hover:text-[#FAF3F0] text-[#4A2E2B] rounded-2xl font-bold text-xs transition border border-[#EED7CE] flex items-center justify-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" /> {item.large_price ? 'Regular' : 'Add Cup'}
                 </button>
@@ -633,7 +623,7 @@ function CustomerKiosk() {
                   <button
                     disabled={item.is_sold_out}
                     onClick={() => addToCart(item, 'Large')}
-                    className="flex-1 py-2.5 bg-[#801B38] hover:bg-rose-900 text-white rounded-2xl font-black text-xs transition flex items-center justify-center gap-1 shadow-xs"
+                    className="flex-1 py-2.5 bg-[#4A2E2B] hover:bg-[#2D1517] text-[#FAF3F0] rounded-2xl font-bold text-xs transition flex items-center justify-center gap-1 shadow-xs"
                   >
                     <Plus className="w-3.5 h-3.5" /> Large
                   </button>
@@ -644,54 +634,40 @@ function CustomerKiosk() {
         </div>
       </div>
 
-      {/* Checkout Tray Panel */}
+      {/* Cart Panel */}
       <div className="space-y-6">
-        <div className="bg-white rounded-3xl p-6 border-2 border-rose-100 shadow-md sticky top-24">
-          <h3 className="text-lg font-black text-[#2D1517] mb-4 flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-[#801B38]" /> Current Tray
+        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-md sticky top-24">
+          <h3 className="text-lg font-black text-[#4A2E2B] mb-4 flex items-center gap-2 font-serif">
+            <ShoppingCart className="w-5 h-5 text-[#4A2E2B]" /> Current Tray
           </h3>
 
           {cart.length === 0 ? (
-            <div className="text-center py-10 text-rose-300">
+            <div className="text-center py-10 text-[#D9A59B]">
               <Coffee className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm font-bold">Your tray is empty</p>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="divide-y divide-rose-100 max-h-48 overflow-y-auto pr-1">
+              <div className="divide-y divide-[#FCEEEA] max-h-48 overflow-y-auto pr-1">
                 {cart.map((item) => (
                   <div key={item.cartKey} className="flex justify-between items-center py-2.5">
                     <div>
-                      <h4 className="font-extrabold text-xs text-[#2D1517]">{item.name} ({item.size})</h4>
-                      <p className="text-[11px] text-rose-800 font-bold">₹{item.price} × {item.qty}</p>
+                      <h4 className="font-extrabold text-xs text-[#4A2E2B]">{item.name} ({item.size})</h4>
+                      <p className="text-[11px] text-[#A66E63] font-bold">₹{item.price} × {item.qty}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-rose-100 text-[#801B38] rounded-lg flex items-center justify-center font-black text-xs"><Minus className="w-3 h-3" /></button>
-                      <span className="font-black text-xs text-[#2D1517]">{item.qty}</span>
-                      <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-rose-100 text-[#801B38] rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
+                      <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-[#FCEEEA] text-[#4A2E2B] rounded-lg flex items-center justify-center font-bold text-xs"><Minus className="w-3 h-3" /></button>
+                      <span className="font-bold text-xs text-[#4A2E2B]">{item.qty}</span>
+                      <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-[#FCEEEA] text-[#4A2E2B] rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Smart Add-On Upsell Prompt */}
-              <div className="bg-rose-50/60 p-3 rounded-2xl border border-rose-100 flex justify-between items-center">
-                <div>
-                  <p className="text-xs font-black text-[#801B38]">Add Extra Chewy Boba?</p>
-                  <p className="text-[10px] text-rose-700 font-bold">+₹30 to make it extra special</p>
-                </div>
-                <button
-                  onClick={() => addToCart({ id: 99, name: 'Extra Chewy Boba', price: 30, category: 'Add-Ons' }, 'Regular')}
-                  className="px-3 py-1.5 bg-[#801B38] text-white text-[11px] font-black rounded-xl hover:bg-rose-900 transition shadow-xs"
-                >
-                  + Add ₹30
-                </button>
-              </div>
-
-              {/* Coupon Code Panel */}
-              <div className="pt-2 border-t border-rose-100">
-                <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1 flex items-center gap-1">
-                  <Tag className="w-3.5 h-3.5 text-[#801B38]" /> Apply Promo Code
+              {/* Coupon Panel */}
+              <div className="pt-2 border-t border-[#EED7CE]">
+                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1 flex items-center gap-1">
+                  <Tag className="w-3.5 h-3.5 text-[#4A2E2B]" /> Apply Promo Code
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -699,50 +675,50 @@ function CustomerKiosk() {
                     placeholder="e.g. WELCOME10"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="flex-1 px-3 py-2 border border-rose-200 rounded-xl text-xs bg-rose-50/20 text-[#2D1517] focus:outline-none font-bold uppercase"
+                    className="flex-1 px-3 py-2 border border-[#EED7CE] rounded-xl text-xs bg-[#FAF3F0] text-[#4A2E2B] focus:outline-none font-bold uppercase"
                   />
                   <button
                     onClick={applyCoupon}
-                    className="px-3.5 py-2 bg-[#801B38] text-white rounded-xl text-xs font-black hover:bg-rose-900 transition shadow-xs"
+                    className="px-3.5 py-2 bg-[#4A2E2B] text-[#FAF3F0] rounded-xl text-xs font-bold hover:bg-[#2D1517] transition shadow-xs"
                   >
                     Apply
                   </button>
                 </div>
                 {couponError && <p className="text-[10px] text-rose-600 font-bold mt-1">{couponError}</p>}
                 {appliedCoupon && (
-                  <div className="mt-1.5 flex justify-between items-center bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-emerald-800 text-[11px] font-black">
+                  <div className="mt-1.5 flex justify-between items-center bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-emerald-800 text-[11px] font-bold">
                     <span>Coupon {appliedCoupon.code} Applied!</span>
-                    <button onClick={() => setAppliedCoupon(null)} className="text-rose-600 hover:text-rose-800 font-black">×</button>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-rose-600 hover:text-rose-800 font-bold">×</button>
                   </div>
                 )}
               </div>
 
-              <div className="border-t border-rose-100 pt-3 space-y-1.5 text-xs">
-                <div className="flex justify-between text-rose-800 font-bold">
+              <div className="border-t border-[#EED7CE] pt-3 space-y-1.5 text-xs">
+                <div className="flex justify-between text-[#A66E63] font-bold">
                   <span>Subtotal</span>
                   <span>₹{subtotal}</span>
                 </div>
                 {discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-700 font-black">
+                  <div className="flex justify-between text-emerald-700 font-bold">
                     <span>Discount</span>
                     <span>-₹{discountAmount}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-base font-black text-[#2D1517] pt-1 border-t border-rose-100">
+                <div className="flex justify-between text-base font-black text-[#4A2E2B] pt-1 border-t border-[#EED7CE]">
                   <span>Total Payable</span>
-                  <span className="text-[#801B38]">₹{totalPayable}</span>
+                  <span className="text-[#4A2E2B]">₹{totalPayable}</span>
                 </div>
 
                 <div className="space-y-2 pt-2">
                   <button
                     onClick={() => handlePlaceOrder('UPI Soundbox / QR')}
-                    className="w-full bg-[#801B38] text-white font-black py-3 rounded-2xl hover:bg-rose-900 transition shadow-lg shadow-rose-200 text-xs tracking-wide"
+                    className="w-full bg-[#4A2E2B] text-[#FAF3F0] font-black py-3 rounded-2xl hover:bg-[#2D1517] transition shadow-lg text-xs tracking-wide"
                   >
                     Generate Token & Pay via UPI (₹{totalPayable})
                   </button>
                   <button
                     onClick={() => handlePlaceOrder('Cash at Counter')}
-                    className="w-full bg-rose-50 hover:bg-rose-100 text-[#801B38] font-black py-2.5 rounded-2xl transition text-xs border border-rose-200"
+                    className="w-full bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] font-bold py-2.5 rounded-2xl transition text-xs border border-[#EED7CE]"
                   >
                     Pay Cash at Counter
                   </button>
@@ -753,15 +729,15 @@ function CustomerKiosk() {
         </div>
 
         {activeOrder && (
-          <div className="bg-white border-2 border-rose-200 rounded-3xl p-6 text-[#2D1517] shadow-lg space-y-3">
+          <div className="bg-white border border-[#EED7CE] rounded-3xl p-6 text-[#4A2E2B] shadow-lg space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs font-black text-[#801B38]">Active Order Token</span>
-              <span className="text-2xl font-black text-[#801B38] bg-rose-50 px-3 py-1 rounded-xl border border-rose-200">
+              <span className="text-xs font-bold text-[#A66E63]">Active Order Token</span>
+              <span className="text-2xl font-black text-[#4A2E2B] bg-[#FCEEEA] px-3 py-1 rounded-xl border border-[#EED7CE]">
                 {activeOrder.token_no || activeOrder.id}
               </span>
             </div>
 
-            <div className="p-4 bg-rose-50/50 rounded-2xl border border-rose-100 text-center space-y-2">
+            <div className="p-4 bg-[#FCEEEA]/60 rounded-2xl border border-[#EED7CE] text-center space-y-2">
               <p className="text-xs font-bold text-amber-900 flex items-center justify-center gap-1">
                 <AlertCircle className="w-4 h-4 text-amber-600" /> Mention Token {activeOrder.token_no} at Counter
               </p>
@@ -770,7 +746,7 @@ function CustomerKiosk() {
                 <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wide ${
                   activeOrder.status === 'Placed' ? 'bg-amber-100 text-amber-900 border border-amber-200' :
                   activeOrder.status === 'Preparing' ? 'bg-blue-100 text-blue-900 border border-blue-200 animate-pulse' :
-                  activeOrder.status === 'Ready' ? 'bg-emerald-600 text-white font-bold shadow-md' : 'bg-rose-100 text-rose-900'
+                  activeOrder.status === 'Ready' ? 'bg-emerald-600 text-white font-bold shadow-md' : 'bg-[#FCEEEA] text-[#4A2E2B]'
                 }`}>
                   {activeOrder.payment_status === 'Unpaid' && activeOrder.status === 'Placed' 
                     ? 'Waiting Counter Payment' 
@@ -830,18 +806,18 @@ function ShopkeeperKDS() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-rose-100 shadow-xs gap-4">
+      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-[#EED7CE] shadow-xs gap-4">
         <div>
-          <h2 className="text-xl font-black text-[#2D1517]">Barista Kitchen Display (KDS)</h2>
-          <p className="text-xs text-rose-800 font-bold">Approve tokens on payment soundbox & manage drink queue</p>
+          <h2 className="text-xl font-bold text-[#4A2E2B] font-serif">Barista Kitchen Display (KDS)</h2>
+          <p className="text-xs text-[#A66E63] font-bold">Approve tokens on payment soundbox & manage drink queue</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-rose-50 p-1 rounded-2xl flex border border-rose-100 text-xs font-black">
+          <div className="bg-[#FCEEEA] p-1 rounded-2xl flex border border-[#EED7CE] text-xs font-bold">
             <button
               onClick={() => setKdsTab('active')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'active' ? 'bg-[#801B38] text-white shadow-xs' : 'text-rose-800'
+                kdsTab === 'active' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
               }`}
             >
               <Clock className="w-4 h-4" /> Active Queue ({activeOrders.length})
@@ -849,14 +825,14 @@ function ShopkeeperKDS() {
             <button
               onClick={() => setKdsTab('completed')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'completed' ? 'bg-[#801B38] text-white shadow-xs' : 'text-rose-800'
+                kdsTab === 'completed' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
               }`}
             >
               <Check className="w-4 h-4" /> History ({completedOrders.length})
             </button>
           </div>
 
-          <button onClick={playOrderChime} className="px-3 py-2 bg-rose-100 text-[#801B38] rounded-2xl text-xs font-black border border-rose-200 flex items-center gap-1 hover:bg-rose-200">
+          <button onClick={playOrderChime} className="px-3 py-2 bg-[#FCEEEA] text-[#4A2E2B] rounded-2xl text-xs font-bold border border-[#EED7CE] flex items-center gap-1 hover:bg-[#F3DCD3]">
             <Volume2 className="w-4 h-4" /> Chime Test
           </button>
         </div>
@@ -867,31 +843,31 @@ function ShopkeeperKDS() {
           {kdsTab === 'active' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {activeOrders.length === 0 ? (
-                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-rose-100 text-rose-400 font-bold">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#EED7CE] text-[#D9A59B] font-bold">
                   No active pending orders in queue.
                 </div>
               ) : (
                 activeOrders.map((order) => (
-                  <div key={order.id} className={`bg-white rounded-3xl p-5 border-2 shadow-xs flex flex-col justify-between ${
-                    order.payment_status === 'Unpaid' ? 'border-amber-300 bg-amber-50/20' : 'border-rose-100'
+                  <div key={order.id} className={`bg-white rounded-3xl p-5 border shadow-xs flex flex-col justify-between ${
+                    order.payment_status === 'Unpaid' ? 'border-amber-300 bg-amber-50/20' : 'border-[#EED7CE]'
                   }`}>
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-black text-sm bg-rose-100 text-[#801B38] border border-rose-200 px-3 py-1 rounded-xl">
+                        <span className="font-mono font-black text-sm bg-[#FCEEEA] text-[#4A2E2B] border border-[#EED7CE] px-3 py-1 rounded-xl">
                           {order.token_no || order.id}
                         </span>
-                        <span className="text-[10px] font-black px-2.5 py-1 bg-rose-50 text-[#801B38] rounded-full uppercase">
+                        <span className="text-[10px] font-black px-2.5 py-1 bg-pink-50 text-[#4A2E2B] rounded-full uppercase">
                           {order.order_type} ({order.table_no})
                         </span>
                       </div>
 
-                      <p className="text-xs font-black text-[#2D1517] mb-2">{order.customer_name} • {order.phone}</p>
+                      <p className="text-xs font-bold text-[#4A2E2B] mb-2">{order.customer_name} • {order.phone}</p>
 
-                      <div className="space-y-1.5 mb-4 border-t border-b border-rose-50 py-2">
+                      <div className="space-y-1.5 mb-4 border-t border-b border-[#FCEEEA] py-2">
                         {order.items?.map((it, idx) => (
                           <div key={idx} className="flex justify-between text-sm">
-                            <span className="text-rose-900 font-bold">• {it.name} ({it.size || 'Regular'})</span>
-                            <span className="font-black text-[#2D1517]">x{it.qty}</span>
+                            <span className="text-[#4A2E2B] font-bold">• {it.name} ({it.size || 'Regular'})</span>
+                            <span className="font-black text-[#4A2E2B]">x{it.qty}</span>
                           </div>
                         ))}
                       </div>
@@ -899,7 +875,7 @@ function ShopkeeperKDS() {
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="text-xs">
-                        <p className="text-rose-800 font-bold">Bill: <strong className="text-[#2D1517]">₹{order.total_payable}</strong></p>
+                        <p className="text-[#A66E63] font-bold">Bill: <strong className="text-[#4A2E2B]">₹{order.total_payable}</strong></p>
                         {order.discount_applied > 0 && (
                           <p className="text-[10px] text-emerald-700 font-bold">Discount: -₹{order.discount_applied}</p>
                         )}
@@ -915,10 +891,10 @@ function ShopkeeperKDS() {
                           </button>
                         )}
                         {order.payment_status === 'Paid' && order.status === 'Preparing' && (
-                          <button onClick={() => updateOrderStatus(order.id, 'Ready')} className="px-3 py-2 bg-emerald-600 text-white rounded-xl text-xs font-black">Mark Ready</button>
+                          <button onClick={() => updateOrderStatus(order.id, 'Ready')} className="px-3 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Mark Ready</button>
                         )}
                         {order.status === 'Ready' && (
-                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3 py-2 bg-[#801B38] text-white rounded-xl text-xs font-black">Complete</button>
+                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3 py-2 bg-[#4A2E2B] text-white rounded-xl text-xs font-bold">Complete</button>
                         )}
                       </div>
                     </div>
@@ -929,27 +905,27 @@ function ShopkeeperKDS() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {completedOrders.length === 0 ? (
-                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-rose-100 text-rose-400 font-bold">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#EED7CE] text-[#D9A59B] font-bold">
                   No completed orders found in history.
                 </div>
               ) : (
                 completedOrders.map((order) => (
-                  <div key={order.id} className="bg-rose-50/30 rounded-3xl p-5 border border-rose-100 flex flex-col justify-between">
+                  <div key={order.id} className="bg-[#FAF3F0] rounded-3xl p-5 border border-[#EED7CE] flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-bold text-xs bg-rose-100 px-2.5 py-1 rounded-xl text-rose-900">{order.token_no || order.id}</span>
+                        <span className="font-mono font-bold text-xs bg-[#FCEEEA] px-2.5 py-1 rounded-xl text-[#4A2E2B]">{order.token_no || order.id}</span>
                         <span className="text-[10px] font-black px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full uppercase">Fulfilled</span>
                       </div>
-                      <p className="text-xs font-black text-rose-900 mb-2">{order.customer_name} • ₹{order.total_payable}</p>
+                      <p className="text-xs font-bold text-[#4A2E2B] mb-2">{order.customer_name} • ₹{order.total_payable}</p>
                       <div className="space-y-1 mb-3">
                         {order.items?.map((it, idx) => (
-                          <p key={idx} className="text-xs text-rose-800 font-bold">• {it.name} x{it.qty}</p>
+                          <p key={idx} className="text-xs text-[#A66E63] font-bold">• {it.name} x{it.qty}</p>
                         ))}
                       </div>
                     </div>
                     <button
                       onClick={() => updateOrderStatus(order.id, 'Preparing')}
-                      className="py-1.5 px-3 bg-white border border-rose-200 text-[#801B38] rounded-xl text-xs font-black hover:bg-rose-50 transition self-end flex items-center gap-1"
+                      className="py-1.5 px-3 bg-white border border-[#EED7CE] text-[#4A2E2B] rounded-xl text-xs font-bold hover:bg-[#FCEEEA] transition self-end flex items-center gap-1"
                     >
                       <RotateCcw className="w-3 h-3" /> Re-open Ticket
                     </button>
@@ -961,24 +937,24 @@ function ShopkeeperKDS() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 border border-rose-100 shadow-xs">
-            <h3 className="font-black text-[#2D1517] text-base mb-1 flex items-center gap-2">
-              <Package className="w-4 h-4 text-[#801B38]" /> Menu Stock Control
+          <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs">
+            <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
+              <Package className="w-4 h-4 text-[#4A2E2B]" /> Menu Stock Control
             </h3>
-            <p className="text-xs text-rose-800 mb-4 font-bold">Toggle drink availability on customer kiosks in real-time.</p>
+            <p className="text-xs text-[#A66E63] mb-4 font-bold">Toggle drink availability on customer kiosks in real-time.</p>
 
             <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
               {menu.map((item) => (
-                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-rose-100 bg-rose-50/20">
+                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-[#EED7CE] bg-[#FAF3F0]/50">
                   <div>
-                    <h4 className="font-black text-xs text-[#2D1517]">{item.name}</h4>
-                    <span className={`text-[10px] font-black ${item.is_sold_out ? 'text-rose-600' : 'text-emerald-700'}`}>
+                    <h4 className="font-bold text-xs text-[#4A2E2B]">{item.name}</h4>
+                    <span className={`text-[10px] font-bold ${item.is_sold_out ? 'text-rose-600' : 'text-emerald-700'}`}>
                       {item.is_sold_out ? 'Sold Out' : 'Available'}
                     </span>
                   </div>
                   <button
                     onClick={() => toggleSoldOut(item.id, item.is_sold_out)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
                       item.is_sold_out ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'
                     }`}
                   >
@@ -1126,20 +1102,20 @@ function ExecutiveMIS() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs flex flex-wrap justify-between items-center gap-4">
+      <div className="bg-white p-6 rounded-3xl border border-[#EED7CE] shadow-xs flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h2 className="text-xl font-black text-[#2D1517]">Executive MIS Financial Dashboard</h2>
-          <p className="text-xs text-rose-800 font-bold">Period financial analytics, COGS tracking, and promo coupon controls</p>
+          <h2 className="text-xl font-bold text-[#4A2E2B] font-serif">Executive MIS Financial Dashboard</h2>
+          <p className="text-xs text-[#A66E63] font-bold">Period financial analytics, COGS tracking, and promo coupon controls</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="bg-rose-50 p-1 rounded-2xl flex border border-rose-100 text-xs font-black">
+          <div className="bg-[#FCEEEA] p-1 rounded-2xl flex border border-[#EED7CE] text-xs font-bold">
             {['today', 'yesterday', 'week', 'month', 'ytd', 'custom'].map((pKey) => (
               <button
                 key={pKey}
                 onClick={() => setPeriod(pKey)}
                 className={`px-3 py-1.5 rounded-xl uppercase tracking-wider transition ${
-                  period === pKey ? 'bg-[#801B38] text-white shadow-xs' : 'text-rose-900'
+                  period === pKey ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
                 }`}
               >
                 {pKey}
@@ -1148,19 +1124,19 @@ function ExecutiveMIS() {
           </div>
 
           {period === 'custom' && (
-            <div className="flex items-center gap-1.5 bg-rose-50 p-1.5 rounded-2xl border border-rose-100 text-xs">
+            <div className="flex items-center gap-1.5 bg-[#FCEEEA] p-1.5 rounded-2xl border border-[#EED7CE] text-xs">
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-white text-[#2D1517] px-2 py-1 rounded-xl border border-rose-200 focus:outline-none font-bold"
+                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-[#EED7CE] focus:outline-none font-bold"
               />
-              <span className="text-rose-400 font-bold">to</span>
+              <span className="text-[#A66E63] font-bold">to</span>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="bg-white text-[#2D1517] px-2 py-1 rounded-xl border border-rose-200 focus:outline-none font-bold"
+                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-[#EED7CE] focus:outline-none font-bold"
               />
             </div>
           )}
@@ -1168,66 +1144,66 @@ function ExecutiveMIS() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white rounded-3xl p-5 border border-rose-100 shadow-xs">
-          <p className="text-xs text-rose-800 font-bold flex items-center justify-between">
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
+          <p className="text-xs text-[#A66E63] font-bold flex items-center justify-between">
             Gross Revenue <TrendingUp className="w-4 h-4 text-emerald-600" />
           </p>
-          <h3 className="text-2xl font-black text-[#2D1517] mt-1">₹{grossSales}</h3>
-          <p className="text-[10px] text-rose-700 mt-1 font-bold">{filteredOrders.length} Orders</p>
+          <h3 className="text-2xl font-black text-[#4A2E2B] mt-1">₹{grossSales}</h3>
+          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">{filteredOrders.length} Orders</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-rose-100 shadow-xs">
-          <p className="text-xs text-rose-800 font-bold">Ingredients COGS</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
+          <p className="text-xs text-[#A66E63] font-bold">Ingredients COGS</p>
           <h3 className="text-2xl font-black text-rose-600 mt-1">₹{cogsTotal}</h3>
-          <p className="text-[10px] text-rose-700 mt-1 font-bold">Direct Costs</p>
+          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Direct Costs</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-rose-100 shadow-xs">
-          <p className="text-xs text-rose-800 font-bold">Gross Profit</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
+          <p className="text-xs text-[#A66E63] font-bold">Gross Profit</p>
           <h3 className="text-2xl font-black text-emerald-700 mt-1">₹{grossProfit}</h3>
-          <p className="text-[10px] text-rose-700 mt-1 font-bold">Sales - COGS</p>
+          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Sales - COGS</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-rose-100 shadow-xs">
-          <p className="text-xs text-rose-800 font-bold">Operating Margin</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
+          <p className="text-xs text-[#A66E63] font-bold">Operating Margin</p>
           <h3 className="text-2xl font-black text-purple-700 mt-1">{netMargin}%</h3>
-          <p className="text-[10px] text-rose-700 mt-1 font-bold">Net %</p>
+          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Net %</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-rose-100 shadow-xs">
-          <p className="text-xs text-rose-800 font-bold">Avg Order Value</p>
-          <h3 className="text-2xl font-black text-[#801B38] mt-1">₹{aov}</h3>
-          <p className="text-[10px] text-rose-700 mt-1 font-bold">Per Ticket</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
+          <p className="text-xs text-[#A66E63] font-bold">Avg Order Value</p>
+          <h3 className="text-2xl font-black text-[#4A2E2B] mt-1">₹{aov}</h3>
+          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Per Ticket</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-rose-100 shadow-xs space-y-4">
-          <h3 className="font-black text-[#2D1517] text-base flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-[#801B38]" /> Active Promo Coupons
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs space-y-4">
+          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2 font-serif">
+            <Ticket className="w-5 h-5 text-[#4A2E2B]" /> Active Promo Coupons
           </h3>
 
-          <div className="divide-y divide-rose-100 max-h-[250px] overflow-y-auto pr-1">
+          <div className="divide-y divide-[#FCEEEA] max-h-[250px] overflow-y-auto pr-1">
             {coupons.map((c) => (
               <div key={c.id} className="py-3 flex items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-black text-sm bg-rose-100 text-[#801B38] border border-rose-200 px-2.5 py-0.5 rounded-lg">
+                    <span className="font-mono font-bold text-sm bg-[#FCEEEA] text-[#4A2E2B] border border-[#EED7CE] px-2.5 py-0.5 rounded-lg">
                       {c.code}
                     </span>
-                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${c.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${c.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
                       {c.is_active ? 'Active' : 'Disabled'}
                     </span>
                   </div>
-                  <p className="text-xs text-rose-800 mt-1 font-bold">
-                    Discount: <strong className="text-[#2D1517]">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
+                  <p className="text-xs text-[#A66E63] mt-1 font-bold">
+                    Discount: <strong className="text-[#4A2E2B]">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => toggleCouponStatus(c.id, c.is_active)}
-                    className="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-[#801B38] rounded-xl text-xs font-black transition border border-rose-200"
+                    className="px-3 py-1 bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] rounded-xl text-xs font-bold transition border border-[#EED7CE]"
                   >
                     {c.is_active ? 'Disable' : 'Enable'}
                   </button>
@@ -1244,32 +1220,32 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-rose-100 shadow-xs h-fit">
-          <h3 className="font-black text-[#2D1517] text-base mb-1 flex items-center gap-2">
-            <Plus className="w-5 h-5 text-[#801B38]" /> Create Promo Coupon
+        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs h-fit">
+          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
+            <Plus className="w-5 h-5 text-[#4A2E2B]" /> Create Promo Coupon
           </h3>
-          <p className="text-xs text-rose-800 mb-4 font-bold">Set promo codes for customer discounts.</p>
+          <p className="text-xs text-[#A66E63] mb-4 font-bold">Set promo codes for customer discounts.</p>
 
           <form onSubmit={handleAddCoupon} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Coupon Code</label>
+              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Coupon Code</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. SUMMER20"
                 value={newCoupon.code}
                 onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
-                className="w-full px-3.5 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black uppercase"
+                className="w-full px-3.5 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold uppercase"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Type</label>
+                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Type</label>
                 <select
                   value={newCoupon.discount_type}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_type: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs font-black bg-rose-50/20 text-[#2D1517]"
+                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs font-bold bg-[#FAF3F0] text-[#4A2E2B]"
                 >
                   <option value="percentage">% Percentage</option>
                   <option value="flat">₹ Flat Amount</option>
@@ -1277,32 +1253,32 @@ function ExecutiveMIS() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Discount</label>
+                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Discount</label>
                 <input
                   type="number"
                   required
                   placeholder={newCoupon.discount_type === 'percentage' ? 'e.g. 20 (%)' : 'e.g. 50 (₹)'}
                   value={newCoupon.discount_value}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_value: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black"
+                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Min Bill Amount (₹)</label>
+              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Min Bill Amount (₹)</label>
               <input
                 type="number"
                 placeholder="e.g. 200 (0 for no limit)"
                 value={newCoupon.min_order_value}
                 onChange={(e) => setNewCoupon({ ...newCoupon, min_order_value: e.target.value })}
-                className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black"
+                className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-[#801B38] text-white font-black rounded-2xl hover:bg-rose-900 transition shadow-md text-xs mt-2"
+              className="w-full py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] transition shadow-md text-xs mt-2"
             >
               Issue Promo Code
             </button>
@@ -1311,26 +1287,26 @@ function ExecutiveMIS() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-rose-100 shadow-xs space-y-4">
-          <h3 className="font-black text-[#2D1517] text-base flex items-center gap-2">
-            <Edit3 className="w-5 h-5 text-[#801B38]" /> Active Menu Catalog
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs space-y-4">
+          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2 font-serif">
+            <Edit3 className="w-5 h-5 text-[#4A2E2B]" /> Active Menu Catalog
           </h3>
 
-          <div className="divide-y divide-rose-100 max-h-[350px] overflow-y-auto pr-1">
+          <div className="divide-y divide-[#FCEEEA] max-h-[350px] overflow-y-auto pr-1">
             {menu.map((item) => (
               <div key={item.id} className="py-3.5 flex items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-black text-sm text-[#2D1517]">{item.name}</h4>
-                    <span className="text-[10px] font-bold px-2 py-0.5 bg-rose-50 text-[#801B38] rounded-md border border-rose-100">{item.category}</span>
+                    <h4 className="font-bold text-sm text-[#4A2E2B] font-serif">{item.name}</h4>
+                    <span className="text-[10px] font-bold px-2 py-0.5 bg-[#FCEEEA] text-[#4A2E2B] rounded-md border border-[#EED7CE]">{item.category}</span>
                   </div>
-                  <p className="text-xs text-rose-800 mt-0.5 font-bold">Regular: <strong className="text-[#2D1517]">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
+                  <p className="text-xs text-[#A66E63] mt-0.5 font-bold">Regular: <strong className="text-[#4A2E2B]">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleUpdatePrice(item.id, item.price)}
-                    className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-[#801B38] rounded-xl text-xs font-black transition border border-rose-200"
+                    className="px-3 py-1.5 bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] rounded-xl text-xs font-bold transition border border-[#EED7CE]"
                   >
                     Edit Price
                   </button>
@@ -1347,31 +1323,31 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-rose-100 shadow-xs h-fit">
-          <h3 className="font-black text-[#2D1517] text-base mb-1 flex items-center gap-2">
-            <Plus className="w-5 h-5 text-[#801B38]" /> Add New Beverage
+        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs h-fit">
+          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
+            <Plus className="w-5 h-5 text-[#4A2E2B]" /> Add New Beverage
           </h3>
-          <p className="text-xs text-rose-800 mb-4 font-bold">Instantly adds drink to customer menu kiosks.</p>
+          <p className="text-xs text-[#A66E63] mb-4 font-bold">Instantly adds drink to customer menu kiosks.</p>
 
           <form onSubmit={handleAddItem} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Item Name</label>
+              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Item Name</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. Mango Matcha"
                 value={newItem.name}
                 onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black"
+                className="w-full px-3.5 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Category Series</label>
+              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Category Series</label>
               <select
                 value={newItem.category}
                 onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs font-black bg-rose-50/20 text-[#2D1517]"
+                className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs font-bold bg-[#FAF3F0] text-[#4A2E2B]"
               >
                 <option value="Sparkling Soda Series">Sparkling Soda Series</option>
                 <option value="Popping Soda Series">Popping Soda Series</option>
@@ -1385,32 +1361,32 @@ function ExecutiveMIS() {
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Regular (₹)</label>
+                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Regular (₹)</label>
                 <input
                   type="number"
                   required
                   placeholder="e.g. 160"
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black"
+                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-black text-[#801B38] uppercase mb-1">Large (₹)</label>
+                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Large (₹)</label>
                 <input
                   type="number"
                   placeholder="e.g. 190 (Optional)"
                   value={newItem.large_price}
                   onChange={(e) => setNewItem({ ...newItem, large_price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-rose-200 rounded-xl text-xs focus:ring-2 focus:ring-[#801B38] focus:outline-none bg-rose-50/20 text-[#2D1517] font-black"
+                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-[#801B38] text-white font-black rounded-2xl hover:bg-rose-900 transition shadow-md text-xs mt-2"
+              className="w-full py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] transition shadow-md text-xs mt-2"
             >
               Add to Live Menu
             </button>
