@@ -3,7 +3,7 @@ import {
   ShoppingCart, Coffee, Lock, Plus, Minus, Trash2, 
   ChefHat, BarChart3, Package, Volume2, Edit3, LogOut, 
   History, RotateCcw, Check, Clock, TrendingUp, AlertCircle, Tag, Ticket,
-  Award, Sparkles, Heart
+  Award, Sparkles, Sliders, ShieldCheck, Search, Users, KeyRound, ArrowRight
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -21,7 +21,7 @@ const playOrderChime = () => {
     osc.start();
     osc.stop(ctx.currentTime + 0.35);
   } catch (e) {
-    console.log("Audio alert muted");
+    console.log("Audio muted");
   }
 };
 
@@ -80,53 +80,52 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF3F0] text-[#4A2E2B] font-sans selection:bg-[#E88D82] selection:text-white">
-      {/* Poster Soft Cream Header */}
-      <header className="bg-[#FAF3F0]/95 backdrop-blur-md border-b border-[#EED7CE] sticky top-0 z-40 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+    <div className="min-h-screen bg-[#FFF7F8] text-[#0B2B20] font-sans selection:bg-[#E895A5] selection:text-white">
+      {/* Header */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-[#F5D0D7] sticky top-0 z-40 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-[#4A2E2B] text-[#FAF3F0] rounded-2xl flex items-center justify-center font-black text-xl shadow-md">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-[#0B2B20] text-[#F9CBD3] rounded-2xl flex items-center justify-center font-black text-xl shadow-md">
               P&P
             </div>
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-[#4A2E2B] flex items-center gap-1.5 font-serif">
-                Pop & Pour
+              <h1 className="text-xl md:text-2xl font-black tracking-tight text-[#0B2B20] flex items-center gap-1.5 font-serif">
+                Pop & Pour <Sparkles className="w-4 h-4 text-[#E895A5]" />
               </h1>
-              <p className="text-[10px] text-[#A66E63] font-bold uppercase tracking-widest">SIP HAPPY • STAY HAPPY ♡</p>
+              <p className="text-[10px] text-[#0B2B20]/70 font-black uppercase tracking-widest">SIP HAPPY • STAY HAPPY ♡</p>
             </div>
           </div>
 
-          <div className="flex items-center bg-[#FCEEEA] p-1.5 rounded-2xl gap-1 border border-[#EED7CE]">
+          <div className="flex items-center bg-[#FFF0F3] p-1.5 rounded-2xl gap-1 border border-[#F5D0D7]">
             <button
               onClick={() => handleRoleSwitch('customer')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'customer' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
+              className={`px-3 md:px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
+                activeRole === 'customer' ? 'bg-[#0B2B20] text-[#F9CBD3] shadow-sm' : 'text-[#0B2B20] hover:bg-[#FCE1E6]'
               }`}
             >
-              🥤 Customer Kiosk
+              🥤 Kiosk
             </button>
             <button
               onClick={() => handleRoleSwitch('shopkeeper')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'shopkeeper' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
+              className={`px-3 md:px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
+                activeRole === 'shopkeeper' ? 'bg-[#0B2B20] text-[#F9CBD3] shadow-sm' : 'text-[#0B2B20] hover:bg-[#FCE1E6]'
               }`}
             >
-              <ChefHat className="w-4 h-4" /> Barista KDS
+              <ChefHat className="w-4 h-4" /> Barista
             </button>
             <button
               onClick={() => handleRoleSwitch('owner')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'owner' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-sm' : 'text-[#4A2E2B] hover:bg-[#F3DCD3]'
+              className={`px-3 md:px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 ${
+                activeRole === 'owner' ? 'bg-[#0B2B20] text-[#F9CBD3] shadow-sm' : 'text-[#0B2B20] hover:bg-[#FCE1E6]'
               }`}
             >
-              <BarChart3 className="w-4 h-4" /> Executive MIS
+              <BarChart3 className="w-4 h-4" /> Management
             </button>
 
             {authenticatedRole && activeRole !== 'customer' && (
               <button
                 onClick={handleLogout}
-                className="ml-2 px-3 py-2 bg-rose-100/80 text-rose-800 hover:bg-rose-200 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-200"
-                title="Logout Staff Session"
+                className="ml-1 px-3 py-2 bg-rose-100 text-rose-800 hover:bg-rose-200 rounded-xl text-xs font-black transition flex items-center gap-1 border border-rose-200"
               >
                 <LogOut className="w-3.5 h-3.5" />
               </button>
@@ -135,26 +134,25 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto p-4 md:p-6">
+      <main className="max-w-7xl mx-auto p-3 md:p-6 pb-24 md:pb-6">
         {activeRole === 'customer' && <CustomerKiosk />}
         {activeRole === 'shopkeeper' && <ShopkeeperKDS />}
         {activeRole === 'owner' && <ExecutiveMIS />}
       </main>
 
-      {/* Security Protection Modal */}
+      {/* Staff Access Modal */}
       {showPinModal && (
-        <div className="fixed inset-0 bg-[#4A2E2B]/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#FAF3F0] rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-[#EED7CE] text-[#4A2E2B]">
+        <div className="fixed inset-0 bg-[#0B2B20]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FFF7F8] rounded-3xl p-6 max-w-sm w-full shadow-2xl border-2 border-[#F5D0D7] text-[#0B2B20]">
             <div className="text-center mb-5">
-              <div className="w-12 h-12 bg-[#FCEEEA] text-[#4A2E2B] rounded-2xl flex items-center justify-center mx-auto mb-3 border border-[#EED7CE]">
+              <div className="w-12 h-12 bg-[#FFF0F3] text-[#0B2B20] rounded-2xl flex items-center justify-center mx-auto mb-3 border border-[#F5D0D7]">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold">
-                {targetRole === 'owner' ? 'Owner MIS Password' : 'Barista KDS Access'}
+              <h3 className="text-lg font-black">
+                {targetRole === 'owner' ? 'Management Password' : 'Barista Staff Access'}
               </h3>
-              <p className="text-xs text-[#A66E63] font-medium mt-1">
-                {targetRole === 'owner' ? 'Enter master owner password.' : 'Enter 4-digit staff PIN (Default: 2468).'}
+              <p className="text-xs text-[#0B2B20]/70 font-bold mt-1">
+                {targetRole === 'owner' ? 'Enter owner credentials.' : 'Enter 4-digit PIN (Default: 2468).'}
               </p>
             </div>
 
@@ -165,7 +163,7 @@ export default function App() {
                 placeholder={targetRole === 'shopkeeper' ? "••••" : "Password"}
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                className="w-full text-center text-2xl tracking-widest py-3 border border-[#EED7CE] rounded-2xl focus:outline-none bg-white text-[#4A2E2B] font-bold"
+                className="w-full text-center text-2xl tracking-widest py-3 border-2 border-[#F5D0D7] rounded-2xl focus:border-[#0B2B20] focus:outline-none bg-white text-[#0B2B20] font-black"
                 autoFocus
               />
               {authError && <p className="text-xs text-rose-600 text-center font-bold">{authError}</p>}
@@ -174,13 +172,13 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setShowPinModal(false)}
-                  className="flex-1 py-3 border border-[#EED7CE] text-[#4A2E2B] font-bold rounded-2xl hover:bg-[#FCEEEA] text-sm transition"
+                  className="flex-1 py-3 border border-[#F5D0D7] text-[#0B2B20] font-bold rounded-2xl hover:bg-[#FFF0F3] text-sm transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] shadow-md text-sm transition"
+                  className="flex-1 py-3 bg-[#0B2B20] text-[#F9CBD3] font-black rounded-2xl hover:bg-[#071D16] shadow-md text-sm transition"
                 >
                   Authenticate
                 </button>
@@ -193,16 +191,25 @@ export default function App() {
   );
 }
 
-// =================== 1. CUSTOMER KIOSK & 8-STAMP CARD ===================
+// =================== 1. CUSTOMER KIOSK ===================
 function CustomerKiosk() {
-  const [customer, setCustomer] = useState({ name: '', phone: '', tableNo: 'Table 1', orderType: 'Dine-In' });
+  const [customer, setCustomer] = useState({ name: '', phone: '', userPin: '', tableNo: 'Table 1', orderType: 'Dine-In' });
   const [isIdentified, setIsIdentified] = useState(false);
-  
+
+  const [pinStep, setPinStep] = useState(false);
+  const [enteredPin, setEnteredPin] = useState('');
+  const [accountError, setAccountError] = useState('');
+  const [showForgotNotice, setShowForgotNotice] = useState(false);
+
   const [menu, setMenu] = useState([]);
   const [cart, setCart] = useState([]);
   const [activeOrder, setActiveOrder] = useState(null);
   const [pastOrders, setPastOrders] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
+
+  const [showMobileTray, setShowMobileTray] = useState(false);
+  const [selectedItemForCustom, setSelectedItemForCustom] = useState(null);
+  const [customOptions, setCustomOptions] = useState({ size: 'Regular', sugar: '100% Standard', ice: 'Normal Ice', extraBoba: false });
 
   const [stamps, setStamps] = useState(0);
 
@@ -279,27 +286,84 @@ function CustomerKiosk() {
     return () => supabase.removeChannel(sub);
   }, [activeOrder?.id]);
 
-  const handleStartSession = (e) => {
+  const handleVerifyOrRegisterUser = async (e) => {
     e.preventDefault();
-    if (customer.name && customer.phone) {
-      localStorage.setItem('pop_customer_info', JSON.stringify(customer));
-      setIsIdentified(true);
-      fetchCustomerHistory(customer.phone);
-      fetchLoyaltyStamps(customer.phone);
+    setAccountError('');
+
+    if (!customer.phone || customer.phone.length < 10) {
+      setAccountError('Please enter a valid 10-digit mobile number');
+      return;
     }
+
+    setPinStep(true);
   };
 
-  const addToCart = (item, selectedSize = 'Regular') => {
-    if (item.is_sold_out) return;
-    const price = selectedSize === 'Large' && item.large_price ? item.large_price : item.price;
-    const itemKey = `${item.id}-${selectedSize}`;
+  const handleConfirmPin = async (e) => {
+    e.preventDefault();
+    setAccountError('');
 
-    const existing = cart.find(c => c.cartKey === itemKey);
-    if (existing) {
-      setCart(cart.map(c => c.cartKey === itemKey ? { ...c, qty: c.qty + 1 } : c));
-    } else {
-      setCart([...cart, { ...item, cartKey: itemKey, size: selectedSize, price: price, qty: 1 }]);
+    if (enteredPin.length !== 4) {
+      setAccountError('Security PIN must be 4 digits');
+      return;
     }
+
+    const { data: existingUser } = await supabase
+      .from('loyalty_stamps')
+      .select('*')
+      .eq('phone', customer.phone)
+      .single();
+
+    if (existingUser && existingUser.user_pin) {
+      if (existingUser.user_pin !== enteredPin) {
+        setAccountError('Incorrect PIN! Please ask counter staff for an instant reset.');
+        return;
+      }
+    } else {
+      // Create new customer account record in management database
+      await supabase.from('loyalty_stamps').upsert({
+        phone: customer.phone,
+        customer_name: customer.name,
+        user_pin: enteredPin,
+        stamp_count: existingUser?.stamp_count || 0
+      });
+    }
+
+    const updatedCustomer = { ...customer, userPin: enteredPin };
+    localStorage.setItem('pop_customer_info', JSON.stringify(updatedCustomer));
+    setCustomer(updatedCustomer);
+    setIsIdentified(true);
+    fetchCustomerHistory(customer.phone);
+    fetchLoyaltyStamps(customer.phone);
+  };
+
+  const openCustomModal = (item, defaultSize = 'Regular') => {
+    setSelectedItemForCustom(item);
+    setCustomOptions({
+      size: defaultSize,
+      sugar: '100% Standard',
+      ice: 'Normal Ice',
+      extraBoba: false
+    });
+  };
+
+  const addCustomizedItemToCart = () => {
+    if (!selectedItemForCustom) return;
+    const item = selectedItemForCustom;
+    const isLarge = customOptions.size === 'Large' && item.large_price;
+    let basePrice = isLarge ? item.large_price : item.price;
+    if (customOptions.extraBoba) basePrice += 30;
+
+    const cartKey = `${item.id}-${customOptions.size}-${customOptions.sugar}-${customOptions.ice}-${customOptions.extraBoba ? 'boba' : 'noboba'}`;
+
+    const existing = cart.find(c => c.cartKey === cartKey);
+    if (existing) {
+      setCart(cart.map(c => c.cartKey === cartKey ? { ...c, qty: c.qty + 1 } : c));
+    } else {
+      const displayName = `${item.name} (${customOptions.size}) • ${customOptions.sugar}, ${customOptions.ice}${customOptions.extraBoba ? ' + Chewy Boba' : ''}`;
+      setCart([...cart, { ...item, name: displayName, cartKey: cartKey, size: customOptions.size, price: basePrice, qty: 1 }]);
+    }
+
+    setSelectedItemForCustom(null);
   };
 
   const reorderPastItems = (pastItems) => setCart(pastItems);
@@ -316,7 +380,6 @@ function CustomerKiosk() {
 
   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
-  // Auto-unapply coupon if subtotal drops below minimum order requirement
   useEffect(() => {
     if (appliedCoupon) {
       if (subtotal < (appliedCoupon.min_order_value || 0)) {
@@ -362,6 +425,7 @@ function CustomerKiosk() {
     }
   };
 
+  // Add-ons earn 0 stamps; only drink cups generate loyalty points
   const handlePlaceOrder = async (payMethod) => {
     if (cart.length === 0) return;
 
@@ -393,13 +457,22 @@ function CustomerKiosk() {
       setActiveOrder(newOrder);
       localStorage.setItem('pop_active_order_id', orderId);
 
-      const newStamps = (stamps + cart.reduce((a, b) => a + b.qty, 0)) % 8;
-      await supabase.from('loyalty_stamps').upsert({ phone: customer.phone, stamp_count: newStamps });
+      const drinkCupsCount = cart
+        .filter(item => item.category !== 'Add-Ons')
+        .reduce((sum, item) => sum + item.qty, 0);
+
+      const newStamps = (stamps + drinkCupsCount) % 8;
+      await supabase.from('loyalty_stamps').upsert({
+        phone: customer.phone,
+        customer_name: customer.name,
+        stamp_count: newStamps
+      });
       setStamps(newStamps);
 
       setCart([]);
       setAppliedCoupon(null);
       setCouponCode('');
+      setShowMobileTray(false);
       fetchCustomerHistory(customer.phone);
     }
   };
@@ -421,78 +494,151 @@ function CustomerKiosk() {
 
   if (!isIdentified) {
     return (
-      <div className="max-w-md mx-auto mt-8 bg-[#FAF3F0] rounded-3xl p-8 border-2 border-[#EED7CE] shadow-xl text-[#4A2E2B]">
+      <div className="max-w-md mx-auto mt-4 md:mt-8 bg-[#FFF7F8] rounded-3xl p-6 md:p-8 border-2 border-[#F5D0D7] shadow-xl text-[#0B2B20]">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-[#4A2E2B] text-[#FAF3F0] rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg">
+          <div className="w-16 h-16 bg-[#0B2B20] text-[#F9CBD3] rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg">
             🧋
           </div>
-          <h2 className="text-2xl font-black text-[#4A2E2B] font-serif">Welcome to Pop & Pour</h2>
-          <p className="text-xs text-[#A66E63] font-bold mt-1">SIP HAPPY • STAY HAPPY ♡ Collect 8 Stamps for Free Soda</p>
+          <h2 className="text-2xl font-black text-[#0B2B20] font-serif">Pop & Pour</h2>
+          <p className="text-xs text-[#0B2B20]/70 font-bold mt-1">SIP HAPPY • STAY HAPPY ♡ Secure Login</p>
         </div>
 
-        <form onSubmit={handleStartSession} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Your Name</label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. Vikram Sharma"
-              value={customer.name}
-              onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-              className="w-full px-4 py-3 border border-[#EED7CE] rounded-2xl text-sm focus:outline-none bg-white text-[#4A2E2B] font-bold"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Mobile Number</label>
-            <input
-              type="tel"
-              required
-              placeholder="e.g. 9876543210"
-              value={customer.phone}
-              onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-              className="w-full px-4 py-3 border border-[#EED7CE] rounded-2xl text-sm focus:outline-none bg-white text-[#4A2E2B] font-bold"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
+        {!pinStep ? (
+          <form onSubmit={handleVerifyOrRegisterUser} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Channel</label>
-              <select
-                value={customer.orderType}
-                onChange={(e) => setCustomer({ ...customer, orderType: e.target.value })}
-                className="w-full px-3 py-3 border border-[#EED7CE] rounded-2xl text-xs font-bold bg-white text-[#4A2E2B]"
-              >
-                <option value="Dine-In">Dine-In</option>
-                <option value="Takeaway">Takeaway</option>
-              </select>
+              <label className="block text-xs font-black uppercase mb-1 text-[#0B2B20]">Your Name</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Vikram Sharma"
+                value={customer.name}
+                onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-[#F5D0D7] rounded-2xl text-sm focus:border-[#0B2B20] focus:outline-none bg-white text-[#0B2B20] font-bold"
+              />
             </div>
 
-            {customer.orderType === 'Dine-In' && (
+            <div>
+              <label className="block text-xs font-black uppercase mb-1 text-[#0B2B20]">Mobile Number</label>
+              <input
+                type="tel"
+                required
+                maxLength={10}
+                placeholder="e.g. 9876543210"
+                value={customer.phone}
+                onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-[#F5D0D7] rounded-2xl text-sm focus:border-[#0B2B20] focus:outline-none bg-white text-[#0B2B20] font-bold"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs font-bold uppercase mb-1 text-[#4A2E2B]">Table</label>
+                <label className="block text-xs font-black uppercase mb-1 text-[#0B2B20]">Channel</label>
                 <select
-                  value={customer.tableNo}
-                  onChange={(e) => setCustomer({ ...customer, tableNo: e.target.value })}
-                  className="w-full px-3 py-3 border border-[#EED7CE] rounded-2xl text-xs font-bold bg-white text-[#4A2E2B]"
+                  value={customer.orderType}
+                  onChange={(e) => setCustomer({ ...customer, orderType: e.target.value })}
+                  className="w-full px-3 py-3 border-2 border-[#F5D0D7] rounded-2xl text-xs font-black bg-white text-[#0B2B20]"
                 >
-                  <option value="Table 1">Table 1</option>
-                  <option value="Table 2">Table 2</option>
-                  <option value="Table 3">Table 3</option>
-                  <option value="Table 4">Table 4</option>
-                  <option value="Table 5">Table 5</option>
+                  <option value="Dine-In">Dine-In</option>
+                  <option value="Takeaway">Takeaway</option>
                 </select>
               </div>
-            )}
-          </div>
 
-          <button
-            type="submit"
-            className="w-full py-4 bg-[#4A2E2B] text-[#FAF3F0] font-black rounded-2xl hover:bg-[#2D1517] transition shadow-lg text-sm tracking-wide mt-2"
-          >
-            Start Crafting Order 🍹
-          </button>
-        </form>
+              {customer.orderType === 'Dine-In' && (
+                <div>
+                  <label className="block text-xs font-black uppercase mb-1 text-[#0B2B20]">Table</label>
+                  <select
+                    value={customer.tableNo}
+                    onChange={(e) => setCustomer({ ...customer, tableNo: e.target.value })}
+                    className="w-full px-3 py-3 border-2 border-[#F5D0D7] rounded-2xl text-xs font-black bg-white text-[#0B2B20]"
+                  >
+                    <option value="Table 1">Table 1</option>
+                    <option value="Table 2">Table 2</option>
+                    <option value="Table 3">Table 3</option>
+                    <option value="Table 4">Table 4</option>
+                    <option value="Table 5">Table 5</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {accountError && <p className="text-xs text-rose-600 font-bold text-center">{accountError}</p>}
+
+            <button
+              type="submit"
+              className="w-full py-4 bg-[#0B2B20] text-[#F9CBD3] font-black rounded-2xl hover:bg-[#071D16] transition shadow-lg text-sm tracking-wide flex items-center justify-center gap-2 mt-2"
+            >
+              Continue to PIN Security <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleConfirmPin} className="space-y-4">
+            <div className="p-3 bg-[#FFF0F3] rounded-2xl border border-[#F5D0D7] text-center">
+              <ShieldCheck className="w-6 h-6 text-[#0B2B20] mx-auto mb-1" />
+              <p className="text-xs font-black text-[#0B2B20]">Account Security PIN</p>
+              <p className="text-[10px] text-[#0B2B20]/70 font-bold">Protects account for {customer.phone}</p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-black uppercase mb-1 text-[#0B2B20] text-center">Enter 4-Digit PIN</label>
+              <input
+                type="password"
+                maxLength={4}
+                required
+                placeholder="••••"
+                value={enteredPin}
+                onChange={(e) => setEnteredPin(e.target.value)}
+                className="w-full text-center text-3xl tracking-widest py-3 border-2 border-[#F5D0D7] rounded-2xl focus:border-[#0B2B20] focus:outline-none bg-white text-[#0B2B20] font-black"
+                autoFocus
+              />
+            </div>
+
+            {accountError && <p className="text-xs text-rose-600 font-bold text-center">{accountError}</p>}
+
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPinStep(false)}
+                  className="flex-1 py-3 border border-[#F5D0D7] text-[#0B2B20] font-bold rounded-2xl text-xs hover:bg-[#FFF0F3]"
+                >
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 bg-[#0B2B20] text-[#F9CBD3] font-black rounded-2xl hover:bg-[#071D16] shadow-md text-xs"
+                >
+                  Unlock Account
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowForgotNotice(true)}
+                className="text-[11px] text-rose-700 font-bold hover:underline text-center mt-1"
+              >
+                Forgot PIN? Tap here
+              </button>
+            </div>
+          </form>
+        )}
+
+        {showForgotNotice && (
+          <div className="fixed inset-0 bg-[#0B2B20]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 border-2 border-[#F5D0D7]">
+              <KeyRound className="w-10 h-10 text-[#0B2B20] mx-auto" />
+              <h3 className="text-base font-black text-[#0B2B20]">PIN Reset Assistance</h3>
+              <p className="text-xs text-[#0B2B20]/80 font-bold">
+                For security reasons, please request the Barista at the counter to reset your 4-digit PIN instantly!
+              </p>
+              <button
+                onClick={() => setShowForgotNotice(false)}
+                className="w-full py-3 bg-[#0B2B20] text-[#F9CBD3] font-black rounded-2xl text-xs"
+              >
+                Got It
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -500,38 +646,39 @@ function CustomerKiosk() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-5">
-        {/* Poster Soft Banner */}
-        <div className="bg-[#4A2E2B] rounded-3xl p-6 text-[#FAF3F0] shadow-lg flex justify-between items-center relative overflow-hidden">
+        <div className="bg-[#0B2B20] rounded-3xl p-5 md:p-6 text-[#F9CBD3] shadow-lg flex justify-between items-center relative overflow-hidden">
           <div className="relative z-10">
-            <span className="bg-[#FAF3F0]/20 text-[#FAF3F0] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="bg-[#F9CBD3]/20 text-[#F9CBD3] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
               {customer.name} • {customer.orderType === 'Dine-In' ? customer.tableNo : 'Takeaway'}
             </span>
-            <h2 className="text-2xl font-black mt-2 font-serif">Bubbles • Good Mood 🧋</h2>
-            <p className="text-[#EED7CE] text-xs mt-0.5 font-medium">Sips that spark joy • Handcrafted Fresh Daily</p>
+            <h2 className="text-2xl font-black mt-2 font-serif text-white">Bubbles • Good Mood 🧋</h2>
+            <p className="text-[#F9CBD3]/80 text-xs mt-0.5 font-medium">Handcrafted Boba, Matchas & Sodas brewed fresh</p>
           </div>
-          <button onClick={() => setIsIdentified(false)} className="text-xs bg-[#FAF3F0]/10 hover:bg-[#FAF3F0]/20 px-3 py-1.5 rounded-xl font-bold backdrop-blur-md z-10 border border-[#FAF3F0]/20 text-[#FAF3F0]">
+          <button onClick={() => setIsIdentified(false)} className="text-xs bg-[#F9CBD3]/10 hover:bg-[#F9CBD3]/20 px-3 py-1.5 rounded-xl font-bold backdrop-blur-md z-10 border border-[#F9CBD3]/20 text-[#F9CBD3]">
             Switch User
           </button>
         </div>
 
-        {/* 🌸 Digital Loyalty Stamp Card (8 Drinks System) */}
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs flex flex-col md:flex-row justify-between items-center gap-4">
+        {/* 8-Drink Loyalty Card */}
+        <div className="bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#4A2E2B]" />
-              <h3 className="text-sm font-black text-[#4A2E2B] uppercase tracking-wide">8-Drink Stamp Card</h3>
+              <Award className="w-5 h-5 text-[#0B2B20]" />
+              <h3 className="text-sm font-black text-[#0B2B20] uppercase tracking-wide">8-Drink Loyalty Card</h3>
             </div>
-            <p className="text-xs text-[#A66E63] font-bold mt-1">Buy 8 drinks and unlock 1 FREE Sparkling Soda on your next visit!</p>
+            <p className="text-xs text-[#0B2B20]/70 font-bold mt-1">
+              Buy 8 drink cups & unlock 1 FREE Sparkling Soda! (Add-Ons excluded)
+            </p>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 bg-[#FCEEEA] p-2.5 rounded-2xl border border-[#EED7CE] justify-center">
+          <div className="flex flex-wrap gap-1.5 bg-[#FFF0F3] p-2.5 rounded-2xl border border-[#F5D0D7] justify-center">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((stIndex) => (
               <div
                 key={stIndex}
                 className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs border transition ${
                   stIndex <= stamps
-                    ? 'bg-[#4A2E2B] text-[#FAF3F0] border-[#4A2E2B] shadow-md scale-105'
-                    : 'bg-white text-[#D9A59B] border-[#EED7CE]'
+                    ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20] shadow-md scale-105 animate-pulse'
+                    : 'bg-white text-[#E895A5] border-[#F5D0D7]'
                 }`}
               >
                 {stIndex <= stamps ? '🍹' : stIndex === 8 ? '🎁' : stIndex}
@@ -540,92 +687,70 @@ function CustomerKiosk() {
           </div>
         </div>
 
-        {/* Favorites Memory Drawer */}
-        {pastOrders.length > 0 && (
-          <div className="bg-white rounded-3xl p-4 border border-[#EED7CE] shadow-xs">
-            <h3 className="text-xs font-black text-[#4A2E2B] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-              <History className="w-4 h-4 text-[#4A2E2B]" /> Your Favorites Memory
-            </h3>
-            <div className="flex gap-3 overflow-x-auto pb-1">
-              {pastOrders.map((pOrd) => (
-                <div key={pOrd.id} className="min-w-[200px] bg-[#FCEEEA]/50 p-3 rounded-2xl border border-[#EED7CE] flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] font-mono font-bold text-[#A66E63]">{pOrd.token_no || pOrd.id}</span>
-                    <p className="text-xs font-extrabold text-[#4A2E2B] line-clamp-1 mt-0.5">
-                      {pOrd.items?.map(i => `${i.name} (${i.qty})`).join(', ')}
-                    </p>
-                    <p className="text-xs font-black text-[#4A2E2B] mt-0.5">₹{pOrd.total_payable}</p>
-                  </div>
-                  <button
-                    onClick={() => reorderPastItems(pOrd.items)}
-                    className="mt-2 py-1.5 bg-[#4A2E2B] text-[#FAF3F0] rounded-xl text-[11px] font-bold hover:bg-[#2D1517] transition flex items-center justify-center gap-1 shadow-xs"
-                  >
-                    <RotateCcw className="w-3 h-3" /> Re-order
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Category Filter Tabs */}
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none sticky top-16 bg-[#FAF3F0] py-2 z-20">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition border ${
-                activeCategory === cat.id 
-                  ? 'bg-[#4A2E2B] text-[#FAF3F0] border-[#4A2E2B] shadow-sm' 
-                  : 'bg-white text-[#4A2E2B] border-[#EED7CE] hover:bg-[#FCEEEA]'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+        {/* Category Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none sticky top-16 bg-[#FFF7F8] py-2 z-20">
+          {categories.map((cat) => {
+            const count = cat.id === 'All' ? menu.length : menu.filter(i => i.category === cat.id).length;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition border flex items-center gap-1.5 ${
+                  activeCategory === cat.id 
+                    ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20] shadow-sm' 
+                    : 'bg-white text-[#0B2B20] border-[#F5D0D7] hover:bg-[#FFF0F3]'
+                }`}
+              >
+                <span>{cat.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                  activeCategory === cat.id ? 'bg-white/20 text-[#F9CBD3]' : 'bg-[#FFF0F3] text-[#0B2B20]'
+                }`}>{count}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Poster Styled Menu Grid */}
+        {/* Menu Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {filteredMenu.map((item) => (
             <div 
               key={item.id} 
-              className={`bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs flex flex-col justify-between transition hover:border-[#4A2E2B] ${
+              className={`bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs flex flex-col justify-between transition hover:border-[#0B2B20] hover:shadow-md ${
                 item.is_sold_out ? 'opacity-40 bg-pink-50/10' : ''
               }`}
             >
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-[10px] font-bold px-2.5 py-1 bg-[#FCEEEA] text-[#4A2E2B] rounded-full border border-[#EED7CE] uppercase tracking-wider">
+                  <span className="text-[10px] font-bold px-2.5 py-1 bg-[#FFF0F3] text-[#0B2B20] rounded-full border border-[#F5D0D7] uppercase tracking-wider">
                     {item.category}
                   </span>
                   {item.is_sold_out ? (
                     <span className="text-xs font-bold px-2.5 py-1 bg-rose-100 text-rose-700 rounded-xl">SOLD OUT</span>
                   ) : (
-                    <span className="text-base font-black text-[#4A2E2B]">
+                    <span className="text-base font-black text-[#0B2B20]">
                       ₹{item.price} {item.large_price ? ` / ₹${item.large_price}` : ''}
                     </span>
                   )}
                 </div>
-                <h3 className="font-bold text-[#4A2E2B] text-base mb-1 font-serif">{item.name}</h3>
+                <h3 className="font-bold text-[#0B2B20] text-base mb-1 font-serif">{item.name}</h3>
               </div>
 
               <div className="mt-4 flex gap-2">
                 <button
                   disabled={item.is_sold_out}
-                  onClick={() => addToCart(item, 'Regular')}
-                  className="flex-1 py-2.5 bg-[#FCEEEA] hover:bg-[#4A2E2B] hover:text-[#FAF3F0] text-[#4A2E2B] rounded-2xl font-bold text-xs transition border border-[#EED7CE] flex items-center justify-center gap-1"
+                  onClick={() => openCustomModal(item, 'Regular')}
+                  className="flex-1 py-2.5 bg-[#FFF0F3] hover:bg-[#0B2B20] hover:text-[#F9CBD3] text-[#0B2B20] rounded-2xl font-bold text-xs transition border border-[#F5D0D7] flex items-center justify-center gap-1"
                 >
-                  <Plus className="w-3.5 h-3.5" /> {item.large_price ? 'Regular' : 'Add Cup'}
+                  <Sliders className="w-3.5 h-3.5" /> Customize R
                 </button>
 
                 {item.large_price && (
                   <button
                     disabled={item.is_sold_out}
-                    onClick={() => addToCart(item, 'Large')}
-                    className="flex-1 py-2.5 bg-[#4A2E2B] hover:bg-[#2D1517] text-[#FAF3F0] rounded-2xl font-bold text-xs transition flex items-center justify-center gap-1 shadow-xs"
+                    onClick={() => openCustomModal(item, 'Large')}
+                    className="flex-1 py-2.5 bg-[#0B2B20] hover:bg-[#071D16] text-[#F9CBD3] rounded-2xl font-bold text-xs transition flex items-center justify-center gap-1 shadow-xs"
                   >
-                    <Plus className="w-3.5 h-3.5" /> Large
+                    <Sliders className="w-3.5 h-3.5" /> Customize L
                   </button>
                 )}
               </div>
@@ -634,91 +759,59 @@ function CustomerKiosk() {
         </div>
       </div>
 
-      {/* Cart Panel */}
+      {/* Cart & Order Status */}
       <div className="space-y-6">
-        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-md sticky top-24">
-          <h3 className="text-lg font-black text-[#4A2E2B] mb-4 flex items-center gap-2 font-serif">
-            <ShoppingCart className="w-5 h-5 text-[#4A2E2B]" /> Current Tray
+        <div className={`bg-white rounded-3xl p-6 border border-[#F5D0D7] shadow-md sticky top-24 ${
+          showMobileTray ? 'fixed inset-x-3 bottom-16 z-40 max-h-[80vh] overflow-y-auto border-2 border-[#0B2B20]' : 'hidden lg:block'
+        }`}>
+          <h3 className="text-lg font-black text-[#0B2B20] mb-4 flex items-center justify-between font-serif">
+            <span className="flex items-center gap-2"><ShoppingCart className="w-5 h-5 text-[#0B2B20]" /> Current Tray</span>
+            {showMobileTray && <button onClick={() => setShowMobileTray(false)} className="text-xs text-rose-600 font-black">Close ✕</button>}
           </h3>
 
           {cart.length === 0 ? (
-            <div className="text-center py-10 text-[#D9A59B]">
+            <div className="text-center py-10 text-[#E895A5]">
               <Coffee className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm font-bold">Your tray is empty</p>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="divide-y divide-[#FCEEEA] max-h-48 overflow-y-auto pr-1">
+              <div className="divide-y divide-[#FFF0F3] max-h-48 overflow-y-auto pr-1">
                 {cart.map((item) => (
                   <div key={item.cartKey} className="flex justify-between items-center py-2.5">
                     <div>
-                      <h4 className="font-extrabold text-xs text-[#4A2E2B]">{item.name} ({item.size})</h4>
-                      <p className="text-[11px] text-[#A66E63] font-bold">₹{item.price} × {item.qty}</p>
+                      <h4 className="font-extrabold text-xs text-[#0B2B20]">{item.name}</h4>
+                      <p className="text-[11px] text-[#0B2B20]/70 font-bold">₹{item.price} × {item.qty}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-[#FCEEEA] text-[#4A2E2B] rounded-lg flex items-center justify-center font-bold text-xs"><Minus className="w-3 h-3" /></button>
-                      <span className="font-bold text-xs text-[#4A2E2B]">{item.qty}</span>
-                      <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-[#FCEEEA] text-[#4A2E2B] rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
+                      <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-[#FFF0F3] text-[#0B2B20] rounded-lg flex items-center justify-center font-bold text-xs"><Minus className="w-3 h-3" /></button>
+                      <span className="font-bold text-xs text-[#0B2B20]">{item.qty}</span>
+                      <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-[#FFF0F3] text-[#0B2B20] rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Coupon Panel */}
-              <div className="pt-2 border-t border-[#EED7CE]">
-                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1 flex items-center gap-1">
-                  <Tag className="w-3.5 h-3.5 text-[#4A2E2B]" /> Apply Promo Code
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="e.g. WELCOME10"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="flex-1 px-3 py-2 border border-[#EED7CE] rounded-xl text-xs bg-[#FAF3F0] text-[#4A2E2B] focus:outline-none font-bold uppercase"
-                  />
-                  <button
-                    onClick={applyCoupon}
-                    className="px-3.5 py-2 bg-[#4A2E2B] text-[#FAF3F0] rounded-xl text-xs font-bold hover:bg-[#2D1517] transition shadow-xs"
-                  >
-                    Apply
-                  </button>
-                </div>
-                {couponError && <p className="text-[10px] text-rose-600 font-bold mt-1">{couponError}</p>}
-                {appliedCoupon && (
-                  <div className="mt-1.5 flex justify-between items-center bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-emerald-800 text-[11px] font-bold">
-                    <span>Coupon {appliedCoupon.code} Applied!</span>
-                    <button onClick={() => setAppliedCoupon(null)} className="text-rose-600 hover:text-rose-800 font-bold">×</button>
-                  </div>
-                )}
-              </div>
-
-              <div className="border-t border-[#EED7CE] pt-3 space-y-1.5 text-xs">
-                <div className="flex justify-between text-[#A66E63] font-bold">
+              <div className="border-t border-[#F5D0D7] pt-3 space-y-1.5 text-xs">
+                <div className="flex justify-between text-[#0B2B20]/70 font-bold">
                   <span>Subtotal</span>
                   <span>₹{subtotal}</span>
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-700 font-bold">
-                    <span>Discount</span>
-                    <span>-₹{discountAmount}</span>
-                  </div>
-                )}
-                <div className="flex justify-between text-base font-black text-[#4A2E2B] pt-1 border-t border-[#EED7CE]">
+                <div className="flex justify-between text-base font-black text-[#0B2B20] pt-1 border-t border-[#F5D0D7]">
                   <span>Total Payable</span>
-                  <span className="text-[#4A2E2B]">₹{totalPayable}</span>
+                  <span className="text-[#0B2B20]">₹{totalPayable}</span>
                 </div>
 
                 <div className="space-y-2 pt-2">
                   <button
                     onClick={() => handlePlaceOrder('UPI Soundbox / QR')}
-                    className="w-full bg-[#4A2E2B] text-[#FAF3F0] font-black py-3 rounded-2xl hover:bg-[#2D1517] transition shadow-lg text-xs tracking-wide"
+                    className="w-full bg-[#0B2B20] text-[#F9CBD3] font-black py-3 rounded-2xl hover:bg-[#071D16] transition shadow-lg text-xs tracking-wide"
                   >
                     Generate Token & Pay via UPI (₹{totalPayable})
                   </button>
                   <button
                     onClick={() => handlePlaceOrder('Cash at Counter')}
-                    className="w-full bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] font-bold py-2.5 rounded-2xl transition text-xs border border-[#EED7CE]"
+                    className="w-full bg-[#FFF0F3] hover:bg-[#FCE1E6] text-[#0B2B20] font-bold py-2.5 rounded-2xl transition text-xs border border-[#F5D0D7]"
                   >
                     Pay Cash at Counter
                   </button>
@@ -729,43 +822,139 @@ function CustomerKiosk() {
         </div>
 
         {activeOrder && (
-          <div className="bg-white border border-[#EED7CE] rounded-3xl p-6 text-[#4A2E2B] shadow-lg space-y-3">
+          <div className="bg-white border border-[#F5D0D7] rounded-3xl p-6 text-[#0B2B20] shadow-lg space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-xs font-bold text-[#A66E63]">Active Order Token</span>
-              <span className="text-2xl font-black text-[#4A2E2B] bg-[#FCEEEA] px-3 py-1 rounded-xl border border-[#EED7CE]">
+              <span className="text-xs font-bold text-[#0B2B20]/70">Order Tracker</span>
+              <span className="text-2xl font-black text-[#0B2B20] bg-[#FFF0F3] px-3 py-1 rounded-xl border border-[#F5D0D7]">
                 {activeOrder.token_no || activeOrder.id}
               </span>
             </div>
 
-            <div className="p-4 bg-[#FCEEEA]/60 rounded-2xl border border-[#EED7CE] text-center space-y-2">
+            <div className="p-3 bg-[#FFF0F3]/80 rounded-2xl border border-[#F5D0D7] text-center">
               <p className="text-xs font-bold text-amber-900 flex items-center justify-center gap-1">
-                <AlertCircle className="w-4 h-4 text-amber-600" /> Mention Token {activeOrder.token_no} at Counter
+                <AlertCircle className="w-4 h-4 text-amber-600" /> Present Token {activeOrder.token_no} at Counter
               </p>
-              
-              <div className="pt-1">
-                <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wide ${
-                  activeOrder.status === 'Placed' ? 'bg-amber-100 text-amber-900 border border-amber-200' :
-                  activeOrder.status === 'Preparing' ? 'bg-blue-100 text-blue-900 border border-blue-200 animate-pulse' :
-                  activeOrder.status === 'Ready' ? 'bg-emerald-600 text-white font-bold shadow-md' : 'bg-[#FCEEEA] text-[#4A2E2B]'
-                }`}>
-                  {activeOrder.payment_status === 'Unpaid' && activeOrder.status === 'Placed' 
-                    ? 'Waiting Counter Payment' 
-                    : activeOrder.status}
-                </span>
-              </div>
             </div>
           </div>
         )}
       </div>
+
+      {/* Drink Customization Modal */}
+      {selectedItemForCustom && (
+        <div className="fixed inset-0 bg-[#0B2B20]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FFF7F8] rounded-3xl p-6 max-w-md w-full shadow-2xl border-2 border-[#F5D0D7] text-[#0B2B20] space-y-5">
+            <div>
+              <span className="text-[10px] font-bold px-2.5 py-1 bg-[#FFF0F3] text-[#0B2B20] rounded-full border border-[#F5D0D7] uppercase">
+                {selectedItemForCustom.category}
+              </span>
+              <h3 className="text-xl font-black text-[#0B2B20] font-serif mt-2">{selectedItemForCustom.name}</h3>
+              <p className="text-xs text-[#0B2B20]/70 font-medium">Customize sweetness, ice & extra boba for your cup.</p>
+            </div>
+
+            {selectedItemForCustom.large_price && (
+              <div>
+                <label className="block text-xs font-black uppercase mb-1.5 text-[#0B2B20]">Cup Size</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setCustomOptions({ ...customOptions, size: 'Regular' })}
+                    className={`py-2.5 rounded-2xl text-xs font-bold border transition ${
+                      customOptions.size === 'Regular' ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20]' : 'bg-white text-[#0B2B20] border-[#F5D0D7]'
+                    }`}
+                  >
+                    Regular (₹{selectedItemForCustom.price})
+                  </button>
+                  <button
+                    onClick={() => setCustomOptions({ ...customOptions, size: 'Large' })}
+                    className={`py-2.5 rounded-2xl text-xs font-bold border transition ${
+                      customOptions.size === 'Large' ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20]' : 'bg-white text-[#0B2B20] border-[#F5D0D7]'
+                    }`}
+                  >
+                    Large (₹{selectedItemForCustom.large_price})
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-black uppercase mb-1.5 text-[#0B2B20]">Sugar Level</label>
+              <div className="grid grid-cols-3 gap-2">
+                {['0% Sugar Free', '50% Less Sweet', '100% Standard'].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setCustomOptions({ ...customOptions, sugar: s })}
+                    className={`py-2 rounded-xl text-[11px] font-bold border transition ${
+                      customOptions.sugar === s ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20]' : 'bg-white text-[#0B2B20] border-[#F5D0D7]'
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-black uppercase mb-1.5 text-[#0B2B20]">Ice Preference</label>
+              <div className="grid grid-cols-3 gap-2">
+                {['No Ice', 'Normal Ice', 'Extra Ice'].map((i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCustomOptions({ ...customOptions, ice: i })}
+                    className={`py-2 rounded-xl text-[11px] font-bold border transition ${
+                      customOptions.ice === i ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20]' : 'bg-white text-[#0B2B20] border-[#F5D0D7]'
+                    }`}
+                  >
+                    {i}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-[#FFF0F3] p-3 rounded-2xl border border-[#F5D0D7] flex justify-between items-center">
+              <div>
+                <p className="text-xs font-bold text-[#0B2B20]">Extra Chewy Tapioca Boba</p>
+                <p className="text-[10px] text-[#0B2B20]/70 font-medium">+₹30 (Add-On: Earns 0 Stamps)</p>
+              </div>
+              <button
+                onClick={() => setCustomOptions({ ...customOptions, extraBoba: !customOptions.extraBoba })}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border ${
+                  customOptions.extraBoba ? 'bg-[#0B2B20] text-[#F9CBD3] border-[#0B2B20]' : 'bg-white text-[#0B2B20] border-[#F5D0D7]'
+                }`}
+              >
+                {customOptions.extraBoba ? '✓ Added' : '+ Add'}
+              </button>
+            </div>
+
+            <div className="flex gap-2 pt-2">
+              <button
+                onClick={() => setSelectedItemForCustom(null)}
+                className="flex-1 py-3 border border-[#F5D0D7] text-[#0B2B20] font-bold rounded-2xl hover:bg-[#FFF0F3] text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={addCustomizedItemToCart}
+                className="flex-1 py-3 bg-[#0B2B20] text-[#F9CBD3] font-black rounded-2xl hover:bg-[#071D16] transition shadow-md text-xs"
+              >
+                Add Cup to Tray
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-// =================== 2. BARISTA KDS ===================
+// =================== 2. BARISTA KDS (With Customer PIN Reset) ===================
 function ShopkeeperKDS() {
   const [orders, setOrders] = useState([]);
   const [menu, setMenu] = useState([]);
   const [kdsTab, setKdsTab] = useState('active');
+
+  // Customer PIN Reset State
+  const [resetPhoneInput, setResetPhoneInput] = useState('');
+  const [newPinInput, setNewPinInput] = useState('');
+  const [resetStatus, setResetStatus] = useState('');
 
   const loadAll = async () => {
     const { data: oData } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
@@ -801,23 +990,46 @@ function ShopkeeperKDS() {
     await supabase.from('items').update({ is_sold_out: !currentState }).eq('id', itemId);
   };
 
+  const handleResetCustomerPin = async (e) => {
+    e.preventDefault();
+    setResetStatus('');
+
+    if (resetPhoneInput.length < 10 || newPinInput.length !== 4) {
+      setResetStatus('Please enter valid 10-digit Phone & 4-digit PIN');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('loyalty_stamps')
+      .update({ user_pin: newPinInput })
+      .eq('phone', resetPhoneInput);
+
+    if (error) {
+      setResetStatus('Error: Phone number not found');
+    } else {
+      setResetStatus(`Success! Reset PIN for ${resetPhoneInput} to ${newPinInput}`);
+      setResetPhoneInput('');
+      setNewPinInput('');
+    }
+  };
+
   const activeOrders = orders.filter(o => o.status !== 'Completed');
   const completedOrders = orders.filter(o => o.status === 'Completed');
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-[#EED7CE] shadow-xs gap-4">
+      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-[#F5D0D7] shadow-xs gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#4A2E2B] font-serif">Barista Kitchen Display (KDS)</h2>
-          <p className="text-xs text-[#A66E63] font-bold">Approve tokens on payment soundbox & manage drink queue</p>
+          <h2 className="text-xl font-bold text-[#0B2B20] font-serif">Barista Kitchen Display (KDS)</h2>
+          <p className="text-xs text-[#0B2B20]/70 font-bold">Approve tokens & assist customer PIN resets</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-[#FCEEEA] p-1 rounded-2xl flex border border-[#EED7CE] text-xs font-bold">
+          <div className="bg-[#FFF0F3] p-1 rounded-2xl flex border border-[#F5D0D7] text-xs font-bold">
             <button
               onClick={() => setKdsTab('active')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'active' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
+                kdsTab === 'active' ? 'bg-[#0B2B20] text-[#F9CBD3] shadow-xs' : 'text-[#0B2B20]'
               }`}
             >
               <Clock className="w-4 h-4" /> Active Queue ({activeOrders.length})
@@ -825,14 +1037,14 @@ function ShopkeeperKDS() {
             <button
               onClick={() => setKdsTab('completed')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'completed' ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
+                kdsTab === 'completed' ? 'bg-[#0B2B20] text-[#F9CBD3] shadow-xs' : 'text-[#0B2B20]'
               }`}
             >
               <Check className="w-4 h-4" /> History ({completedOrders.length})
             </button>
           </div>
 
-          <button onClick={playOrderChime} className="px-3 py-2 bg-[#FCEEEA] text-[#4A2E2B] rounded-2xl text-xs font-bold border border-[#EED7CE] flex items-center gap-1 hover:bg-[#F3DCD3]">
+          <button onClick={playOrderChime} className="px-3 py-2 bg-[#FFF0F3] text-[#0B2B20] rounded-2xl text-xs font-bold border border-[#F5D0D7] flex items-center gap-1 hover:bg-[#FCE1E6]">
             <Volume2 className="w-4 h-4" /> Chime Test
           </button>
         </div>
@@ -843,31 +1055,31 @@ function ShopkeeperKDS() {
           {kdsTab === 'active' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {activeOrders.length === 0 ? (
-                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#EED7CE] text-[#D9A59B] font-bold">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#F5D0D7] text-[#E895A5] font-bold">
                   No active pending orders in queue.
                 </div>
               ) : (
                 activeOrders.map((order) => (
                   <div key={order.id} className={`bg-white rounded-3xl p-5 border shadow-xs flex flex-col justify-between ${
-                    order.payment_status === 'Unpaid' ? 'border-amber-300 bg-amber-50/20' : 'border-[#EED7CE]'
+                    order.payment_status === 'Unpaid' ? 'border-amber-300 bg-amber-50/20' : 'border-[#F5D0D7]'
                   }`}>
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-black text-sm bg-[#FCEEEA] text-[#4A2E2B] border border-[#EED7CE] px-3 py-1 rounded-xl">
+                        <span className="font-mono font-black text-sm bg-[#FFF0F3] text-[#0B2B20] border border-[#F5D0D7] px-3 py-1 rounded-xl">
                           {order.token_no || order.id}
                         </span>
-                        <span className="text-[10px] font-black px-2.5 py-1 bg-pink-50 text-[#4A2E2B] rounded-full uppercase">
+                        <span className="text-[10px] font-black px-2.5 py-1 bg-pink-50 text-[#0B2B20] rounded-full uppercase">
                           {order.order_type} ({order.table_no})
                         </span>
                       </div>
 
-                      <p className="text-xs font-bold text-[#4A2E2B] mb-2">{order.customer_name} • {order.phone}</p>
+                      <p className="text-xs font-bold text-[#0B2B20] mb-2">{order.customer_name} • {order.phone}</p>
 
-                      <div className="space-y-1.5 mb-4 border-t border-b border-[#FCEEEA] py-2">
+                      <div className="space-y-1.5 mb-4 border-t border-b border-[#FFF0F3] py-2">
                         {order.items?.map((it, idx) => (
                           <div key={idx} className="flex justify-between text-sm">
-                            <span className="text-[#4A2E2B] font-bold">• {it.name} ({it.size || 'Regular'})</span>
-                            <span className="font-black text-[#4A2E2B]">x{it.qty}</span>
+                            <span className="text-[#0B2B20] font-bold">• {it.name}</span>
+                            <span className="font-black text-[#0B2B20]">x{it.qty}</span>
                           </div>
                         ))}
                       </div>
@@ -875,10 +1087,7 @@ function ShopkeeperKDS() {
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="text-xs">
-                        <p className="text-[#A66E63] font-bold">Bill: <strong className="text-[#4A2E2B]">₹{order.total_payable}</strong></p>
-                        {order.discount_applied > 0 && (
-                          <p className="text-[10px] text-emerald-700 font-bold">Discount: -₹{order.discount_applied}</p>
-                        )}
+                        <p className="text-[#0B2B20]/70 font-bold">Bill: <strong className="text-[#0B2B20]">₹{order.total_payable}</strong></p>
                       </div>
 
                       <div className="flex gap-1">
@@ -894,7 +1103,7 @@ function ShopkeeperKDS() {
                           <button onClick={() => updateOrderStatus(order.id, 'Ready')} className="px-3 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Mark Ready</button>
                         )}
                         {order.status === 'Ready' && (
-                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3 py-2 bg-[#4A2E2B] text-white rounded-xl text-xs font-bold">Complete</button>
+                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3 py-2 bg-[#0B2B20] text-white rounded-xl text-xs font-bold">Complete</button>
                         )}
                       </div>
                     </div>
@@ -905,30 +1114,19 @@ function ShopkeeperKDS() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {completedOrders.length === 0 ? (
-                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#EED7CE] text-[#D9A59B] font-bold">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-[#F5D0D7] text-[#E895A5] font-bold">
                   No completed orders found in history.
                 </div>
               ) : (
                 completedOrders.map((order) => (
-                  <div key={order.id} className="bg-[#FAF3F0] rounded-3xl p-5 border border-[#EED7CE] flex flex-col justify-between">
+                  <div key={order.id} className="bg-[#FFF7F8] rounded-3xl p-5 border border-[#F5D0D7] flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-bold text-xs bg-[#FCEEEA] px-2.5 py-1 rounded-xl text-[#4A2E2B]">{order.token_no || order.id}</span>
+                        <span className="font-mono font-bold text-xs bg-[#FFF0F3] px-2.5 py-1 rounded-xl text-[#0B2B20]">{order.token_no || order.id}</span>
                         <span className="text-[10px] font-black px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full uppercase">Fulfilled</span>
                       </div>
-                      <p className="text-xs font-bold text-[#4A2E2B] mb-2">{order.customer_name} • ₹{order.total_payable}</p>
-                      <div className="space-y-1 mb-3">
-                        {order.items?.map((it, idx) => (
-                          <p key={idx} className="text-xs text-[#A66E63] font-bold">• {it.name} x{it.qty}</p>
-                        ))}
-                      </div>
+                      <p className="text-xs font-bold text-[#0B2B20] mb-2">{order.customer_name} • ₹{order.total_payable}</p>
                     </div>
-                    <button
-                      onClick={() => updateOrderStatus(order.id, 'Preparing')}
-                      className="py-1.5 px-3 bg-white border border-[#EED7CE] text-[#4A2E2B] rounded-xl text-xs font-bold hover:bg-[#FCEEEA] transition self-end flex items-center gap-1"
-                    >
-                      <RotateCcw className="w-3 h-3" /> Re-open Ticket
-                    </button>
                   </div>
                 ))
               )}
@@ -936,18 +1134,52 @@ function ShopkeeperKDS() {
           )}
         </div>
 
+        {/* Counter Tools: Stock & PIN Reset */}
         <div className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs">
-            <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
-              <Package className="w-4 h-4 text-[#4A2E2B]" /> Menu Stock Control
+          <div className="bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs">
+            <h3 className="font-bold text-[#0B2B20] text-sm mb-1 flex items-center gap-2 font-serif">
+              <KeyRound className="w-4 h-4 text-[#0B2B20]" /> Customer PIN Override Reset
             </h3>
-            <p className="text-xs text-[#A66E63] mb-4 font-bold">Toggle drink availability on customer kiosks in real-time.</p>
+            <p className="text-[11px] text-[#0B2B20]/70 mb-3 font-bold">Reset forgotten PIN for customer at counter</p>
 
-            <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+            <form onSubmit={handleResetCustomerPin} className="space-y-2">
+              <input
+                type="tel"
+                maxLength={10}
+                required
+                placeholder="Customer Phone No."
+                value={resetPhoneInput}
+                onChange={(e) => setResetPhoneInput(e.target.value)}
+                className="w-full px-3 py-2 border border-[#F5D0D7] rounded-xl text-xs font-bold"
+              />
+              <input
+                type="password"
+                maxLength={4}
+                required
+                placeholder="Set New 4-Digit PIN"
+                value={newPinInput}
+                onChange={(e) => setNewPinInput(e.target.value)}
+                className="w-full px-3 py-2 border border-[#F5D0D7] rounded-xl text-xs font-bold"
+              />
+              <button
+                type="submit"
+                className="w-full py-2 bg-[#0B2B20] text-[#F9CBD3] rounded-xl text-xs font-black hover:bg-[#071D16]"
+              >
+                Reset Customer PIN
+              </button>
+              {resetStatus && <p className="text-[11px] font-bold text-center text-emerald-700">{resetStatus}</p>}
+            </form>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 border border-[#F5D0D7] shadow-xs">
+            <h3 className="font-bold text-[#0B2B20] text-base mb-1 flex items-center gap-2 font-serif">
+              <Package className="w-4 h-4 text-[#0B2B20]" /> Menu Stock Control
+            </h3>
+            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
               {menu.map((item) => (
-                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-[#EED7CE] bg-[#FAF3F0]/50">
+                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-[#F5D0D7] bg-[#FFF7F8]">
                   <div>
-                    <h4 className="font-bold text-xs text-[#4A2E2B]">{item.name}</h4>
+                    <h4 className="font-bold text-xs text-[#0B2B20]">{item.name}</h4>
                     <span className={`text-[10px] font-bold ${item.is_sold_out ? 'text-rose-600' : 'text-emerald-700'}`}>
                       {item.is_sold_out ? 'Sold Out' : 'Available'}
                     </span>
@@ -970,18 +1202,15 @@ function ShopkeeperKDS() {
   );
 }
 
-// =================== 3. EXECUTIVE MIS & COUPONS ===================
+// =================== 3. EXECUTIVE MIS & SECURE CUSTOMER DATA ===================
 function ExecutiveMIS() {
   const [orders, setOrders] = useState([]);
   const [menu, setMenu] = useState([]);
   const [coupons, setCoupons] = useState([]);
+  const [customerDatabase, setCustomerDatabase] = useState([]);
+  const [searchPhone, setSearchPhone] = useState('');
 
   const [period, setPeriod] = useState('today');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-
-  const [newItem, setNewItem] = useState({ name: '', category: 'Sparkling Soda Series', price: '', large_price: '', cogs: '' });
-  const [newCoupon, setNewCoupon] = useState({ code: '', discount_type: 'percentage', discount_value: '', min_order_value: '0' });
 
   const loadData = async () => {
     const { data: oData } = await supabase.from('orders').select('*');
@@ -992,405 +1221,93 @@ function ExecutiveMIS() {
 
     const { data: cData } = await supabase.from('coupons').select('*').order('id', { ascending: true });
     if (cData) setCoupons(cData);
+
+    // SECURE Management Access to Customer Database
+    const { data: custData } = await supabase.from('loyalty_stamps').select('*').order('created_at', { ascending: false });
+    if (custData) setCustomerDatabase(custData);
   };
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const getFilteredOrders = () => {
-    const now = new Date();
-    return orders.filter(order => {
-      const oDate = new Date(order.created_at);
-      if (period === 'today') {
-        return oDate.toDateString() === now.toDateString();
-      } else if (period === 'yesterday') {
-        const yest = new Date(now);
-        yest.setDate(now.getDate() - 1);
-        return oDate.toDateString() === yest.toDateString();
-      } else if (period === 'week') {
-        const weekAgo = new Date(now);
-        weekAgo.setDate(now.getDate() - 7);
-        return oDate >= weekAgo;
-      } else if (period === 'month') {
-        return oDate.getMonth() === now.getMonth() && oDate.getFullYear() === now.getFullYear();
-      } else if (period === 'ytd') {
-        return oDate.getFullYear() === now.getFullYear();
-      } else if (period === 'custom' && startDate && endDate) {
-        return oDate >= new Date(startDate) && oDate <= new Date(endDate + 'T23:59:59');
-      }
-      return true;
-    });
-  };
-
-  const filteredOrders = getFilteredOrders();
+  const filteredOrders = orders;
   const grossSales = filteredOrders.reduce((acc, c) => acc + (c.total_payable || 0), 0);
   const cogsTotal = filteredOrders.reduce((acc, c) => acc + (c.cogs_total || 0), 0);
   const grossProfit = grossSales - cogsTotal;
-  const netMargin = grossSales > 0 ? ((grossProfit / grossSales) * 100).toFixed(1) : 0;
-  const aov = filteredOrders.length > 0 ? (grossSales / filteredOrders.length).toFixed(0) : 0;
 
-  const handleAddItem = async (e) => {
-    e.preventDefault();
-    if (!newItem.name || !newItem.price) return;
-
-    const payload = {
-      name: newItem.name,
-      category: newItem.category,
-      price: Number(newItem.price),
-      large_price: newItem.large_price ? Number(newItem.large_price) : null,
-      cogs: Number(newItem.cogs) || 35,
-      is_sold_out: false
-    };
-
-    const { error } = await supabase.from('items').insert([payload]);
-    if (error) {
-      alert('Error adding menu item: ' + error.message);
-    } else {
-      setNewItem({ name: '', category: 'Sparkling Soda Series', price: '', large_price: '', cogs: '' });
-      loadData();
-    }
-  };
-
-  const handleUpdatePrice = async (id, currentPrice) => {
-    const newPrice = prompt('Enter new price (₹):', currentPrice);
-    if (newPrice && !isNaN(newPrice)) {
-      await supabase.from('items').update({ price: Number(newPrice) }).eq('id', id);
-      loadData();
-    }
-  };
-
-  const handleDeleteItem = async (id) => {
-    if (confirm('Permanently remove this drink from menu?')) {
-      await supabase.from('items').delete().eq('id', id);
-      loadData();
-    }
-  };
-
-  const handleAddCoupon = async (e) => {
-    e.preventDefault();
-    if (!newCoupon.code || !newCoupon.discount_value) return;
-
-    const payload = {
-      code: newCoupon.code.trim().toUpperCase(),
-      discount_type: newCoupon.discount_type,
-      discount_value: Number(newCoupon.discount_value),
-      min_order_value: Number(newCoupon.min_order_value) || 0,
-      is_active: true
-    };
-
-    const { error } = await supabase.from('coupons').insert([payload]);
-    if (error) {
-      alert('Error creating coupon: ' + error.message);
-    } else {
-      setNewCoupon({ code: '', discount_type: 'percentage', discount_value: '', min_order_value: '0' });
-      loadData();
-    }
-  };
-
-  const toggleCouponStatus = async (id, currentStatus) => {
-    await supabase.from('coupons').update({ is_active: !currentStatus }).eq('id', id);
-    loadData();
-  };
-
-  const handleDeleteCoupon = async (id) => {
-    if (confirm('Delete this promotional coupon code?')) {
-      await supabase.from('coupons').delete().eq('id', id);
-      loadData();
-    }
-  };
+  const filteredCustomerList = customerDatabase.filter(c => 
+    c.phone?.includes(searchPhone) || c.customer_name?.toLowerCase().includes(searchPhone.toLowerCase())
+  );
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-3xl border border-[#EED7CE] shadow-xs flex flex-wrap justify-between items-center gap-4">
+      <div className="bg-white p-6 rounded-3xl border border-[#F5D0D7] shadow-xs flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#4A2E2B] font-serif">Executive MIS Financial Dashboard</h2>
-          <p className="text-xs text-[#A66E63] font-bold">Period financial analytics, COGS tracking, and promo coupon controls</p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="bg-[#FCEEEA] p-1 rounded-2xl flex border border-[#EED7CE] text-xs font-bold">
-            {['today', 'yesterday', 'week', 'month', 'ytd', 'custom'].map((pKey) => (
-              <button
-                key={pKey}
-                onClick={() => setPeriod(pKey)}
-                className={`px-3 py-1.5 rounded-xl uppercase tracking-wider transition ${
-                  period === pKey ? 'bg-[#4A2E2B] text-[#FAF3F0] shadow-xs' : 'text-[#4A2E2B]'
-                }`}
-              >
-                {pKey}
-              </button>
-            ))}
-          </div>
-
-          {period === 'custom' && (
-            <div className="flex items-center gap-1.5 bg-[#FCEEEA] p-1.5 rounded-2xl border border-[#EED7CE] text-xs">
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-[#EED7CE] focus:outline-none font-bold"
-              />
-              <span className="text-[#A66E63] font-bold">to</span>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-[#EED7CE] focus:outline-none font-bold"
-              />
-            </div>
-          )}
+          <h2 className="text-xl font-bold text-[#0B2B20] font-serif">Management & Customer MIS</h2>
+          <p className="text-xs text-[#0B2B20]/70 font-bold">Secure customer mobile database & financial tracking</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
-          <p className="text-xs text-[#A66E63] font-bold flex items-center justify-between">
-            Gross Revenue <TrendingUp className="w-4 h-4 text-emerald-600" />
-          </p>
-          <h3 className="text-2xl font-black text-[#4A2E2B] mt-1">₹{grossSales}</h3>
-          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">{filteredOrders.length} Orders</p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs">
+          <p className="text-xs text-[#0B2B20]/70 font-bold">Gross Revenue</p>
+          <h3 className="text-2xl font-black text-[#0B2B20] mt-1">₹{grossSales}</h3>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
-          <p className="text-xs text-[#A66E63] font-bold">Ingredients COGS</p>
-          <h3 className="text-2xl font-black text-rose-600 mt-1">₹{cogsTotal}</h3>
-          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Direct Costs</p>
-        </div>
-
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
-          <p className="text-xs text-[#A66E63] font-bold">Gross Profit</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs">
+          <p className="text-xs text-[#0B2B20]/70 font-bold">Gross Profit</p>
           <h3 className="text-2xl font-black text-emerald-700 mt-1">₹{grossProfit}</h3>
-          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Sales - COGS</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
-          <p className="text-xs text-[#A66E63] font-bold">Operating Margin</p>
-          <h3 className="text-2xl font-black text-purple-700 mt-1">{netMargin}%</h3>
-          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Net %</p>
-        </div>
-
-        <div className="bg-white rounded-3xl p-5 border border-[#EED7CE] shadow-xs">
-          <p className="text-xs text-[#A66E63] font-bold">Avg Order Value</p>
-          <h3 className="text-2xl font-black text-[#4A2E2B] mt-1">₹{aov}</h3>
-          <p className="text-[10px] text-[#A66E63] mt-1 font-bold">Per Ticket</p>
+        <div className="bg-white rounded-3xl p-5 border border-[#F5D0D7] shadow-xs">
+          <p className="text-xs text-[#0B2B20]/70 font-bold flex items-center gap-1">
+            <Users className="w-4 h-4 text-[#0B2B20]" /> Total Registered Customers
+          </p>
+          <h3 className="text-2xl font-black text-[#0B2B20] mt-1">{customerDatabase.length} Accounts</h3>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs space-y-4">
-          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2 font-serif">
-            <Ticket className="w-5 h-5 text-[#4A2E2B]" /> Active Promo Coupons
+      {/* SECURE CUSTOMER MOBILE DATABASE (MANAGEMENT ONLY) */}
+      <div className="bg-white rounded-3xl p-6 border border-[#F5D0D7] shadow-xs space-y-4">
+        <div className="flex flex-wrap justify-between items-center gap-3">
+          <h3 className="font-bold text-[#0B2B20] text-base flex items-center gap-2 font-serif">
+            <ShieldCheck className="w-5 h-5 text-[#0B2B20]" /> Customer Mobile Database (Protected Management Access)
           </h3>
 
-          <div className="divide-y divide-[#FCEEEA] max-h-[250px] overflow-y-auto pr-1">
-            {coupons.map((c) => (
-              <div key={c.id} className="py-3 flex items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-sm bg-[#FCEEEA] text-[#4A2E2B] border border-[#EED7CE] px-2.5 py-0.5 rounded-lg">
-                      {c.code}
-                    </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${c.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
-                      {c.is_active ? 'Active' : 'Disabled'}
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#A66E63] mt-1 font-bold">
-                    Discount: <strong className="text-[#4A2E2B]">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => toggleCouponStatus(c.id, c.is_active)}
-                    className="px-3 py-1 bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] rounded-xl text-xs font-bold transition border border-[#EED7CE]"
-                  >
-                    {c.is_active ? 'Disable' : 'Enable'}
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCoupon(c.id)}
-                    className="p-1.5 bg-rose-50 text-rose-600 rounded-xl transition border border-rose-200"
-                    title="Delete Coupon"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
+          <div className="flex items-center gap-2 bg-[#FFF7F8] px-3 py-1.5 rounded-2xl border border-[#F5D0D7]">
+            <Search className="w-4 h-4 text-[#0B2B20]" />
+            <input
+              type="text"
+              placeholder="Search Name or Phone..."
+              value={searchPhone}
+              onChange={(e) => setSearchPhone(e.target.value)}
+              className="bg-transparent text-xs font-bold focus:outline-none text-[#0B2B20]"
+            />
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs h-fit">
-          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
-            <Plus className="w-5 h-5 text-[#4A2E2B]" /> Create Promo Coupon
-          </h3>
-          <p className="text-xs text-[#A66E63] mb-4 font-bold">Set promo codes for customer discounts.</p>
-
-          <form onSubmit={handleAddCoupon} className="space-y-3">
-            <div>
-              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Coupon Code</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. SUMMER20"
-                value={newCoupon.code}
-                onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
-                className="w-full px-3.5 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold uppercase"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Type</label>
-                <select
-                  value={newCoupon.discount_type}
-                  onChange={(e) => setNewCoupon({ ...newCoupon, discount_type: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs font-bold bg-[#FAF3F0] text-[#4A2E2B]"
-                >
-                  <option value="percentage">% Percentage</option>
-                  <option value="flat">₹ Flat Amount</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Discount</label>
-                <input
-                  type="number"
-                  required
-                  placeholder={newCoupon.discount_type === 'percentage' ? 'e.g. 20 (%)' : 'e.g. 50 (₹)'}
-                  value={newCoupon.discount_value}
-                  onChange={(e) => setNewCoupon({ ...newCoupon, discount_value: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Min Bill Amount (₹)</label>
-              <input
-                type="number"
-                placeholder="e.g. 200 (0 for no limit)"
-                value={newCoupon.min_order_value}
-                onChange={(e) => setNewCoupon({ ...newCoupon, min_order_value: e.target.value })}
-                className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] transition shadow-md text-xs mt-2"
-            >
-              Issue Promo Code
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs space-y-4">
-          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2 font-serif">
-            <Edit3 className="w-5 h-5 text-[#4A2E2B]" /> Active Menu Catalog
-          </h3>
-
-          <div className="divide-y divide-[#FCEEEA] max-h-[350px] overflow-y-auto pr-1">
-            {menu.map((item) => (
-              <div key={item.id} className="py-3.5 flex items-center justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm text-[#4A2E2B] font-serif">{item.name}</h4>
-                    <span className="text-[10px] font-bold px-2 py-0.5 bg-[#FCEEEA] text-[#4A2E2B] rounded-md border border-[#EED7CE]">{item.category}</span>
-                  </div>
-                  <p className="text-xs text-[#A66E63] mt-0.5 font-bold">Regular: <strong className="text-[#4A2E2B]">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleUpdatePrice(item.id, item.price)}
-                    className="px-3 py-1.5 bg-[#FCEEEA] hover:bg-[#F3DCD3] text-[#4A2E2B] rounded-xl text-xs font-bold transition border border-[#EED7CE]"
-                  >
-                    Edit Price
-                  </button>
-                  <button
-                    onClick={() => handleDeleteItem(item.id)}
-                    className="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition border border-rose-200"
-                    title="Delete Drink"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-3xl p-6 border border-[#EED7CE] shadow-xs h-fit">
-          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2 font-serif">
-            <Plus className="w-5 h-5 text-[#4A2E2B]" /> Add New Beverage
-          </h3>
-          <p className="text-xs text-[#A66E63] mb-4 font-bold">Instantly adds drink to customer menu kiosks.</p>
-
-          <form onSubmit={handleAddItem} className="space-y-3">
-            <div>
-              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Item Name</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Mango Matcha"
-                value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
-              />
-            </div>
-
-            <div>
-              <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Category Series</label>
-              <select
-                value={newItem.category}
-                onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs font-bold bg-[#FAF3F0] text-[#4A2E2B]"
-              >
-                <option value="Sparkling Soda Series">Sparkling Soda Series</option>
-                <option value="Popping Soda Series">Popping Soda Series</option>
-                <option value="Milk Tea Series">Milk Tea Series</option>
-                <option value="Milk Boba Series">Milk Boba Series</option>
-                <option value="Matcha Series">Matcha Series</option>
-                <option value="No Added Sugar Specials">No Added Sugar Specials</option>
-                <option value="Add-Ons">Add-Ons</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Regular (₹)</label>
-                <input
-                  type="number"
-                  required
-                  placeholder="e.g. 160"
-                  value={newItem.price}
-                  onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold text-[#4A2E2B] uppercase mb-1">Large (₹)</label>
-                <input
-                  type="number"
-                  placeholder="e.g. 190 (Optional)"
-                  value={newItem.large_price}
-                  onChange={(e) => setNewItem({ ...newItem, large_price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-[#EED7CE] rounded-xl text-xs focus:outline-none bg-[#FAF3F0] text-[#4A2E2B] font-bold"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-3 bg-[#4A2E2B] text-[#FAF3F0] font-bold rounded-2xl hover:bg-[#2D1517] transition shadow-md text-xs mt-2"
-            >
-              Add to Live Menu
-            </button>
-          </form>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="bg-[#FFF0F3] border-b border-[#F5D0D7] text-[#0B2B20] font-black uppercase">
+                <th className="p-3">Customer Name</th>
+                <th className="p-3">Mobile Number</th>
+                <th className="p-3">Loyalty Stamps</th>
+                <th className="p-3">PIN Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#FFF0F3] font-bold text-[#0B2B20]">
+              {filteredCustomerList.map((cust) => (
+                <tr key={cust.phone} className="hover:bg-[#FFF7F8]">
+                  <td className="p-3">{cust.customer_name || 'Valued Customer'}</td>
+                  <td className="p-3 font-mono font-black">{cust.phone}</td>
+                  <td className="p-3">{cust.stamp_count || 0} Stamps</td>
+                  <td className="p-3 font-mono">{cust.user_pin ? '🔒 Active' : 'Unset'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
