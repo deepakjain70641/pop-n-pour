@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ShoppingCart, Coffee, Lock, CheckCircle, Plus, Minus, Trash2, 
+  ShoppingCart, Coffee, Lock, Plus, Minus, Trash2, 
   ChefHat, BarChart3, Package, Volume2, Edit3, LogOut, 
   History, RotateCcw, Check, Clock, TrendingUp, AlertCircle, Tag, Ticket,
   Award, Sparkles
@@ -80,26 +80,27 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF8F6] text-pink-950 font-sans selection:bg-pink-400 selection:text-white">
-      <header className="bg-pink-100/90 backdrop-blur-md border-b border-pink-200 sticky top-0 z-40 shadow-sm">
+    <div className="min-h-screen bg-[#FAF3F0] text-[#4A2E2B] font-sans selection:bg-pink-400 selection:text-white">
+      {/* Aesthetic Header */}
+      <header className="bg-white/90 backdrop-blur-md border-b border-pink-200/60 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-pink-500 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-pink-300">
+            <div className="w-11 h-11 bg-gradient-to-tr from-pink-400 to-rose-400 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-pink-200">
               P&P
             </div>
             <div>
-              <h1 className="text-xl font-black tracking-tight text-pink-900">
-                Pop & Pour
+              <h1 className="text-xl font-black tracking-tight text-[#4A2E2B] flex items-center gap-1.5">
+                Pop & Pour <Sparkles className="w-4 h-4 text-pink-500 fill-pink-400" />
               </h1>
-              <p className="text-[10px] text-pink-600 font-extrabold uppercase tracking-widest">Sip Happy • Stay Happy 🌸</p>
+              <p className="text-[10px] text-pink-600 font-extrabold uppercase tracking-widest">SIP HAPPY • STAY HAPPY 🌸</p>
             </div>
           </div>
 
-          <div className="flex items-center bg-white/80 p-1.5 rounded-2xl gap-1 border border-pink-200 shadow-sm">
+          <div className="flex items-center bg-pink-50/80 p-1.5 rounded-2xl gap-1 border border-pink-200/60 shadow-inner">
             <button
               onClick={() => handleRoleSwitch('customer')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'customer' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
+                activeRole === 'customer' ? 'bg-pink-500 text-white shadow-md shadow-pink-200' : 'text-pink-800 hover:text-pink-950'
               }`}
             >
               🥤 Customer Kiosk
@@ -107,7 +108,7 @@ export default function App() {
             <button
               onClick={() => handleRoleSwitch('shopkeeper')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'shopkeeper' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
+                activeRole === 'shopkeeper' ? 'bg-pink-500 text-white shadow-md shadow-pink-200' : 'text-pink-800 hover:text-pink-950'
               }`}
             >
               <ChefHat className="w-4 h-4" /> Barista KDS
@@ -115,7 +116,7 @@ export default function App() {
             <button
               onClick={() => handleRoleSwitch('owner')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'owner' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
+                activeRole === 'owner' ? 'bg-pink-500 text-white shadow-md shadow-pink-200' : 'text-pink-800 hover:text-pink-950'
               }`}
             >
               <BarChart3 className="w-4 h-4" /> Executive MIS
@@ -141,8 +142,8 @@ export default function App() {
       </main>
 
       {showPinModal && (
-        <div className="fixed inset-0 bg-pink-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-pink-100 text-pink-950">
+        <div className="fixed inset-0 bg-[#4A2E2B]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-pink-100 text-[#4A2E2B]">
             <div className="text-center mb-5">
               <div className="w-12 h-12 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-pink-200">
                 <Lock className="w-5 h-5" />
@@ -162,7 +163,7 @@ export default function App() {
                 placeholder={targetRole === 'shopkeeper' ? "••••" : "Password"}
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                className="w-full text-center text-2xl tracking-widest py-3 border border-pink-200 rounded-2xl focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/50 text-pink-950"
+                className="w-full text-center text-2xl tracking-widest py-3 border border-pink-200 rounded-2xl focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/50 text-[#4A2E2B]"
                 autoFocus
               />
               {authError && <p className="text-xs text-rose-500 text-center font-semibold">{authError}</p>}
@@ -199,11 +200,10 @@ function CustomerKiosk() {
   const [cart, setCart] = useState([]);
   const [activeOrder, setActiveOrder] = useState(null);
   const [pastOrders, setPastOrders] = useState([]);
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  // Loyalty Stamp State (8 Drinks System)
   const [stamps, setStamps] = useState(0);
 
-  // Coupon State
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponError, setCouponError] = useState('');
@@ -318,7 +318,7 @@ function CustomerKiosk() {
 
   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
-  // Auto-Unapply Coupon Bug Fix
+  // Auto-unapply coupon if cart falls below min_order_value
   useEffect(() => {
     if (appliedCoupon) {
       if (subtotal < (appliedCoupon.min_order_value || 0)) {
@@ -339,7 +339,7 @@ function CustomerKiosk() {
   }
 
   const totalPayable = subtotal - discountAmount; 
-  const cogsTotal = cart.reduce((acc, item) => acc + ((item.cogs || 40) * item.qty), 0);
+  const cogsTotal = cart.reduce((acc, item) => acc + ((item.cogs || 35) * item.qty), 0);
 
   const applyCoupon = async () => {
     setCouponError('');
@@ -395,7 +395,6 @@ function CustomerKiosk() {
       setActiveOrder(newOrder);
       localStorage.setItem('pop_active_order_id', orderId);
 
-      // Update 8-Drink Loyalty Stamp Count
       const newStamps = (stamps + cart.reduce((a, b) => a + b.qty, 0)) % 8;
       await supabase.from('loyalty_stamps').upsert({ phone: customer.phone, stamp_count: newStamps });
       setStamps(newStamps);
@@ -407,49 +406,55 @@ function CustomerKiosk() {
     }
   };
 
+  const categories = ['All', 'Sparkling Soda Series', 'Popping Soda Series', 'Milk Tea Series', 'Milk Boba Series', 'Matcha Series', 'No Added Sugar Specials', 'Add-Ons'];
+
+  const filteredMenu = activeCategory === 'All' 
+    ? menu 
+    : menu.filter(item => item.category === activeCategory);
+
   if (!isIdentified) {
     return (
-      <div className="max-w-md mx-auto mt-8 bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-pink-100 shadow-xl text-pink-950">
+      <div className="max-w-md mx-auto mt-8 bg-white/95 backdrop-blur-xl rounded-3xl p-8 border border-pink-200/80 shadow-xl text-[#4A2E2B]">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-md shadow-pink-200">
+          <div className="w-16 h-16 bg-gradient-to-tr from-pink-400 to-rose-400 text-white rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg shadow-pink-200">
             🧋
           </div>
-          <h2 className="text-2xl font-black">Welcome to Pop & Pour</h2>
-          <p className="text-xs text-pink-600 mt-1">Sip happy, stay happy • Collect 8 stamps for free sodas!</p>
+          <h2 className="text-2xl font-black text-[#4A2E2B]">Welcome to Pop & Pour</h2>
+          <p className="text-xs text-pink-600 mt-1 font-medium">Sip Happy • Stay Happy • Collect 8 Stamps for Free Soda 🌸</p>
         </div>
 
         <form onSubmit={handleStartSession} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Your Name</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-pink-900">Your Name</label>
             <input
               type="text"
               required
               placeholder="e.g. Vikram Sharma"
               value={customer.name}
               onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30"
+              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Mobile Number</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-pink-900">Mobile Number</label>
             <input
               type="tel"
               required
               placeholder="e.g. 9876543210"
               value={customer.phone}
               onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30"
+              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Channel</label>
+              <label className="block text-xs font-bold uppercase mb-1 text-pink-900">Channel</label>
               <select
                 value={customer.orderType}
                 onChange={(e) => setCustomer({ ...customer, orderType: e.target.value })}
-                className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30"
+                className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30 text-[#4A2E2B]"
               >
                 <option value="Dine-In">Dine-In</option>
                 <option value="Takeaway">Takeaway</option>
@@ -458,11 +463,11 @@ function CustomerKiosk() {
 
             {customer.orderType === 'Dine-In' && (
               <div>
-                <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Table</label>
+                <label className="block text-xs font-bold uppercase mb-1 text-pink-900">Table</label>
                 <select
                   value={customer.tableNo}
                   onChange={(e) => setCustomer({ ...customer, tableNo: e.target.value })}
-                  className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30"
+                  className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30 text-[#4A2E2B]"
                 >
                   <option value="Table 1">Table 1</option>
                   <option value="Table 2">Table 2</option>
@@ -476,7 +481,7 @@ function CustomerKiosk() {
 
           <button
             type="submit"
-            className="w-full py-3.5 bg-pink-500 text-white font-bold rounded-2xl hover:bg-pink-600 transition shadow-lg shadow-pink-200 text-sm"
+            className="w-full py-3.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-black rounded-2xl hover:opacity-95 transition shadow-lg shadow-pink-200 text-sm tracking-wide"
           >
             Start Crafting Order 🍹
           </button>
@@ -488,30 +493,30 @@ function CustomerKiosk() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-6">
-        <div className="bg-gradient-to-r from-pink-400 to-rose-400 rounded-3xl p-6 text-white shadow-lg flex justify-between items-center">
-          <div>
-            <span className="bg-white/20 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+        {/* Soft Pink Banner */}
+        <div className="bg-gradient-to-r from-pink-400 via-rose-300 to-pink-300 rounded-3xl p-6 text-white shadow-lg flex justify-between items-center relative overflow-hidden">
+          <div className="relative z-10">
+            <span className="bg-white/25 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
               {customer.name} • {customer.orderType === 'Dine-In' ? customer.tableNo : 'Takeaway'}
             </span>
-            <h2 className="text-2xl font-black mt-2">Bubbles • Good Mood 🧋</h2>
-            <p className="text-pink-100 text-xs mt-1">Handcrafted Boba, Matchas & Sparkling Sodas brewed fresh.</p>
+            <h2 className="text-2xl font-black mt-2 tracking-tight">Bubbles • Good Mood 🧋</h2>
+            <p className="text-pink-50 text-xs mt-1 font-medium">Sips that spark joy • Fresh Boba, Sodas & Matchas</p>
           </div>
-          <button onClick={() => setIsIdentified(false)} className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-xl font-semibold">
+          <button onClick={() => setIsIdentified(false)} className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-xl font-semibold backdrop-blur-md z-10">
             Change
           </button>
         </div>
 
         {/* 🌸 Digital Loyalty Stamp Card (8 Drinks System) */}
-        <div className="bg-white rounded-3xl p-5 border border-pink-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-pink-500" />
-              <h3 className="text-sm font-black text-pink-950 uppercase tracking-wide">8-Drink Loyalty Card</h3>
+              <h3 className="text-sm font-black text-[#4A2E2B] uppercase tracking-wide">8-Drink Loyalty Card</h3>
             </div>
-            <p className="text-xs text-pink-600 mt-1">Buy 8 drinks and unlock 1 FREE Sparkling Soda on your next visit!</p>
+            <p className="text-xs text-pink-600 mt-1 font-medium">Buy 8 drinks and unlock 1 FREE Sparkling Soda on your next visit!</p>
           </div>
 
-          {/* 8-Stamp Grid */}
           <div className="flex flex-wrap gap-1.5 bg-pink-50/80 p-2.5 rounded-2xl border border-pink-100 justify-center">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((stIndex) => (
               <div
@@ -528,8 +533,9 @@ function CustomerKiosk() {
           </div>
         </div>
 
+        {/* Favorites Memory Drawer */}
         {pastOrders.length > 0 && (
-          <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
             <h3 className="text-xs font-black text-pink-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <History className="w-4 h-4 text-pink-500" /> Your Favorites Memory
             </h3>
@@ -538,7 +544,7 @@ function CustomerKiosk() {
                 <div key={pOrd.id} className="min-w-[210px] bg-pink-50/50 p-3.5 rounded-2xl border border-pink-100 flex flex-col justify-between">
                   <div>
                     <span className="text-[10px] font-mono font-bold text-pink-600">{pOrd.token_no || pOrd.id}</span>
-                    <p className="text-xs font-bold text-pink-950 line-clamp-1 mt-1">
+                    <p className="text-xs font-bold text-[#4A2E2B] line-clamp-1 mt-1">
                       {pOrd.items?.map(i => `${i.name} (${i.qty})`).join(', ')}
                     </p>
                     <p className="text-xs font-black text-pink-900 mt-1">₹{pOrd.total_payable}</p>
@@ -555,21 +561,39 @@ function CustomerKiosk() {
           </div>
         )}
 
+        {/* Category Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition border ${
+                activeCategory === cat 
+                  ? 'bg-pink-500 text-white border-pink-500 shadow-md shadow-pink-200' 
+                  : 'bg-white text-pink-800 border-pink-200/80 hover:bg-pink-50'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Menu Items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {menu.map((item) => (
-            <div key={item.id} className={`bg-white rounded-3xl p-5 border border-pink-100 shadow-sm flex flex-col justify-between transition hover:border-pink-300 ${item.is_sold_out ? 'opacity-40 bg-pink-50/20' : ''}`}>
+          {filteredMenu.map((item) => (
+            <div key={item.id} className={`bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm flex flex-col justify-between transition hover:border-pink-300 ${item.is_sold_out ? 'opacity-40 bg-pink-50/20' : ''}`}>
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-[10px] font-extrabold px-2.5 py-1 bg-pink-50 text-pink-600 rounded-full border border-pink-100 uppercase tracking-wide">{item.category}</span>
                   {item.is_sold_out ? (
                     <span className="text-xs font-bold px-2.5 py-1 bg-rose-100 text-rose-600 rounded-xl">SOLD OUT</span>
                   ) : (
-                    <span className="text-base font-black text-pink-950">
+                    <span className="text-base font-black text-[#4A2E2B]">
                       ₹{item.price} {item.large_price ? ` / ₹${item.large_price}` : ''}
                     </span>
                   )}
                 </div>
-                <h3 className="font-bold text-pink-950 text-base mb-1">{item.name}</h3>
+                <h3 className="font-bold text-[#4A2E2B] text-base mb-1">{item.name}</h3>
               </div>
 
               <div className="mt-4 flex gap-2">
@@ -596,9 +620,10 @@ function CustomerKiosk() {
         </div>
       </div>
 
+      {/* Cart Tray */}
       <div className="space-y-6">
-        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-md sticky top-24">
-          <h3 className="text-lg font-bold text-pink-950 mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-3xl p-6 border border-pink-200/80 shadow-md sticky top-24">
+          <h3 className="text-lg font-bold text-[#4A2E2B] mb-4 flex items-center gap-2">
             <ShoppingCart className="w-5 h-5 text-pink-500" /> Current Tray
           </h3>
 
@@ -613,12 +638,12 @@ function CustomerKiosk() {
                 {cart.map((item) => (
                   <div key={item.cartKey} className="flex justify-between items-center py-2.5">
                     <div>
-                      <h4 className="font-semibold text-xs text-pink-950">{item.name} ({item.size})</h4>
+                      <h4 className="font-semibold text-xs text-[#4A2E2B]">{item.name} ({item.size})</h4>
                       <p className="text-[11px] text-pink-600">₹{item.price} × {item.qty}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-pink-100 text-pink-800 rounded-lg flex items-center justify-center font-bold text-xs"><Minus className="w-3 h-3" /></button>
-                      <span className="font-bold text-xs text-pink-950">{item.qty}</span>
+                      <span className="font-bold text-xs text-[#4A2E2B]">{item.qty}</span>
                       <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-pink-100 text-pink-800 rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
                     </div>
                   </div>
@@ -626,7 +651,7 @@ function CustomerKiosk() {
               </div>
 
               <div className="pt-2 border-t border-pink-100">
-                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1 flex items-center gap-1">
+                <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1 flex items-center gap-1">
                   <Tag className="w-3.5 h-3.5 text-pink-500" /> Apply Promo Code
                 </label>
                 <div className="flex gap-2">
@@ -635,7 +660,7 @@ function CustomerKiosk() {
                     placeholder="e.g. WELCOME10"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="flex-1 px-3 py-2 border border-pink-200 rounded-xl text-xs bg-pink-50/30 text-pink-950 focus:outline-none uppercase"
+                    className="flex-1 px-3 py-2 border border-pink-200 rounded-xl text-xs bg-pink-50/30 text-[#4A2E2B] focus:outline-none uppercase"
                   />
                   <button
                     onClick={applyCoupon}
@@ -664,7 +689,7 @@ function CustomerKiosk() {
                     <span>-₹{discountAmount}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-base font-black text-pink-950 pt-1 border-t border-pink-100">
+                <div className="flex justify-between text-base font-black text-[#4A2E2B] pt-1 border-t border-pink-100">
                   <span>Total Payable</span>
                   <span className="text-pink-600">₹{totalPayable}</span>
                 </div>
@@ -672,7 +697,7 @@ function CustomerKiosk() {
                 <div className="space-y-2 pt-2">
                   <button
                     onClick={() => handlePlaceOrder('UPI Soundbox / QR')}
-                    className="w-full bg-pink-500 text-white font-bold py-3 rounded-2xl hover:bg-pink-600 transition shadow-lg shadow-pink-200 text-xs"
+                    className="w-full bg-gradient-to-r from-pink-500 to-rose-400 text-white font-bold py-3 rounded-2xl hover:opacity-95 transition shadow-lg shadow-pink-200 text-xs tracking-wide"
                   >
                     Generate Token & Pay via UPI (₹{totalPayable})
                   </button>
@@ -689,7 +714,7 @@ function CustomerKiosk() {
         </div>
 
         {activeOrder && (
-          <div className="bg-white border border-pink-200 rounded-3xl p-6 text-pink-950 shadow-lg space-y-3">
+          <div className="bg-white border border-pink-200/80 rounded-3xl p-6 text-[#4A2E2B] shadow-lg space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-xs font-bold text-pink-600">Active Order Token</span>
               <span className="text-2xl font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-xl border border-pink-200">
@@ -698,8 +723,8 @@ function CustomerKiosk() {
             </div>
 
             <div className="p-4 bg-pink-50/60 rounded-2xl border border-pink-100 text-center space-y-2">
-              <p className="text-xs font-bold text-amber-700 flex items-center justify-center gap-1">
-                <AlertCircle className="w-4 h-4" /> Mention Token {activeOrder.token_no} at Counter
+              <p className="text-xs font-bold text-amber-800 flex items-center justify-center gap-1">
+                <AlertCircle className="w-4 h-4 text-amber-600" /> Mention Token {activeOrder.token_no} at Counter
               </p>
               
               <div className="pt-1">
@@ -766,10 +791,10 @@ function ShopkeeperKDS() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-pink-100 shadow-sm gap-4">
+      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-pink-200/80 shadow-sm gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-pink-950">Barista Kitchen Display (KDS)</h2>
-          <p className="text-xs text-pink-600">Approve tokens on payment soundbox & manage drink queue</p>
+          <h2 className="text-xl font-extrabold text-[#4A2E2B]">Barista Kitchen Display (KDS)</h2>
+          <p className="text-xs text-pink-600 font-medium">Approve tokens on payment soundbox & manage drink queue</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -821,13 +846,13 @@ function ShopkeeperKDS() {
                         </span>
                       </div>
 
-                      <p className="text-xs font-bold text-pink-950 mb-2">{order.customer_name} • {order.phone}</p>
+                      <p className="text-xs font-bold text-[#4A2E2B] mb-2">{order.customer_name} • {order.phone}</p>
 
                       <div className="space-y-1.5 mb-4 border-t border-b border-pink-50 py-2">
                         {order.items?.map((it, idx) => (
                           <div key={idx} className="flex justify-between text-sm">
                             <span className="text-pink-900 font-medium">• {it.name} ({it.size || 'Regular'})</span>
-                            <span className="font-bold text-pink-950">x{it.qty}</span>
+                            <span className="font-bold text-[#4A2E2B]">x{it.qty}</span>
                           </div>
                         ))}
                       </div>
@@ -835,7 +860,7 @@ function ShopkeeperKDS() {
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="text-xs">
-                        <p className="text-pink-600 font-medium">Bill: <strong className="text-pink-950">₹{order.total_payable}</strong></p>
+                        <p className="text-pink-600 font-medium">Bill: <strong className="text-[#4A2E2B]">₹{order.total_payable}</strong></p>
                         {order.discount_applied > 0 && (
                           <p className="text-[10px] text-emerald-600">Discount: -₹{order.discount_applied}</p>
                         )}
@@ -898,16 +923,16 @@ function ShopkeeperKDS() {
 
         <div className="space-y-6">
           <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm">
-            <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+            <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2">
               <Package className="w-4 h-4 text-pink-500" /> Menu Stock Control
             </h3>
-            <p className="text-xs text-pink-600 mb-4">Toggle drink availability on customer kiosks in real-time.</p>
+            <p className="text-xs text-pink-600 mb-4 font-medium">Toggle drink availability on customer kiosks in real-time.</p>
 
             <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
               {menu.map((item) => (
                 <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-pink-100 bg-pink-50/30">
                   <div>
-                    <h4 className="font-bold text-xs text-pink-950">{item.name}</h4>
+                    <h4 className="font-bold text-xs text-[#4A2E2B]">{item.name}</h4>
                     <span className={`text-[10px] font-bold ${item.is_sold_out ? 'text-rose-500' : 'text-emerald-600'}`}>
                       {item.is_sold_out ? 'Sold Out' : 'Available'}
                     </span>
@@ -1062,10 +1087,10 @@ function ExecutiveMIS() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm flex flex-wrap justify-between items-center gap-4">
+      <div className="bg-white p-6 rounded-3xl border border-pink-200/80 shadow-sm flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-pink-950">Executive MIS Financial Dashboard</h2>
-          <p className="text-xs text-pink-600">Period financial analytics, COGS tracking, and promo coupon controls</p>
+          <h2 className="text-xl font-extrabold text-[#4A2E2B]">Executive MIS Financial Dashboard</h2>
+          <p className="text-xs text-pink-600 font-medium">Period financial analytics, COGS tracking, and promo coupon controls</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -1089,14 +1114,14 @@ function ExecutiveMIS() {
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-white text-pink-950 px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
+                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
               />
               <span className="text-pink-400">to</span>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="bg-white text-pink-950 px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
+                className="bg-white text-[#4A2E2B] px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
               />
             </div>
           )}
@@ -1104,42 +1129,42 @@ function ExecutiveMIS() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
           <p className="text-xs text-pink-600 font-medium flex items-center justify-between">
             Gross Revenue <TrendingUp className="w-4 h-4 text-emerald-500" />
           </p>
-          <h3 className="text-2xl font-black text-pink-950 mt-1">₹{grossSales}</h3>
-          <p className="text-[10px] text-pink-500 mt-1">{filteredOrders.length} Orders</p>
+          <h3 className="text-2xl font-black text-[#4A2E2B] mt-1">₹{grossSales}</h3>
+          <p className="text-[10px] text-pink-500 mt-1 font-medium">{filteredOrders.length} Orders</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
           <p className="text-xs text-pink-600 font-medium">Ingredients COGS</p>
           <h3 className="text-2xl font-black text-rose-500 mt-1">₹{cogsTotal}</h3>
-          <p className="text-[10px] text-pink-500 mt-1">Direct Costs</p>
+          <p className="text-[10px] text-pink-500 mt-1 font-medium">Direct Costs</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
           <p className="text-xs text-pink-600 font-medium">Gross Profit</p>
           <h3 className="text-2xl font-black text-emerald-600 mt-1">₹{grossProfit}</h3>
-          <p className="text-[10px] text-pink-500 mt-1">Sales - COGS</p>
+          <p className="text-[10px] text-pink-500 mt-1 font-medium">Sales - COGS</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
           <p className="text-xs text-pink-600 font-medium">Operating Margin</p>
           <h3 className="text-2xl font-black text-purple-600 mt-1">{netMargin}%</h3>
-          <p className="text-[10px] text-pink-500 mt-1">Net %</p>
+          <p className="text-[10px] text-pink-500 mt-1 font-medium">Net %</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+        <div className="bg-white rounded-3xl p-5 border border-pink-200/80 shadow-sm">
           <p className="text-xs text-pink-600 font-medium">Avg Order Value</p>
           <h3 className="text-2xl font-black text-pink-600 mt-1">₹{aov}</h3>
-          <p className="text-[10px] text-pink-500 mt-1">Per Ticket</p>
+          <p className="text-[10px] text-pink-500 mt-1 font-medium">Per Ticket</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-100 shadow-sm space-y-4">
-          <h3 className="font-bold text-pink-950 text-base flex items-center gap-2">
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-200/80 shadow-sm space-y-4">
+          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2">
             <Ticket className="w-5 h-5 text-pink-500" /> Active Promo Coupons
           </h3>
 
@@ -1155,8 +1180,8 @@ function ExecutiveMIS() {
                       {c.is_active ? 'Active' : 'Disabled'}
                     </span>
                   </div>
-                  <p className="text-xs text-pink-600 mt-1">
-                    Discount: <strong className="text-pink-950">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
+                  <p className="text-xs text-pink-600 mt-1 font-medium">
+                    Discount: <strong className="text-[#4A2E2B]">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
                   </p>
                 </div>
 
@@ -1180,32 +1205,32 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm h-fit">
-          <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+        <div className="bg-white rounded-3xl p-6 border border-pink-200/80 shadow-sm h-fit">
+          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2">
             <Plus className="w-5 h-5 text-pink-500" /> Create Promo Coupon
           </h3>
-          <p className="text-xs text-pink-600 mb-4">Set promo codes for customer discounts.</p>
+          <p className="text-xs text-pink-600 mb-4 font-medium">Set promo codes for customer discounts.</p>
 
           <form onSubmit={handleAddCoupon} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Coupon Code</label>
+              <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Coupon Code</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. SUMMER20"
                 value={newCoupon.code}
                 onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
-                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950 uppercase"
+                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B] uppercase"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Type</label>
+                <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Type</label>
                 <select
                   value={newCoupon.discount_type}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_type: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-pink-950"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-[#4A2E2B]"
                 >
                   <option value="percentage">% Percentage</option>
                   <option value="flat">₹ Flat Amount</option>
@@ -1213,26 +1238,26 @@ function ExecutiveMIS() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Discount</label>
+                <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Discount</label>
                 <input
                   type="number"
                   required
                   placeholder={newCoupon.discount_type === 'percentage' ? 'e.g. 20 (%)' : 'e.g. 50 (₹)'}
                   value={newCoupon.discount_value}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_value: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Min Bill Amount (₹)</label>
+              <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Min Bill Amount (₹)</label>
               <input
                 type="number"
                 placeholder="e.g. 200 (0 for no limit)"
                 value={newCoupon.min_order_value}
                 onChange={(e) => setNewCoupon({ ...newCoupon, min_order_value: e.target.value })}
-                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
+                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
               />
             </div>
 
@@ -1247,8 +1272,8 @@ function ExecutiveMIS() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-100 shadow-sm space-y-4">
-          <h3 className="font-bold text-pink-950 text-base flex items-center gap-2">
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-200/80 shadow-sm space-y-4">
+          <h3 className="font-bold text-[#4A2E2B] text-base flex items-center gap-2">
             <Edit3 className="w-5 h-5 text-pink-500" /> Active Menu Catalog
           </h3>
 
@@ -1257,10 +1282,10 @@ function ExecutiveMIS() {
               <div key={item.id} className="py-3.5 flex items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm text-pink-950">{item.name}</h4>
+                    <h4 className="font-bold text-sm text-[#4A2E2B]">{item.name}</h4>
                     <span className="text-[10px] font-semibold px-2 py-0.5 bg-pink-50 text-pink-600 rounded-md">{item.category}</span>
                   </div>
-                  <p className="text-xs text-pink-600 mt-0.5">Regular: <strong className="text-pink-950">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
+                  <p className="text-xs text-pink-600 mt-0.5 font-medium">Regular: <strong className="text-[#4A2E2B]">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -1283,31 +1308,31 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm h-fit">
-          <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+        <div className="bg-white rounded-3xl p-6 border border-pink-200/80 shadow-sm h-fit">
+          <h3 className="font-bold text-[#4A2E2B] text-base mb-1 flex items-center gap-2">
             <Plus className="w-5 h-5 text-pink-500" /> Add New Beverage
           </h3>
-          <p className="text-xs text-pink-600 mb-4">Instantly adds drink to customer menu kiosks.</p>
+          <p className="text-xs text-pink-600 mb-4 font-medium">Instantly adds drink to customer menu kiosks.</p>
 
           <form onSubmit={handleAddItem} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Item Name</label>
+              <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Item Name</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. Mango Matcha"
                 value={newItem.name}
                 onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
+                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Category Series</label>
+              <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Category Series</label>
               <select
                 value={newItem.category}
                 onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-pink-950"
+                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-[#4A2E2B]"
               >
                 <option value="Sparkling Soda Series">Sparkling Soda Series</option>
                 <option value="Popping Soda Series">Popping Soda Series</option>
@@ -1315,30 +1340,31 @@ function ExecutiveMIS() {
                 <option value="Milk Boba Series">Milk Boba Series</option>
                 <option value="Matcha Series">Matcha Series</option>
                 <option value="No Added Sugar Specials">No Added Sugar Specials</option>
+                <option value="Add-Ons">Add-Ons</option>
               </select>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Regular (₹)</label>
+                <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Regular (₹)</label>
                 <input
                   type="number"
                   required
                   placeholder="e.g. 160"
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Large (₹)</label>
+                <label className="block text-[11px] font-bold text-pink-900 uppercase mb-1">Large (₹)</label>
                 <input
                   type="number"
                   placeholder="e.g. 190 (Optional)"
                   value={newItem.large_price}
                   onChange={(e) => setNewItem({ ...newItem, large_price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-[#4A2E2B]"
                 />
               </div>
             </div>
