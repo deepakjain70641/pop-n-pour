@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   ShoppingCart, Coffee, Lock, CheckCircle, Plus, Minus, Trash2, 
   ChefHat, BarChart3, Package, Volume2, Edit3, LogOut, 
-  History, RotateCcw, Check, Clock, TrendingUp, AlertCircle, Tag, Ticket
+  History, RotateCcw, Check, Clock, TrendingUp, AlertCircle, Tag, Ticket,
+  Award, Sparkles
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -79,26 +80,26 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-pink-500 selection:text-white">
-      <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 shadow-lg">
+    <div className="min-h-screen bg-[#FFF8F6] text-pink-950 font-sans selection:bg-pink-400 selection:text-white">
+      <header className="bg-pink-100/90 backdrop-blur-md border-b border-pink-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-pink-500/30">
+            <div className="w-11 h-11 bg-pink-500 rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-pink-300">
               P&P
             </div>
             <div>
-              <h1 className="text-xl font-black tracking-tight bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
-                Pop & Pour Suite
+              <h1 className="text-xl font-black tracking-tight text-pink-900">
+                Pop & Pour
               </h1>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Enterprise QSR Operating System</p>
+              <p className="text-[10px] text-pink-600 font-extrabold uppercase tracking-widest">Sip Happy • Stay Happy 🌸</p>
             </div>
           </div>
 
-          <div className="flex items-center bg-slate-800/80 p-1.5 rounded-2xl gap-1 border border-slate-700/60 shadow-inner">
+          <div className="flex items-center bg-white/80 p-1.5 rounded-2xl gap-1 border border-pink-200 shadow-sm">
             <button
               onClick={() => handleRoleSwitch('customer')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'customer' ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                activeRole === 'customer' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
               }`}
             >
               🥤 Customer Kiosk
@@ -106,7 +107,7 @@ export default function App() {
             <button
               onClick={() => handleRoleSwitch('shopkeeper')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'shopkeeper' ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                activeRole === 'shopkeeper' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
               }`}
             >
               <ChefHat className="w-4 h-4" /> Barista KDS
@@ -114,7 +115,7 @@ export default function App() {
             <button
               onClick={() => handleRoleSwitch('owner')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                activeRole === 'owner' ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                activeRole === 'owner' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700 hover:text-pink-950'
               }`}
             >
               <BarChart3 className="w-4 h-4" /> Executive MIS
@@ -123,7 +124,7 @@ export default function App() {
             {authenticatedRole && activeRole !== 'customer' && (
               <button
                 onClick={handleLogout}
-                className="ml-2 px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-red-500/20"
+                className="ml-2 px-3 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-200"
                 title="Logout Staff Session"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -140,16 +141,16 @@ export default function App() {
       </main>
 
       {showPinModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-800 rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-700 text-slate-100">
+        <div className="fixed inset-0 bg-pink-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-pink-100 text-pink-950">
             <div className="text-center mb-5">
-              <div className="w-12 h-12 bg-pink-500/10 text-pink-400 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-pink-500/20">
+              <div className="w-12 h-12 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-pink-200">
                 <Lock className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold">
-                {targetRole === 'owner' ? 'Executive Password Required' : 'Barista Staff Access'}
+                {targetRole === 'owner' ? 'Owner MIS Password' : 'Barista KDS Access'}
               </h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-pink-600 mt-1">
                 {targetRole === 'owner' ? 'Enter master owner password.' : 'Enter 4-digit staff PIN (Default: 2468).'}
               </p>
             </div>
@@ -161,22 +162,22 @@ export default function App() {
                 placeholder={targetRole === 'shopkeeper' ? "••••" : "Password"}
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                className="w-full text-center text-2xl tracking-widest py-3 border border-slate-700 rounded-2xl focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                className="w-full text-center text-2xl tracking-widest py-3 border border-pink-200 rounded-2xl focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/50 text-pink-950"
                 autoFocus
               />
-              {authError && <p className="text-xs text-red-400 text-center font-semibold">{authError}</p>}
+              {authError && <p className="text-xs text-rose-500 text-center font-semibold">{authError}</p>}
 
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setShowPinModal(false)}
-                  className="flex-1 py-3 border border-slate-700 text-slate-300 font-semibold rounded-2xl hover:bg-slate-700/50 text-sm transition"
+                  className="flex-1 py-3 border border-pink-200 text-pink-800 font-semibold rounded-2xl hover:bg-pink-50 text-sm transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-2xl hover:opacity-90 shadow-lg text-sm transition"
+                  className="flex-1 py-3 bg-pink-500 text-white font-bold rounded-2xl hover:bg-pink-600 shadow-md text-sm transition"
                 >
                   Authenticate
                 </button>
@@ -189,7 +190,7 @@ export default function App() {
   );
 }
 
-// =================== 1. CUSTOMER KIOSK & COUPON ENGINE ===================
+// =================== 1. CUSTOMER KIOSK & 8-STAMP CARD ===================
 function CustomerKiosk() {
   const [customer, setCustomer] = useState({ name: '', phone: '', tableNo: 'Table 1', orderType: 'Dine-In' });
   const [isIdentified, setIsIdentified] = useState(false);
@@ -198,6 +199,9 @@ function CustomerKiosk() {
   const [cart, setCart] = useState([]);
   const [activeOrder, setActiveOrder] = useState(null);
   const [pastOrders, setPastOrders] = useState([]);
+
+  // Loyalty Stamp State (8 Drinks System)
+  const [stamps, setStamps] = useState(0);
 
   // Coupon State
   const [couponCode, setCouponCode] = useState('');
@@ -213,6 +217,7 @@ function CustomerKiosk() {
       setCustomer(parsed);
       setIsIdentified(true);
       fetchCustomerHistory(parsed.phone);
+      fetchLoyaltyStamps(parsed.phone);
 
       if (savedOrderId) {
         supabase
@@ -230,6 +235,14 @@ function CustomerKiosk() {
       }
     }
   }, []);
+
+  const fetchLoyaltyStamps = async (phone) => {
+    if (!phone) return;
+    const { data } = await supabase.from('loyalty_stamps').select('*').eq('phone', phone).single();
+    if (data) {
+      setStamps(data.stamp_count || 0);
+    }
+  };
 
   const fetchCustomerHistory = async (phone) => {
     if (!phone) return;
@@ -272,16 +285,20 @@ function CustomerKiosk() {
       localStorage.setItem('pop_customer_info', JSON.stringify(customer));
       setIsIdentified(true);
       fetchCustomerHistory(customer.phone);
+      fetchLoyaltyStamps(customer.phone);
     }
   };
 
-  const addToCart = (item) => {
+  const addToCart = (item, selectedSize = 'Regular') => {
     if (item.is_sold_out) return;
-    const existing = cart.find(c => c.id === item.id);
+    const price = selectedSize === 'Large' && item.large_price ? item.large_price : item.price;
+    const itemKey = `${item.id}-${selectedSize}`;
+
+    const existing = cart.find(c => c.cartKey === itemKey);
     if (existing) {
-      setCart(cart.map(c => c.id === item.id ? { ...c, qty: c.qty + 1 } : c));
+      setCart(cart.map(c => c.cartKey === itemKey ? { ...c, qty: c.qty + 1 } : c));
     } else {
-      setCart([...cart, { ...item, qty: 1 }]);
+      setCart([...cart, { ...item, cartKey: itemKey, size: selectedSize, price: price, qty: 1 }]);
     }
   };
 
@@ -289,9 +306,9 @@ function CustomerKiosk() {
     setCart(pastItems);
   };
 
-  const updateQty = (id, delta) => {
+  const updateQty = (cartKey, delta) => {
     setCart(cart.map(item => {
-      if (item.id === id) {
+      if (item.cartKey === cartKey) {
         const newQty = item.qty + delta;
         return newQty > 0 ? { ...item, qty: newQty } : null;
       }
@@ -299,9 +316,18 @@ function CustomerKiosk() {
     }).filter(Boolean));
   };
 
-  // Pricing & Coupon Calculations
   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-  
+
+  // Auto-Unapply Coupon Bug Fix
+  useEffect(() => {
+    if (appliedCoupon) {
+      if (subtotal < (appliedCoupon.min_order_value || 0)) {
+        setAppliedCoupon(null);
+        setCouponError(`Coupon ${appliedCoupon.code} unapplied (Requires min order ₹${appliedCoupon.min_order_value})`);
+      }
+    }
+  }, [subtotal, appliedCoupon]);
+
   let discountAmount = 0;
   if (appliedCoupon) {
     if (appliedCoupon.discount_type === 'percentage') {
@@ -368,6 +394,12 @@ function CustomerKiosk() {
     } else {
       setActiveOrder(newOrder);
       localStorage.setItem('pop_active_order_id', orderId);
+
+      // Update 8-Drink Loyalty Stamp Count
+      const newStamps = (stamps + cart.reduce((a, b) => a + b.qty, 0)) % 8;
+      await supabase.from('loyalty_stamps').upsert({ phone: customer.phone, stamp_count: newStamps });
+      setStamps(newStamps);
+
       setCart([]);
       setAppliedCoupon(null);
       setCouponCode('');
@@ -377,47 +409,47 @@ function CustomerKiosk() {
 
   if (!isIdentified) {
     return (
-      <div className="max-w-md mx-auto mt-8 bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 border border-slate-700 shadow-2xl">
+      <div className="max-w-md mx-auto mt-8 bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-pink-100 shadow-xl text-pink-950">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-3xl mx-auto mb-3 shadow-lg shadow-pink-500/30">
+          <div className="w-16 h-16 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-md shadow-pink-200">
             🧋
           </div>
-          <h2 className="text-2xl font-black text-white">Welcome to Pop & Pour</h2>
-          <p className="text-xs text-slate-400 mt-1">Enter details to generate your digital order token.</p>
+          <h2 className="text-2xl font-black">Welcome to Pop & Pour</h2>
+          <p className="text-xs text-pink-600 mt-1">Sip happy, stay happy • Collect 8 stamps for free sodas!</p>
         </div>
 
         <form onSubmit={handleStartSession} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase mb-1">Your Name</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Your Name</label>
             <input
               type="text"
               required
               placeholder="e.g. Vikram Sharma"
               value={customer.name}
               onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-              className="w-full px-4 py-3 border border-slate-700 rounded-2xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-300 uppercase mb-1">Mobile Number</label>
+            <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Mobile Number</label>
             <input
               type="tel"
               required
               placeholder="e.g. 9876543210"
               value={customer.phone}
               onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-              className="w-full px-4 py-3 border border-slate-700 rounded-2xl text-sm focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+              className="w-full px-4 py-3 border border-pink-200 rounded-2xl text-sm focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-xs font-bold text-slate-300 uppercase mb-1">Channel</label>
+              <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Channel</label>
               <select
                 value={customer.orderType}
                 onChange={(e) => setCustomer({ ...customer, orderType: e.target.value })}
-                className="w-full px-3 py-3 border border-slate-700 rounded-2xl text-xs font-bold bg-slate-900 text-white"
+                className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30"
               >
                 <option value="Dine-In">Dine-In</option>
                 <option value="Takeaway">Takeaway</option>
@@ -426,11 +458,11 @@ function CustomerKiosk() {
 
             {customer.orderType === 'Dine-In' && (
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase mb-1">Table</label>
+                <label className="block text-xs font-bold uppercase mb-1 text-pink-800">Table</label>
                 <select
                   value={customer.tableNo}
                   onChange={(e) => setCustomer({ ...customer, tableNo: e.target.value })}
-                  className="w-full px-3 py-3 border border-slate-700 rounded-2xl text-xs font-bold bg-slate-900 text-white"
+                  className="w-full px-3 py-3 border border-pink-200 rounded-2xl text-xs font-bold bg-pink-50/30"
                 >
                   <option value="Table 1">Table 1</option>
                   <option value="Table 2">Table 2</option>
@@ -444,7 +476,7 @@ function CustomerKiosk() {
 
           <button
             type="submit"
-            className="w-full py-3.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-2xl hover:opacity-95 transition shadow-lg shadow-pink-500/25 text-sm"
+            className="w-full py-3.5 bg-pink-500 text-white font-bold rounded-2xl hover:bg-pink-600 transition shadow-lg shadow-pink-200 text-sm"
           >
             Start Crafting Order 🍹
           </button>
@@ -456,37 +488,64 @@ function CustomerKiosk() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-6">
-        <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-6 text-white shadow-xl flex justify-between items-center">
+        <div className="bg-gradient-to-r from-pink-400 to-rose-400 rounded-3xl p-6 text-white shadow-lg flex justify-between items-center">
           <div>
             <span className="bg-white/20 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
               {customer.name} • {customer.orderType === 'Dine-In' ? customer.tableNo : 'Takeaway'}
             </span>
-            <h2 className="text-2xl font-black mt-2">Craft Beverages Menu 🧋</h2>
-            <p className="text-pink-100 text-xs mt-1">Select drinks & apply discount coupons.</p>
+            <h2 className="text-2xl font-black mt-2">Bubbles • Good Mood 🧋</h2>
+            <p className="text-pink-100 text-xs mt-1">Handcrafted Boba, Matchas & Sparkling Sodas brewed fresh.</p>
           </div>
-          <button onClick={() => setIsIdentified(false)} className="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl font-semibold">
+          <button onClick={() => setIsIdentified(false)} className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-xl font-semibold">
             Change
           </button>
         </div>
 
+        {/* 🌸 Digital Loyalty Stamp Card (8 Drinks System) */}
+        <div className="bg-white rounded-3xl p-5 border border-pink-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <Award className="w-5 h-5 text-pink-500" />
+              <h3 className="text-sm font-black text-pink-950 uppercase tracking-wide">8-Drink Loyalty Card</h3>
+            </div>
+            <p className="text-xs text-pink-600 mt-1">Buy 8 drinks and unlock 1 FREE Sparkling Soda on your next visit!</p>
+          </div>
+
+          {/* 8-Stamp Grid */}
+          <div className="flex flex-wrap gap-1.5 bg-pink-50/80 p-2.5 rounded-2xl border border-pink-100 justify-center">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((stIndex) => (
+              <div
+                key={stIndex}
+                className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs border transition ${
+                  stIndex <= stamps
+                    ? 'bg-pink-500 text-white border-pink-600 shadow-md scale-105'
+                    : 'bg-white text-pink-300 border-pink-200'
+                }`}
+              >
+                {stIndex <= stamps ? '🍹' : stIndex === 8 ? '🎁' : stIndex}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {pastOrders.length > 0 && (
-          <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-sm">
-            <h3 className="text-xs font-black text-pink-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <History className="w-4 h-4 text-pink-400" /> Your Favorites Memory
+          <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+            <h3 className="text-xs font-black text-pink-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <History className="w-4 h-4 text-pink-500" /> Your Favorites Memory
             </h3>
             <div className="flex gap-3 overflow-x-auto pb-2">
               {pastOrders.map((pOrd) => (
-                <div key={pOrd.id} className="min-w-[210px] bg-slate-900/80 p-3.5 rounded-2xl border border-slate-700 flex flex-col justify-between">
+                <div key={pOrd.id} className="min-w-[210px] bg-pink-50/50 p-3.5 rounded-2xl border border-pink-100 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-pink-400">{pOrd.token_no || pOrd.id}</span>
-                    <p className="text-xs font-bold text-slate-200 line-clamp-1 mt-1">
+                    <span className="text-[10px] font-mono font-bold text-pink-600">{pOrd.token_no || pOrd.id}</span>
+                    <p className="text-xs font-bold text-pink-950 line-clamp-1 mt-1">
                       {pOrd.items?.map(i => `${i.name} (${i.qty})`).join(', ')}
                     </p>
-                    <p className="text-xs font-black text-white mt-1">₹{pOrd.total_payable}</p>
+                    <p className="text-xs font-black text-pink-900 mt-1">₹{pOrd.total_payable}</p>
                   </div>
                   <button
                     onClick={() => reorderPastItems(pOrd.items)}
-                    className="mt-3 py-1.5 bg-pink-500/20 text-pink-300 border border-pink-500/30 rounded-xl text-[11px] font-bold hover:bg-pink-500/30 transition flex items-center justify-center gap-1"
+                    className="mt-3 py-1.5 bg-pink-500 text-white rounded-xl text-[11px] font-bold hover:bg-pink-600 transition flex items-center justify-center gap-1 shadow-sm"
                   >
                     <RotateCcw className="w-3 h-3" /> Re-order
                   </button>
@@ -498,68 +557,77 @@ function CustomerKiosk() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {menu.map((item) => (
-            <div key={item.id} className={`bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700/80 shadow-md flex flex-col justify-between transition hover:border-pink-500/50 ${item.is_sold_out ? 'opacity-40 bg-slate-900' : ''}`}>
+            <div key={item.id} className={`bg-white rounded-3xl p-5 border border-pink-100 shadow-sm flex flex-col justify-between transition hover:border-pink-300 ${item.is_sold_out ? 'opacity-40 bg-pink-50/20' : ''}`}>
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-xs font-semibold px-2.5 py-1 bg-pink-500/10 text-pink-400 rounded-full border border-pink-500/20">{item.category}</span>
+                  <span className="text-[10px] font-extrabold px-2.5 py-1 bg-pink-50 text-pink-600 rounded-full border border-pink-100 uppercase tracking-wide">{item.category}</span>
                   {item.is_sold_out ? (
-                    <span className="text-xs font-bold px-2.5 py-1 bg-red-500/20 text-red-400 rounded-xl">SOLD OUT</span>
+                    <span className="text-xs font-bold px-2.5 py-1 bg-rose-100 text-rose-600 rounded-xl">SOLD OUT</span>
                   ) : (
-                    <span className="text-base font-black text-white">₹{item.price}</span>
+                    <span className="text-base font-black text-pink-950">
+                      ₹{item.price} {item.large_price ? ` / ₹${item.large_price}` : ''}
+                    </span>
                   )}
                 </div>
-                <h3 className="font-bold text-white text-base mb-1">{item.name}</h3>
+                <h3 className="font-bold text-pink-950 text-base mb-1">{item.name}</h3>
               </div>
 
-              <button
-                disabled={item.is_sold_out}
-                onClick={() => addToCart(item)}
-                className={`mt-4 w-full py-3 rounded-2xl font-bold text-sm transition flex items-center justify-center gap-2 ${
-                  item.is_sold_out 
-                    ? 'bg-slate-700 text-slate-500 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:opacity-90 shadow-md'
-                }`}
-              >
-                <Plus className="w-4 h-4" /> Add to Cup
-              </button>
+              <div className="mt-4 flex gap-2">
+                <button
+                  disabled={item.is_sold_out}
+                  onClick={() => addToCart(item, 'Regular')}
+                  className="flex-1 py-2.5 bg-pink-50 hover:bg-pink-500 hover:text-white text-pink-800 rounded-2xl font-bold text-xs transition border border-pink-200 flex items-center justify-center gap-1"
+                >
+                  <Plus className="w-3.5 h-3.5" /> {item.large_price ? 'Regular' : 'Add Cup'}
+                </button>
+
+                {item.large_price && (
+                  <button
+                    disabled={item.is_sold_out}
+                    onClick={() => addToCart(item, 'Large')}
+                    className="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl font-bold text-xs transition flex items-center justify-center gap-1 shadow-sm"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Large
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       <div className="space-y-6">
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-xl sticky top-24">
-          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-            <ShoppingCart className="w-5 h-5 text-pink-400" /> Current Tray
+        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-md sticky top-24">
+          <h3 className="text-lg font-bold text-pink-950 mb-4 flex items-center gap-2">
+            <ShoppingCart className="w-5 h-5 text-pink-500" /> Current Tray
           </h3>
 
           {cart.length === 0 ? (
-            <div className="text-center py-10 text-slate-500">
+            <div className="text-center py-10 text-pink-300">
               <Coffee className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm font-medium">Tray is empty</p>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="divide-y divide-slate-700 max-h-48 overflow-y-auto pr-1">
+              <div className="divide-y divide-pink-100 max-h-48 overflow-y-auto pr-1">
                 {cart.map((item) => (
-                  <div key={item.id} className="flex justify-between items-center py-2.5">
+                  <div key={item.cartKey} className="flex justify-between items-center py-2.5">
                     <div>
-                      <h4 className="font-semibold text-xs text-slate-200">{item.name}</h4>
-                      <p className="text-[11px] text-slate-400">₹{item.price} × {item.qty}</p>
+                      <h4 className="font-semibold text-xs text-pink-950">{item.name} ({item.size})</h4>
+                      <p className="text-[11px] text-pink-600">₹{item.price} × {item.qty}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQty(item.id, -1)} className="w-6 h-6 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-xs"><Minus className="w-3 h-3" /></button>
-                      <span className="font-bold text-xs text-white">{item.qty}</span>
-                      <button onClick={() => updateQty(item.id, 1)} className="w-6 h-6 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-xs"><Plus className="w-3 h-3" /></button>
+                      <button onClick={() => updateQty(item.cartKey, -1)} className="w-6 h-6 bg-pink-100 text-pink-800 rounded-lg flex items-center justify-center font-bold text-xs"><Minus className="w-3 h-3" /></button>
+                      <span className="font-bold text-xs text-pink-950">{item.qty}</span>
+                      <button onClick={() => updateQty(item.cartKey, 1)} className="w-6 h-6 bg-pink-100 text-pink-800 rounded-lg flex items-center justify-center font-bold text-xs"><Plus className="w-3 h-3" /></button>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Coupon Code Input */}
-              <div className="pt-2 border-t border-slate-700">
-                <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1 flex items-center gap-1">
-                  <Tag className="w-3.5 h-3.5 text-pink-400" /> Have a Promo Code?
+              <div className="pt-2 border-t border-pink-100">
+                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1 flex items-center gap-1">
+                  <Tag className="w-3.5 h-3.5 text-pink-500" /> Apply Promo Code
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -567,50 +635,50 @@ function CustomerKiosk() {
                     placeholder="e.g. WELCOME10"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    className="flex-1 px-3 py-2 border border-slate-700 rounded-xl text-xs bg-slate-900 text-white focus:outline-none uppercase"
+                    className="flex-1 px-3 py-2 border border-pink-200 rounded-xl text-xs bg-pink-50/30 text-pink-950 focus:outline-none uppercase"
                   />
                   <button
                     onClick={applyCoupon}
-                    className="px-3.5 py-2 bg-pink-500/20 text-pink-300 border border-pink-500/30 rounded-xl text-xs font-bold hover:bg-pink-500/30 transition"
+                    className="px-3.5 py-2 bg-pink-500 text-white rounded-xl text-xs font-bold hover:bg-pink-600 transition shadow-sm"
                   >
                     Apply
                   </button>
                 </div>
-                {couponError && <p className="text-[10px] text-red-400 font-semibold mt-1">{couponError}</p>}
+                {couponError && <p className="text-[10px] text-rose-500 font-semibold mt-1">{couponError}</p>}
                 {appliedCoupon && (
-                  <div className="mt-1.5 flex justify-between items-center bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-lg text-emerald-400 text-[11px] font-bold">
+                  <div className="mt-1.5 flex justify-between items-center bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-emerald-700 text-[11px] font-bold">
                     <span>Coupon {appliedCoupon.code} Applied!</span>
-                    <button onClick={() => setAppliedCoupon(null)} className="text-red-400 hover:text-red-300">×</button>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-rose-500 hover:text-rose-700">×</button>
                   </div>
                 )}
               </div>
 
-              <div className="border-t border-slate-700 pt-3 space-y-1.5 text-xs">
-                <div className="flex justify-between text-slate-400">
+              <div className="border-t border-pink-100 pt-3 space-y-1.5 text-xs">
+                <div className="flex justify-between text-pink-700">
                   <span>Subtotal</span>
                   <span>₹{subtotal}</span>
                 </div>
                 {discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-400 font-bold">
+                  <div className="flex justify-between text-emerald-600 font-bold">
                     <span>Discount</span>
                     <span>-₹{discountAmount}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-base font-black text-white pt-1 border-t border-slate-700">
+                <div className="flex justify-between text-base font-black text-pink-950 pt-1 border-t border-pink-100">
                   <span>Total Payable</span>
-                  <span className="text-pink-400">₹{totalPayable}</span>
+                  <span className="text-pink-600">₹{totalPayable}</span>
                 </div>
 
                 <div className="space-y-2 pt-2">
                   <button
                     onClick={() => handlePlaceOrder('UPI Soundbox / QR')}
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 rounded-2xl hover:opacity-90 transition shadow-lg shadow-pink-500/20 text-xs"
+                    className="w-full bg-pink-500 text-white font-bold py-3 rounded-2xl hover:bg-pink-600 transition shadow-lg shadow-pink-200 text-xs"
                   >
                     Generate Token & Pay via UPI (₹{totalPayable})
                   </button>
                   <button
                     onClick={() => handlePlaceOrder('Cash at Counter')}
-                    className="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-2.5 rounded-2xl transition text-xs border border-slate-600"
+                    className="w-full bg-pink-50 hover:bg-pink-100 text-pink-800 font-bold py-2.5 rounded-2xl transition text-xs border border-pink-200"
                   >
                     Pay Cash at Counter
                   </button>
@@ -621,25 +689,24 @@ function CustomerKiosk() {
         </div>
 
         {activeOrder && (
-          <div className="bg-slate-800/90 border border-slate-700 rounded-3xl p-6 text-slate-100 shadow-2xl space-y-3">
+          <div className="bg-white border border-pink-200 rounded-3xl p-6 text-pink-950 shadow-lg space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs font-bold text-slate-400">Your Active Order Token</span>
-              <span className="text-2xl font-black text-pink-400 bg-pink-500/10 px-3 py-1 rounded-xl border border-pink-500/30">
+              <span className="text-xs font-bold text-pink-600">Active Order Token</span>
+              <span className="text-2xl font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-xl border border-pink-200">
                 {activeOrder.token_no || activeOrder.id}
               </span>
             </div>
 
-            <div className="p-4 bg-slate-900/80 rounded-2xl border border-slate-700 text-center space-y-2">
-              <p className="text-xs font-bold text-amber-400 flex items-center justify-center gap-1">
-                <AlertCircle className="w-4 h-4" /> Show Token {activeOrder.token_no} at Counter
+            <div className="p-4 bg-pink-50/60 rounded-2xl border border-pink-100 text-center space-y-2">
+              <p className="text-xs font-bold text-amber-700 flex items-center justify-center gap-1">
+                <AlertCircle className="w-4 h-4" /> Mention Token {activeOrder.token_no} at Counter
               </p>
-              <p className="text-[11px] text-slate-400">Mention token while paying on UPI Soundbox or Cash.</p>
               
-              <div className="pt-2">
+              <div className="pt-1">
                 <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wide ${
-                  activeOrder.status === 'Placed' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
-                  activeOrder.status === 'Preparing' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30 animate-pulse' :
-                  activeOrder.status === 'Ready' ? 'bg-emerald-500 text-white font-bold shadow-lg' : 'bg-slate-700 text-slate-300'
+                  activeOrder.status === 'Placed' ? 'bg-amber-100 text-amber-800 border border-amber-200' :
+                  activeOrder.status === 'Preparing' ? 'bg-blue-100 text-blue-800 border border-blue-200 animate-pulse' :
+                  activeOrder.status === 'Ready' ? 'bg-emerald-600 text-white font-bold shadow-md' : 'bg-pink-100 text-pink-800'
                 }`}>
                   {activeOrder.payment_status === 'Unpaid' && activeOrder.status === 'Placed' 
                     ? 'Waiting Counter Payment' 
@@ -699,18 +766,18 @@ function ShopkeeperKDS() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap justify-between items-center bg-slate-800/80 backdrop-blur-md p-6 rounded-3xl border border-slate-700 shadow-md gap-4">
+      <div className="flex flex-wrap justify-between items-center bg-white p-6 rounded-3xl border border-pink-100 shadow-sm gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-white">Barista Kitchen Display (KDS)</h2>
-          <p className="text-xs text-slate-400">Approve tokens on payment soundbox & manage beverage queue</p>
+          <h2 className="text-xl font-extrabold text-pink-950">Barista Kitchen Display (KDS)</h2>
+          <p className="text-xs text-pink-600">Approve tokens on payment soundbox & manage drink queue</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-slate-900/80 p-1 rounded-2xl flex border border-slate-700 text-xs font-bold">
+          <div className="bg-pink-50 p-1 rounded-2xl flex border border-pink-100 text-xs font-bold">
             <button
               onClick={() => setKdsTab('active')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'active' ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                kdsTab === 'active' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700'
               }`}
             >
               <Clock className="w-4 h-4" /> Active Queue ({activeOrders.length})
@@ -718,14 +785,14 @@ function ShopkeeperKDS() {
             <button
               onClick={() => setKdsTab('completed')}
               className={`px-4 py-2 rounded-xl transition flex items-center gap-1.5 ${
-                kdsTab === 'completed' ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                kdsTab === 'completed' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700'
               }`}
             >
               <Check className="w-4 h-4" /> History ({completedOrders.length})
             </button>
           </div>
 
-          <button onClick={playOrderChime} className="px-3 py-2 bg-pink-500/10 text-pink-400 rounded-2xl text-xs font-bold border border-pink-500/20 flex items-center gap-1 hover:bg-pink-500/20">
+          <button onClick={playOrderChime} className="px-3 py-2 bg-pink-100 text-pink-700 rounded-2xl text-xs font-bold border border-pink-200 flex items-center gap-1 hover:bg-pink-200">
             <Volume2 className="w-4 h-4" /> Chime Test
           </button>
         </div>
@@ -736,31 +803,31 @@ function ShopkeeperKDS() {
           {kdsTab === 'active' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {activeOrders.length === 0 ? (
-                <div className="col-span-2 bg-slate-800/50 rounded-3xl p-12 text-center border border-slate-700 text-slate-500 font-medium">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-pink-100 text-pink-400 font-medium">
                   No active pending orders in queue.
                 </div>
               ) : (
                 activeOrders.map((order) => (
-                  <div key={order.id} className={`bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border shadow-md flex flex-col justify-between ${
-                    order.payment_status === 'Unpaid' ? 'border-amber-500/50 bg-amber-500/5' : 'border-slate-700'
+                  <div key={order.id} className={`bg-white rounded-3xl p-5 border shadow-sm flex flex-col justify-between ${
+                    order.payment_status === 'Unpaid' ? 'border-amber-300 bg-amber-50/30' : 'border-pink-100'
                   }`}>
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-black text-sm bg-pink-500/20 text-pink-300 border border-pink-500/30 px-3 py-1 rounded-xl">
+                        <span className="font-mono font-black text-sm bg-pink-100 text-pink-700 border border-pink-200 px-3 py-1 rounded-xl">
                           {order.token_no || order.id}
                         </span>
-                        <span className="text-[10px] font-black px-2.5 py-1 bg-slate-700 text-slate-300 rounded-full uppercase">
+                        <span className="text-[10px] font-black px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full uppercase">
                           {order.order_type} ({order.table_no})
                         </span>
                       </div>
 
-                      <p className="text-xs font-bold text-slate-200 mb-2">{order.customer_name} • {order.phone}</p>
+                      <p className="text-xs font-bold text-pink-950 mb-2">{order.customer_name} • {order.phone}</p>
 
-                      <div className="space-y-1.5 mb-4 border-t border-b border-slate-700/60 py-2">
+                      <div className="space-y-1.5 mb-4 border-t border-b border-pink-50 py-2">
                         {order.items?.map((it, idx) => (
                           <div key={idx} className="flex justify-between text-sm">
-                            <span className="text-slate-300 font-medium">• {it.name}</span>
-                            <span className="font-bold text-white">x{it.qty}</span>
+                            <span className="text-pink-900 font-medium">• {it.name} ({it.size || 'Regular'})</span>
+                            <span className="font-bold text-pink-950">x{it.qty}</span>
                           </div>
                         ))}
                       </div>
@@ -768,9 +835,9 @@ function ShopkeeperKDS() {
 
                     <div className="flex items-center justify-between pt-2">
                       <div className="text-xs">
-                        <p className="text-slate-400 font-medium">Bill: <strong className="text-white">₹{order.total_payable}</strong></p>
+                        <p className="text-pink-600 font-medium">Bill: <strong className="text-pink-950">₹{order.total_payable}</strong></p>
                         {order.discount_applied > 0 && (
-                          <p className="text-[10px] text-emerald-400">Coupon Discount: -₹{order.discount_applied}</p>
+                          <p className="text-[10px] text-emerald-600">Discount: -₹{order.discount_applied}</p>
                         )}
                       </div>
 
@@ -778,16 +845,16 @@ function ShopkeeperKDS() {
                         {order.payment_status === 'Unpaid' && (
                           <button
                             onClick={() => approveTokenAndPrep(order.id)}
-                            className="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black rounded-xl text-xs shadow-md hover:opacity-90"
+                            className="px-3 py-2 bg-amber-500 text-white font-black rounded-xl text-xs shadow-md hover:bg-amber-600"
                           >
                             Approve Token & Prep
                           </button>
                         )}
                         {order.payment_status === 'Paid' && order.status === 'Preparing' && (
-                          <button onClick={() => updateOrderStatus(order.id, 'Ready')} className="px-3.5 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Mark Ready</button>
+                          <button onClick={() => updateOrderStatus(order.id, 'Ready')} className="px-3 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">Mark Ready</button>
                         )}
                         {order.status === 'Ready' && (
-                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3.5 py-2 bg-slate-900 text-white border border-slate-700 rounded-xl text-xs font-bold">Complete</button>
+                          <button onClick={() => updateOrderStatus(order.id, 'Completed')} className="px-3 py-2 bg-pink-900 text-white rounded-xl text-xs font-bold">Complete</button>
                         )}
                       </div>
                     </div>
@@ -798,27 +865,27 @@ function ShopkeeperKDS() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {completedOrders.length === 0 ? (
-                <div className="col-span-2 bg-slate-800/50 rounded-3xl p-12 text-center border border-slate-700 text-slate-500 font-medium">
+                <div className="col-span-2 bg-white rounded-3xl p-12 text-center border border-pink-100 text-pink-400 font-medium">
                   No completed orders found in history.
                 </div>
               ) : (
                 completedOrders.map((order) => (
-                  <div key={order.id} className="bg-slate-800/40 rounded-3xl p-5 border border-slate-700/60 flex flex-col justify-between">
+                  <div key={order.id} className="bg-pink-50/40 rounded-3xl p-5 border border-pink-100 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="font-mono font-bold text-xs bg-slate-700 px-2.5 py-1 rounded-xl text-slate-300">{order.token_no || order.id}</span>
-                        <span className="text-[10px] font-black px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full uppercase">Fulfilled</span>
+                        <span className="font-mono font-bold text-xs bg-pink-100 px-2.5 py-1 rounded-xl text-pink-800">{order.token_no || order.id}</span>
+                        <span className="text-[10px] font-black px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full uppercase">Fulfilled</span>
                       </div>
-                      <p className="text-xs font-bold text-slate-300 mb-2">{order.customer_name} • ₹{order.total_payable}</p>
+                      <p className="text-xs font-bold text-pink-900 mb-2">{order.customer_name} • ₹{order.total_payable}</p>
                       <div className="space-y-1 mb-3">
                         {order.items?.map((it, idx) => (
-                          <p key={idx} className="text-xs text-slate-400">• {it.name} x{it.qty}</p>
+                          <p key={idx} className="text-xs text-pink-700">• {it.name} x{it.qty}</p>
                         ))}
                       </div>
                     </div>
                     <button
                       onClick={() => updateOrderStatus(order.id, 'Preparing')}
-                      className="py-1.5 px-3 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-xs font-bold transition self-end flex items-center gap-1 border border-slate-600"
+                      className="py-1.5 px-3 bg-white border border-pink-200 text-pink-800 rounded-xl text-xs font-bold hover:bg-pink-50 transition self-end flex items-center gap-1"
                     >
                       <RotateCcw className="w-3 h-3" /> Re-open Ticket
                     </button>
@@ -830,25 +897,25 @@ function ShopkeeperKDS() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-md">
-            <h3 className="font-bold text-white text-base mb-1 flex items-center gap-2">
-              <Package className="w-4 h-4 text-pink-400" /> Menu Stock Control
+          <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm">
+            <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+              <Package className="w-4 h-4 text-pink-500" /> Menu Stock Control
             </h3>
-            <p className="text-xs text-slate-400 mb-4">Toggle drink availability on customer kiosks in real-time.</p>
+            <p className="text-xs text-pink-600 mb-4">Toggle drink availability on customer kiosks in real-time.</p>
 
             <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
               {menu.map((item) => (
-                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-slate-700 bg-slate-900/60">
+                <div key={item.id} className="flex justify-between items-center p-3 rounded-2xl border border-pink-100 bg-pink-50/30">
                   <div>
-                    <h4 className="font-bold text-xs text-white">{item.name}</h4>
-                    <span className={`text-[10px] font-bold ${item.is_sold_out ? 'text-red-400' : 'text-emerald-400'}`}>
+                    <h4 className="font-bold text-xs text-pink-950">{item.name}</h4>
+                    <span className={`text-[10px] font-bold ${item.is_sold_out ? 'text-rose-500' : 'text-emerald-600'}`}>
                       {item.is_sold_out ? 'Sold Out' : 'Available'}
                     </span>
                   </div>
                   <button
                     onClick={() => toggleSoldOut(item.id, item.is_sold_out)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                      item.is_sold_out ? 'bg-emerald-600 text-white' : 'bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30'
+                      item.is_sold_out ? 'bg-emerald-600 text-white' : 'bg-rose-500 text-white'
                     }`}
                   >
                     {item.is_sold_out ? 'Restock' : 'Sold Out'}
@@ -863,21 +930,17 @@ function ShopkeeperKDS() {
   );
 }
 
-// =================== 3. EXECUTIVE MIS & COUPON MANAGER ===================
+// =================== 3. EXECUTIVE MIS & COUPON CONTROL ===================
 function ExecutiveMIS() {
   const [orders, setOrders] = useState([]);
   const [menu, setMenu] = useState([]);
   const [coupons, setCoupons] = useState([]);
 
-  // Date Filtering State
   const [period, setPeriod] = useState('today');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  // New Item State
-  const [newItem, setNewItem] = useState({ name: '', category: 'Boba Teas', price: '', cogs: '' });
-
-  // New Coupon State
+  const [newItem, setNewItem] = useState({ name: '', category: 'Sparkling Soda Series', price: '', large_price: '', cogs: '' });
   const [newCoupon, setNewCoupon] = useState({ code: '', discount_type: 'percentage', discount_value: '', min_order_value: '0' });
 
   const loadData = async () => {
@@ -927,7 +990,6 @@ function ExecutiveMIS() {
   const netMargin = grossSales > 0 ? ((grossProfit / grossSales) * 100).toFixed(1) : 0;
   const aov = filteredOrders.length > 0 ? (grossSales / filteredOrders.length).toFixed(0) : 0;
 
-  // Add New Item
   const handleAddItem = async (e) => {
     e.preventDefault();
     if (!newItem.name || !newItem.price) return;
@@ -936,7 +998,8 @@ function ExecutiveMIS() {
       name: newItem.name,
       category: newItem.category,
       price: Number(newItem.price),
-      cogs: Number(newItem.cogs) || 40,
+      large_price: newItem.large_price ? Number(newItem.large_price) : null,
+      cogs: Number(newItem.cogs) || 35,
       is_sold_out: false
     };
 
@@ -944,7 +1007,7 @@ function ExecutiveMIS() {
     if (error) {
       alert('Error adding menu item: ' + error.message);
     } else {
-      setNewItem({ name: '', category: 'Boba Teas', price: '', cogs: '' });
+      setNewItem({ name: '', category: 'Sparkling Soda Series', price: '', large_price: '', cogs: '' });
       loadData();
     }
   };
@@ -958,13 +1021,12 @@ function ExecutiveMIS() {
   };
 
   const handleDeleteItem = async (id) => {
-    if (confirm('Permanently remove this menu item?')) {
+    if (confirm('Permanently remove this drink from menu?')) {
       await supabase.from('items').delete().eq('id', id);
       loadData();
     }
   };
 
-  // Add Coupon
   const handleAddCoupon = async (e) => {
     e.preventDefault();
     if (!newCoupon.code || !newCoupon.discount_value) return;
@@ -1000,20 +1062,20 @@ function ExecutiveMIS() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-slate-800/80 backdrop-blur-md p-6 rounded-3xl border border-slate-700 shadow-md flex flex-wrap justify-between items-center gap-4">
+      <div className="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm flex flex-wrap justify-between items-center gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-white">Executive MIS Financial Dashboard</h2>
-          <p className="text-xs text-slate-400">Real-time revenue, COGS, margins, and active discount promotions</p>
+          <h2 className="text-xl font-extrabold text-pink-950">Executive MIS Financial Dashboard</h2>
+          <p className="text-xs text-pink-600">Period financial analytics, COGS tracking, and promo coupon controls</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="bg-slate-900/80 p-1 rounded-2xl flex border border-slate-700 text-xs font-bold">
+          <div className="bg-pink-50 p-1 rounded-2xl flex border border-pink-100 text-xs font-bold">
             {['today', 'yesterday', 'week', 'month', 'ytd', 'custom'].map((pKey) => (
               <button
                 key={pKey}
                 onClick={() => setPeriod(pKey)}
                 className={`px-3 py-1.5 rounded-xl uppercase tracking-wider transition ${
-                  period === pKey ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                  period === pKey ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-700'
                 }`}
               >
                 {pKey}
@@ -1022,19 +1084,19 @@ function ExecutiveMIS() {
           </div>
 
           {period === 'custom' && (
-            <div className="flex items-center gap-1.5 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-700 text-xs">
+            <div className="flex items-center gap-1.5 bg-pink-50 p-1.5 rounded-2xl border border-pink-100 text-xs">
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-slate-800 text-white px-2 py-1 rounded-xl border border-slate-700 focus:outline-none"
+                className="bg-white text-pink-950 px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
               />
-              <span className="text-slate-500">to</span>
+              <span className="text-pink-400">to</span>
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="bg-slate-800 text-white px-2 py-1 rounded-xl border border-slate-700 focus:outline-none"
+                className="bg-white text-pink-950 px-2 py-1 rounded-xl border border-pink-200 focus:outline-none"
               />
             </div>
           )}
@@ -1042,73 +1104,72 @@ function ExecutiveMIS() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-md">
-          <p className="text-xs text-slate-400 font-medium flex items-center justify-between">
-            Gross Collections <TrendingUp className="w-4 h-4 text-emerald-400" />
+        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <p className="text-xs text-pink-600 font-medium flex items-center justify-between">
+            Gross Revenue <TrendingUp className="w-4 h-4 text-emerald-500" />
           </p>
-          <h3 className="text-2xl font-black text-white mt-1">₹{grossSales}</h3>
-          <p className="text-[10px] text-slate-500 mt-1">{filteredOrders.length} Orders</p>
+          <h3 className="text-2xl font-black text-pink-950 mt-1">₹{grossSales}</h3>
+          <p className="text-[10px] text-pink-500 mt-1">{filteredOrders.length} Orders</p>
         </div>
 
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-md">
-          <p className="text-xs text-slate-400 font-medium">Raw Ingredient COGS</p>
-          <h3 className="text-2xl font-black text-red-400 mt-1">₹{cogsTotal}</h3>
-          <p className="text-[10px] text-slate-500 mt-1">Direct Costs</p>
+        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <p className="text-xs text-pink-600 font-medium">Ingredients COGS</p>
+          <h3 className="text-2xl font-black text-rose-500 mt-1">₹{cogsTotal}</h3>
+          <p className="text-[10px] text-pink-500 mt-1">Direct Costs</p>
         </div>
 
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-md">
-          <p className="text-xs text-slate-400 font-medium">Net Gross Profit</p>
-          <h3 className="text-2xl font-black text-emerald-400 mt-1">₹{grossProfit}</h3>
-          <p className="text-[10px] text-slate-500 mt-1">Sales - COGS</p>
+        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <p className="text-xs text-pink-600 font-medium">Gross Profit</p>
+          <h3 className="text-2xl font-black text-emerald-600 mt-1">₹{grossProfit}</h3>
+          <p className="text-[10px] text-pink-500 mt-1">Sales - COGS</p>
         </div>
 
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-md">
-          <p className="text-xs text-slate-400 font-medium">Operating Margin</p>
-          <h3 className="text-2xl font-black text-purple-400 mt-1">{netMargin}%</h3>
-          <p className="text-[10px] text-slate-500 mt-1">Net %</p>
+        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <p className="text-xs text-pink-600 font-medium">Operating Margin</p>
+          <h3 className="text-2xl font-black text-purple-600 mt-1">{netMargin}%</h3>
+          <p className="text-[10px] text-pink-500 mt-1">Net %</p>
         </div>
 
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 border border-slate-700 shadow-md">
-          <p className="text-xs text-slate-400 font-medium">Avg Order Value (AOV)</p>
-          <h3 className="text-2xl font-black text-pink-400 mt-1">₹{aov}</h3>
-          <p className="text-[10px] text-slate-500 mt-1">Per Ticket</p>
+        <div className="bg-white rounded-3xl p-5 border border-pink-100 shadow-sm">
+          <p className="text-xs text-pink-600 font-medium">Avg Order Value</p>
+          <h3 className="text-2xl font-black text-pink-600 mt-1">₹{aov}</h3>
+          <p className="text-[10px] text-pink-500 mt-1">Per Ticket</p>
         </div>
       </div>
 
-      {/* Coupon Manager & New Coupon Form */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-md space-y-4">
-          <h3 className="font-bold text-white text-base flex items-center gap-2">
-            <Ticket className="w-5 h-5 text-pink-400" /> Promotional Coupon Codes
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-100 shadow-sm space-y-4">
+          <h3 className="font-bold text-pink-950 text-base flex items-center gap-2">
+            <Ticket className="w-5 h-5 text-pink-500" /> Active Promo Coupons
           </h3>
 
-          <div className="divide-y divide-slate-700/60 max-h-[300px] overflow-y-auto pr-1">
+          <div className="divide-y divide-pink-100 max-h-[250px] overflow-y-auto pr-1">
             {coupons.map((c) => (
               <div key={c.id} className="py-3 flex items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-black text-sm bg-pink-500/20 text-pink-300 border border-pink-500/30 px-2.5 py-0.5 rounded-lg">
+                    <span className="font-mono font-black text-sm bg-pink-100 text-pink-700 border border-pink-200 px-2.5 py-0.5 rounded-lg">
                       {c.code}
                     </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${c.is_active ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${c.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
                       {c.is_active ? 'Active' : 'Disabled'}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Discount: <strong className="text-white">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Bill: ₹{c.min_order_value}
+                  <p className="text-xs text-pink-600 mt-1">
+                    Discount: <strong className="text-pink-950">{c.discount_type === 'percentage' ? `${c.discount_value}%` : `₹${c.discount_value}`}</strong> | Min Order: ₹{c.min_order_value}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => toggleCouponStatus(c.id, c.is_active)}
-                    className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-xs font-bold transition"
+                    className="px-3 py-1 bg-pink-50 hover:bg-pink-100 text-pink-800 rounded-xl text-xs font-bold transition border border-pink-200"
                   >
                     {c.is_active ? 'Disable' : 'Enable'}
                   </button>
                   <button
                     onClick={() => handleDeleteCoupon(c.id)}
-                    className="p-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl transition border border-red-500/20"
+                    className="p-1.5 bg-rose-50 text-rose-600 rounded-xl transition border border-rose-200"
                     title="Delete Coupon"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -1119,33 +1180,32 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        {/* Add Coupon Form */}
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-md h-fit">
-          <h3 className="font-bold text-white text-base mb-1 flex items-center gap-2">
-            <Plus className="w-5 h-5 text-purple-400" /> Create Promo Coupon
+        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm h-fit">
+          <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+            <Plus className="w-5 h-5 text-pink-500" /> Create Promo Coupon
           </h3>
-          <p className="text-xs text-slate-400 mb-4">Set custom promo codes for customer discounts.</p>
+          <p className="text-xs text-pink-600 mb-4">Set promo codes for customer discounts.</p>
 
           <form onSubmit={handleAddCoupon} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Coupon Code</label>
+              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Coupon Code</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. SUMMER20"
                 value={newCoupon.code}
                 onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
-                className="w-full px-3.5 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white uppercase"
+                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950 uppercase"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Type</label>
+                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Type</label>
                 <select
                   value={newCoupon.discount_type}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_type: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs font-bold bg-slate-900 text-white"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-pink-950"
                 >
                   <option value="percentage">% Percentage</option>
                   <option value="flat">₹ Flat Amount</option>
@@ -1153,68 +1213,67 @@ function ExecutiveMIS() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Discount Value</label>
+                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Discount</label>
                 <input
                   type="number"
                   required
                   placeholder={newCoupon.discount_type === 'percentage' ? 'e.g. 20 (%)' : 'e.g. 50 (₹)'}
                   value={newCoupon.discount_value}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discount_value: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Min Bill Amount (₹)</label>
+              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Min Bill Amount (₹)</label>
               <input
                 type="number"
-                placeholder="e.g. 150 (0 for no limit)"
+                placeholder="e.g. 200 (0 for no limit)"
                 value={newCoupon.min_order_value}
                 onChange={(e) => setNewCoupon({ ...newCoupon, min_order_value: e.target.value })}
-                className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-2xl hover:opacity-90 transition shadow-lg shadow-pink-500/20 text-xs mt-2"
+              className="w-full py-3 bg-pink-500 text-white font-bold rounded-2xl hover:bg-pink-600 transition shadow-md text-xs mt-2"
             >
-              Issue Coupon Code
+              Issue Promo Code
             </button>
           </form>
         </div>
       </div>
 
-      {/* Dynamic Menu Catalog Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-md space-y-4">
-          <h3 className="font-bold text-white text-base flex items-center gap-2">
-            <Edit3 className="w-5 h-5 text-pink-400" /> Active Menu Catalog
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-pink-100 shadow-sm space-y-4">
+          <h3 className="font-bold text-pink-950 text-base flex items-center gap-2">
+            <Edit3 className="w-5 h-5 text-pink-500" /> Active Menu Catalog
           </h3>
 
-          <div className="divide-y divide-slate-700/60 max-h-[350px] overflow-y-auto pr-1">
+          <div className="divide-y divide-pink-100 max-h-[350px] overflow-y-auto pr-1">
             {menu.map((item) => (
               <div key={item.id} className="py-3.5 flex items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm text-white">{item.name}</h4>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 bg-slate-700 rounded-md text-slate-300">{item.category}</span>
+                    <h4 className="font-bold text-sm text-pink-950">{item.name}</h4>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 bg-pink-50 text-pink-600 rounded-md">{item.category}</span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5">Price: <strong className="text-white">₹{item.price}</strong> | COGS: ₹{item.cogs}</p>
+                  <p className="text-xs text-pink-600 mt-0.5">Regular: <strong className="text-pink-950">₹{item.price}</strong> {item.large_price ? `| Large: ₹${item.large_price}` : ''} | COGS: ₹{item.cogs}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleUpdatePrice(item.id, item.price)}
-                    className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-xs font-bold transition"
+                    className="px-3 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-800 rounded-xl text-xs font-bold transition border border-pink-200"
                   >
                     Edit Price
                   </button>
                   <button
                     onClick={() => handleDeleteItem(item.id)}
-                    className="p-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl transition border border-red-500/20"
-                    title="Delete Item"
+                    className="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition border border-rose-200"
+                    title="Delete Drink"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -1224,68 +1283,69 @@ function ExecutiveMIS() {
           </div>
         </div>
 
-        {/* Add New Beverage Form */}
-        <div className="bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-700 shadow-md h-fit">
-          <h3 className="font-bold text-white text-base mb-1 flex items-center gap-2">
-            <Plus className="w-5 h-5 text-purple-400" /> Add New Beverage
+        <div className="bg-white rounded-3xl p-6 border border-pink-100 shadow-sm h-fit">
+          <h3 className="font-bold text-pink-950 text-base mb-1 flex items-center gap-2">
+            <Plus className="w-5 h-5 text-pink-500" /> Add New Beverage
           </h3>
-          <p className="text-xs text-slate-400 mb-4">Instantly adds drink to live customer menus.</p>
+          <p className="text-xs text-pink-600 mb-4">Instantly adds drink to customer menu kiosks.</p>
 
           <form onSubmit={handleAddItem} className="space-y-3">
             <div>
-              <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Item Name</label>
+              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Item Name</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Taro Boba Tea"
+                placeholder="e.g. Mango Matcha"
                 value={newItem.name}
                 onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                className="w-full px-3.5 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                className="w-full px-3.5 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Category</label>
+              <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Category Series</label>
               <select
                 value={newItem.category}
                 onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
-                className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs font-bold bg-slate-900 text-white"
+                className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs font-bold bg-pink-50/30 text-pink-950"
               >
-                <option value="Boba Teas">Boba Teas</option>
-                <option value="Sparkling Sodas">Sparkling Sodas</option>
-                <option value="Fruit Teas">Fruit Teas</option>
-                <option value="Snacks & Desserts">Snacks & Desserts</option>
+                <option value="Sparkling Soda Series">Sparkling Soda Series</option>
+                <option value="Popping Soda Series">Popping Soda Series</option>
+                <option value="Milk Tea Series">Milk Tea Series</option>
+                <option value="Milk Boba Series">Milk Boba Series</option>
+                <option value="Matcha Series">Matcha Series</option>
+                <option value="No Added Sugar Specials">No Added Sugar Specials</option>
               </select>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">Price (₹)</label>
+                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Regular (₹)</label>
                 <input
                   type="number"
                   required
-                  placeholder="e.g. 190"
+                  placeholder="e.g. 160"
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-300 uppercase mb-1">COGS (₹)</label>
+                <label className="block text-[11px] font-bold text-pink-800 uppercase mb-1">Large (₹)</label>
                 <input
                   type="number"
-                  placeholder="e.g. 45"
-                  value={newItem.cogs}
-                  onChange={(e) => setNewItem({ ...newItem, cogs: e.target.value })}
-                  className="w-full px-3 py-2.5 border border-slate-700 rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none bg-slate-900 text-white"
+                  placeholder="e.g. 190 (Optional)"
+                  value={newItem.large_price}
+                  onChange={(e) => setNewItem({ ...newItem, large_price: e.target.value })}
+                  className="w-full px-3 py-2.5 border border-pink-200 rounded-xl text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none bg-pink-50/30 text-pink-950"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-2xl hover:opacity-90 transition shadow-lg shadow-pink-500/20 text-xs mt-2"
+              className="w-full py-3 bg-pink-500 text-white font-bold rounded-2xl hover:bg-pink-600 transition shadow-md text-xs mt-2"
             >
               Add to Live Menu
             </button>
