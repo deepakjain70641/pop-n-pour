@@ -69,8 +69,8 @@ export default function CustomerKiosk() {
   if (placed) {
     const left = placed.stampsAfter == null ? null : REWARD.stamps - placed.stampsAfter;
     return (
-      <div className={`${cls.card} mx-auto max-w-md p-8 text-center`}>
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FADCDF]"><Check className="h-8 w-8 text-[#E8744F]" /></div>
+      <div className={`${cls.card} anim-pop mx-auto max-w-md p-8 text-center`}>
+        <div className="anim-wiggle mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FADCDF]" style={{ animationDelay: '.3s' }}><Check className="h-8 w-8 text-[#E8744F]" /></div>
         <p className="text-xs font-bold uppercase tracking-widest text-[#6B6259]">Order placed</p>
         <h2 className="my-2 font-serif text-6xl font-black">#{placed.no}</h2>
         <p className="text-sm">{placed.name ? `Thanks, ${placed.name}! ` : ''}Please pay <b>{inr(placed.total)}</b> at the counter. We'll call your number when it's ready.</p>
@@ -88,13 +88,14 @@ export default function CustomerKiosk() {
   const shown = catId === 'all' ? CATEGORIES : [catOf(catId)];
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-      <section>
-        <div className="relative mb-5 overflow-hidden rounded-3xl bg-[#1F3B2C] px-6 py-7 text-[#FBF5EA] md:px-10 md:py-9">
-          <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[#E8744F]/30 blur-2xl" />
-          <div className="absolute -bottom-12 right-24 h-40 w-40 rounded-full bg-[#FADCDF]/30 blur-2xl" />
+    <div className="grid min-w-0 gap-6 lg:grid-cols-[1fr_360px]">
+      <section className="min-w-0">
+        <div className="anim-up relative mb-5 overflow-hidden rounded-3xl bg-[#1F3B2C] px-5 py-6 text-[#FBF5EA] md:px-10 md:py-9">
+          <div className="anim-float absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[#E8744F]/30 blur-2xl" />
+          <div className="anim-float absolute -bottom-12 right-24 h-40 w-40 rounded-full bg-[#FADCDF]/30 blur-2xl" style={{ animationDelay: '-2.5s' }} />
+          <span className="anim-float absolute right-5 top-4 text-4xl md:right-10 md:text-6xl" style={{ animationDelay: '-1s' }}>🧋</span>
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#FADCDF]">Welcome to</p>
-          <h2 className="font-serif text-3xl font-black md:text-5xl">Pop <span className="text-[#E8744F]">&amp;</span> Pour</h2>
+          <h2 className="font-serif text-3xl font-black md:text-5xl pr-12">Pop <span className="text-[#E8744F]">&amp;</span> Pour</h2>
           <p className="mt-2 max-w-md text-sm text-[#FBF5EA]/80">Sparkling sodas, milk teas, boba & matcha — made fresh at the counter. Pick your drink, we'll call your number.</p>
           <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#FBF5EA]/15 px-3 py-1 text-xs font-bold"><Sparkles className="h-3.5 w-3.5 text-[#E8744F]" /> Every {REWARD.stamps}th drink is on us</p>
         </div>
@@ -116,18 +117,18 @@ export default function CustomerKiosk() {
               <span className="text-xs font-bold uppercase tracking-widest text-[#6B6259]">{c.note}</span>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {itemsOf(menu, c.id).map((item) => <ItemCard key={item.id} item={item} cat={c} addons={c.addons ? addons : []} onAdd={addToCart} />)}
+              {itemsOf(menu, c.id).map((item, i) => <ItemCard key={item.id} item={item} cat={c} addons={c.addons ? addons : []} onAdd={addToCart} delay={i * 40} />)}
             </div>
           </div>
         ))}
       </section>
 
-      <button onClick={() => setCartOpen(true)} className={`${cls.btnCoral} fixed bottom-4 left-4 right-4 z-30 flex items-center justify-between shadow-lg lg:hidden`}>
+      <button key={count} onClick={() => setCartOpen(true)} className={`${cls.btnCoral} ${count ? 'anim-bump' : ''} fixed bottom-4 left-4 right-4 z-30 flex items-center justify-between py-3.5 shadow-xl lg:hidden`}>
         <span className="flex items-center gap-2"><ShoppingCart className="h-4 w-4" /> {count} item{count === 1 ? '' : 's'}</span>
         <span>{inr(total)}</span>
       </button>
 
-      <aside className={`${cartOpen ? 'fixed inset-0 z-50 overflow-y-auto bg-[#FBF5EA] p-4' : 'hidden'} lg:static lg:block lg:p-0`}>
+      <aside className={`${cartOpen ? 'anim-pop fixed inset-0 z-50 overflow-y-auto bg-[#FBF5EA] p-4' : 'hidden'} lg:static lg:block lg:p-0`}>
         <div className={`${cls.card} space-y-4 p-4 lg:sticky lg:top-24`}>
           <div className="flex items-center justify-between">
             <h3 className="font-serif text-xl font-bold">Your cup</h3>
@@ -207,13 +208,13 @@ const Row = ({ label, value, bold }) => (
   <div className={`flex justify-between ${bold ? 'text-base font-black' : 'text-[#6B6259]'}`}><span>{label}</span><span>{value}</span></div>
 );
 
-function ItemCard({ item, cat, addons, onAdd }) {
+function ItemCard({ item, cat, addons, onAdd, delay }) {
   const [ids, setIds] = useState([]);
   const toggle = (id) => setIds((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]));
   const extra = addonPrice(addons, ids);
   const sizes = [['R', item.price_r], ['L', item.price_l]].filter(([, p]) => p != null);
   return (
-    <div className={`${cls.card} relative flex flex-col gap-3 overflow-hidden p-4 transition hover:-translate-y-0.5 hover:shadow-md ${item.sold_out ? 'opacity-50' : ''}`}>
+    <div className={`${cls.card} anim-up relative flex flex-col gap-3 overflow-hidden p-4 transition hover:-translate-y-0.5 hover:shadow-md ${item.sold_out ? 'opacity-50' : ''}`} style={{ animationDelay: `${delay}ms` }}>
       <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: cat.color }} />
       <div className="flex items-start justify-between gap-2">
         <div>
@@ -297,7 +298,7 @@ function LoyaltyModal({ onClose, onDone }) {
   const tabCls = (m) => `flex-1 rounded-xl py-2 text-xs font-bold ${mode === m ? 'bg-[#1F3B2C] text-[#FBF5EA]' : 'bg-[#FADCDF]'}`;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F3B2C]/60 p-4 backdrop-blur-sm" onClick={onClose}>
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className={`${cls.card} w-full max-w-sm space-y-4 p-6`}>
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className={`${cls.card} anim-pop w-full max-w-sm space-y-4 p-6`}>
         <h3 className="text-center font-serif text-xl font-bold">Loyalty stamps</h3>
         <p className="text-center text-xs text-[#6B6259]">1 stamp per order · {REWARD.stamps} stamps = {REWARD.label}</p>
         <div className="flex gap-2">

@@ -104,7 +104,7 @@ function OrderCard({ o, onStart, onReady, onComplete, onCancel }) {
     ? `https://wa.me/91${o.customer_phone}?text=${encodeURIComponent(`Hi ${o.customer_name || ''}! Your Pop & Pour order #${o.order_no} is ready 🥤 Please collect it at the counter.`)}`
     : null;
   return (
-    <div className={`${cls.card} p-3`}>
+    <div className={`${cls.card} anim-up p-3`}>
       <div className="flex items-start justify-between">
         <div>
           <p className="font-serif text-2xl font-bold leading-none">#{o.order_no}</p>

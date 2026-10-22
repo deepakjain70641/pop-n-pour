@@ -74,7 +74,7 @@ export default function App() {
 function Modal({ title, Icon, onClose, onSubmit, busy, error, children, submitLabel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F3B2C]/60 p-4 backdrop-blur-sm" onClick={onClose}>
-      <form onSubmit={onSubmit} onClick={(e) => e.stopPropagation()} className={`${cls.card} w-full max-w-sm space-y-4 p-6`}>
+      <form onSubmit={onSubmit} onClick={(e) => e.stopPropagation()} className={`${cls.card} anim-pop w-full max-w-sm space-y-4 p-6`}>
         <div className="text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FADCDF]"><Icon className="h-5 w-5" /></div>
           <h3 className="font-serif text-xl font-bold">{title}</h3>
