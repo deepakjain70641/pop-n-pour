@@ -129,10 +129,10 @@ export default function CustomerKiosk() {
         ))}
       </section>
 
-      <button key={count} onClick={() => setCartOpen(true)} className={`${cls.btnCoral} ${count ? 'anim-bump' : ''} fixed bottom-4 left-4 right-4 z-30 flex items-center justify-between py-3.5 shadow-xl lg:hidden`}>
+      {count > 0 && <button key={count} onClick={() => setCartOpen(true)} className={`${cls.btnCoral} anim-bump fixed bottom-4 left-4 right-4 z-30 flex items-center justify-between py-3.5 shadow-xl lg:hidden`}>
         <span className="flex items-center gap-2"><ShoppingCart className="h-4 w-4" /> {count} item{count === 1 ? '' : 's'}</span>
         <span>{inr(total)}</span>
-      </button>
+      </button>}
 
       <aside className={`${cartOpen ? 'anim-pop fixed inset-0 z-50 overflow-y-auto bg-[#FBF5EA] p-4' : 'hidden'} lg:static lg:block lg:p-0`}>
         <div className={`${cls.card} space-y-4 p-4 lg:sticky lg:top-[calc(var(--hdr,0px)+1rem)]`}>
@@ -197,15 +197,15 @@ export default function CustomerKiosk() {
             </>
           )}
 
-          <div className="space-y-1 border-t border-[#F2DED5] pt-3 text-sm">
+          {cart.length > 0 && <div className="space-y-1 border-t border-[#F2DED5] pt-3 text-sm">
             <Row label="Subtotal" value={inr(subtotal)} />
             {promoDiscount > 0 && <Row label={`Promo ${promo.code}`} value={`− ${inr(promoDiscount)}`} />}
             {rewardDiscount > 0 && <Row label="Free Sparkling Soda" value={`− ${inr(rewardDiscount)}`} />}
             <Row label="Total" value={inr(total)} bold />
-          </div>
+          </div>}
           {error && <p className="text-xs font-bold text-[#C0392B]">{error}</p>}
           <button disabled={!cart.length || busy} onClick={() => placeOrder(false)} className={`${cls.btnCoral} w-full`}>
-            {busy ? 'Placing…' : `Place order · ${inr(total)}`}
+            {busy ? 'Placing…' : cart.length ? `Place order · ${inr(total)}` : 'Add a drink to order'}
           </button>
           <p className="text-center text-[11px] text-[#6B6259]">Pay by cash or UPI at the counter when you place the order</p>
         </div>
