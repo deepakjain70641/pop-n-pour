@@ -162,7 +162,7 @@ export default function CustomerKiosk() {
             </ul>
           )}
 
-          <PromoBox promo={promo} setPromo={setPromo} subtotal={subtotal} />
+          <PromoBox promo={promo} setPromo={setPromo} subtotal={subtotal} customer={customer} onNeedLogin={() => setShowLoyalty(true)} />
 
           {customer ? (
             <div className="rounded-xl bg-[#FADCDF] p-3 text-xs">
@@ -269,12 +269,13 @@ function ItemCard({ item, cat, addons, onAdd, delay }) {
   );
 }
 
-function PromoBox({ promo, setPromo, subtotal }) {
+function PromoBox({ promo, setPromo, subtotal, customer, onNeedLogin }) {
   const [code, setCode] = useState('');
   const [msg, setMsg] = useState('');
   const apply = async () => {
     const c = code.trim().toUpperCase();
     if (!c) return;
+    if (!customer) { setMsg('Enter your 10-digit mobile number to use a promo code'); return onNeedLogin(); } // promo needs a verified mobile (loyalty login)
     const { data } = await supabase.from('promos').select('*').eq('code', c).eq('active', true).maybeSingle();
     if (!data) return setMsg('Invalid or expired code');
     if (subtotal < Number(data.min_order)) return setMsg(`Minimum order ${inr(data.min_order)} for this code`);
