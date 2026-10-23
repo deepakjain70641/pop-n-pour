@@ -106,7 +106,7 @@ export default function CustomerKiosk() {
           </button>
         </div>
 
-        <div className="mb-5 flex gap-2 overflow-x-auto pb-1">
+        <div className="sticky top-[var(--hdr,0px)] z-20 -mx-3 mb-5 flex gap-2 overflow-x-auto bg-[#FBF5EA] px-3 py-2 md:-mx-6 md:px-6">
           {[{ id: 'all', name: 'All drinks', emoji: '✨' }, ...CATEGORIES].map((c) => (
             <button key={c.id} onClick={() => setCatId(c.id)}
               className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold transition ${c.id === catId ? 'bg-[#1F3B2C] text-[#FBF5EA]' : 'bg-[#FADCDF] hover:bg-[#F5C9CE]'}`}>
@@ -135,7 +135,7 @@ export default function CustomerKiosk() {
       </button>
 
       <aside className={`${cartOpen ? 'anim-pop fixed inset-0 z-50 overflow-y-auto bg-[#FBF5EA] p-4' : 'hidden'} lg:static lg:block lg:p-0`}>
-        <div className={`${cls.card} space-y-4 p-4 lg:sticky lg:top-24`}>
+        <div className={`${cls.card} space-y-4 p-4 lg:sticky lg:top-[calc(var(--hdr,0px)+1rem)]`}>
           <div className="flex items-center justify-between">
             <h3 className="font-serif text-xl font-bold">Your cup</h3>
             <button onClick={() => setCartOpen(false)} className="lg:hidden"><X className="h-5 w-5" /></button>

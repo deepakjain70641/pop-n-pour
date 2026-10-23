@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChefHat, BarChart3, LogOut, Lock, KeyRound } from 'lucide-react';
 import { supabase } from './supabase';
 import { cls } from './ui';
@@ -19,6 +19,12 @@ export default function App() {
   const [view, setView] = useState('kiosk');
   const [staff, setStaff] = useState(null);
   const [loginFor, setLoginFor] = useState(null);
+  const hdr = useRef(null);
+  useEffect(() => {
+    const ro = new ResizeObserver(([e]) => document.documentElement.style.setProperty('--hdr', `${e.target.offsetHeight}px`));
+    ro.observe(hdr.current);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => setStaff(await fetchStaff(data.session)));
@@ -39,7 +45,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FBF5EA] text-[#1F3B2C]">
-      <header className="sticky top-0 z-40 border-b border-[#F2DED5] bg-[#FBF5EA]/90 backdrop-blur">
+      <header ref={hdr} className="sticky top-0 z-40 border-b border-[#F2DED5] bg-[#FBF5EA]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <button onClick={() => go('kiosk')} className="flex items-center gap-3 text-left">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FADCDF] font-serif text-lg font-black">P&amp;p</div>
