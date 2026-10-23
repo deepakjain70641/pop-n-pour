@@ -256,7 +256,6 @@ function CustomersTab() {
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-[#6B6259]">PINs are stored hashed and cannot be viewed.</p>
     </div>
   );
 }

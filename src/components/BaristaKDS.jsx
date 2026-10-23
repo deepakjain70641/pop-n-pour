@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX, KeyRound, RefreshCw, Clock, Award, Ticket, MessageCircle, Ban } from 'lucide-react';
+import { Volume2, VolumeX, RefreshCw, Clock, Award, Ticket, MessageCircle, Ban } from 'lucide-react';
 import { supabase } from '../supabase';
 import { inr, cls, fmtTime, minsAgo } from '../ui';
 import { CATEGORIES, catName, itemsOf } from '../menu';
 
 const COLUMNS = [
-  { status: 'new', title: 'New', color: 'bg-[#FADCDF]' },
+  { status: 'new', title: 'New · collect payment', color: 'bg-[#FADCDF]' },
   { status: 'preparing', title: 'Preparing', color: 'bg-[#FCEBD2]' },
   { status: 'ready', title: 'Ready', color: 'bg-[#E6F2EC]' },
 ];
@@ -79,7 +79,7 @@ export default function BaristaKDS() {
               {list.length === 0 && <p className="py-6 text-center text-xs text-[#6B6259]">—</p>}
               {list.map((o) => (
                 <OrderCard key={o.id} o={o}
-                  onStart={() => update(o.id, { status: 'preparing' })}
+                  onStart={() => update(o.id, { status: 'preparing', paid_at: new Date().toISOString() })}
                   onReady={() => update(o.id, { status: 'ready' })}
                   onComplete={() => complete(o.id)}
                   onCancel={(reason) => update(o.id, { status: 'cancelled', cancel_reason: reason })} />
@@ -89,10 +89,7 @@ export default function BaristaKDS() {
         })}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <SoldOutPanel />
-        <PinReset />
-      </div>
+      <SoldOutPanel />
     </div>
   );
 }
@@ -123,7 +120,7 @@ function OrderCard({ o, onStart, onReady, onComplete, onCancel }) {
         ))}
       </ul>
       <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-bold">
-        <span>Collect {inr(o.total)}</span>
+        <span className={o.paid_at ? 'rounded-full bg-[#E6F2EC] px-2 py-0.5' : 'text-[#C0392B]'}>{o.paid_at ? 'Paid' : 'Collect'} {inr(o.total)}</span>
         {o.promo_code && <span className="flex items-center gap-1 rounded-full bg-[#E6F2EC] px-2 py-0.5"><Ticket className="h-3 w-3" />{o.promo_code}</span>}
         {o.reward_redeemed && <span className="flex items-center gap-1 rounded-full bg-[#FADCDF] px-2 py-0.5"><Award className="h-3 w-3" />Free soda</span>}
         {o.customer_id && !o.reward_redeemed && <span className="rounded-full bg-[#F4EBE1] px-2 py-0.5">Loyalty</span>}
@@ -136,9 +133,9 @@ function OrderCard({ o, onStart, onReady, onComplete, onCancel }) {
         </select>
       ) : (
         <div className="flex gap-2">
-          {o.status === 'new' && <button onClick={onStart} className={`${cls.btn} flex-1`}>Start</button>}
+          {o.status === 'new' && <button onClick={onStart} className={`${cls.btnCoral} flex-1`}>Paid · Start</button>}
           {o.status === 'preparing' && <button onClick={onReady} className={`${cls.btn} flex-1`}>Ready</button>}
-          {o.status === 'ready' && <button onClick={onComplete} className={`${cls.btnCoral} flex-1`}>Paid & handed over</button>}
+          {o.status === 'ready' && <button onClick={onComplete} className={`${cls.btn} flex-1`}>Handed over</button>}
           {o.status === 'ready' && wa && <a href={wa} target="_blank" rel="noreferrer" title="WhatsApp customer" className="flex items-center rounded-xl bg-[#25D366] px-3 text-white"><MessageCircle className="h-4 w-4" /></a>}
           <button onClick={() => setCancelling(true)} className={cls.btnGhost} title="Cancel"><Ban className="h-4 w-4" /></button>
         </div>
@@ -169,27 +166,5 @@ function SoldOutPanel() {
         </div>
       ))}
     </details>
-  );
-}
-
-function PinReset() {
-  const [phone, setPhone] = useState('');
-  const [pin, setPin] = useState('');
-  const [msg, setMsg] = useState('');
-  const submit = async (e) => {
-    e.preventDefault();
-    if (!/^\d{10}$/.test(phone) || !/^\d{4}$/.test(pin)) return setMsg('10-digit phone and 4-digit PIN required');
-    const { error } = await supabase.rpc('reset_customer_pin', { p_phone: phone, p_pin: pin });
-    setMsg(error ? error.message : 'PIN updated');
-    if (!error) { setPhone(''); setPin(''); }
-  };
-  return (
-    <form onSubmit={submit} className={`${cls.card} flex flex-wrap items-end gap-3 self-start p-4`}>
-      <h3 className="flex w-full items-center gap-2 text-sm font-black"><KeyRound className="h-4 w-4" /> Reset customer PIN</h3>
-      <div className="min-w-40 flex-1"><label className={cls.label}>Mobile</label><input inputMode="numeric" maxLength={10} value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))} className={cls.input} /></div>
-      <div className="w-32"><label className={cls.label}>New PIN</label><input inputMode="numeric" maxLength={4} value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))} className={cls.input} /></div>
-      <button type="submit" className={cls.btn}>Reset</button>
-      {msg && <p className="w-full text-xs font-bold">{msg}</p>}
-    </form>
   );
 }

@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ShoppingCart, Plus, Minus, Ticket, Award, X, Check, Sparkles } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, Ticket, Award, X, Check, Sparkles, History } from 'lucide-react';
 import { supabase } from '../supabase';
 import { CATEGORIES, REWARD, catOf, addonsOf, itemsOf } from '../menu';
-import { inr, cls } from '../ui';
+import { inr, cls, fmtTime } from '../ui';
 
 const addonPrice = (addons, ids) => ids.reduce((s, id) => s + Number(addons.find((a) => a.id === id)?.price_r || 0), 0);
 const addonNames = (addons, ids) => ids.map((id) => addons.find((a) => a.id === id)?.name).filter(Boolean);
 
 export default function CustomerKiosk() {
-  const [menu, setMenu] = useState([]);
+  const [menu, setMenu] = useState(() => { try { return JSON.parse(localStorage.getItem('menu') || '[]'); } catch { return []; } }); // cached copy paints instantly
   const [catId, setCatId] = useState('all');
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -17,12 +17,14 @@ export default function CustomerKiosk() {
   const [redeem, setRedeem] = useState(false);
   const [guestName, setGuestName] = useState('');
   const [showLoyalty, setShowLoyalty] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
+  const [nudge, setNudge] = useState(false); // asked a guest once to join loyalty before ordering
   const [placed, setPlaced] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const load = () => supabase.from('menu_items').select('*').order('sort').then(({ data }) => data && setMenu(data));
+    const load = () => supabase.from('menu_items').select('*').order('sort').then(({ data }) => { if (data) { setMenu(data); try { localStorage.setItem('menu', JSON.stringify(data)); } catch { /* ignore */ } } });
     load();
     const t = setInterval(load, 60000); // picks up sold-out changes
     return () => clearInterval(t);
@@ -49,7 +51,8 @@ export default function CustomerKiosk() {
   };
   const changeQty = (key, d) => setCart((c) => c.map((l) => (l.key === key ? { ...l, qty: l.qty + d } : l)).filter((l) => l.qty > 0));
 
-  const placeOrder = async () => {
+  const placeOrder = async (skipNudge) => {
+    if (!customer && !nudge && !skipNudge) { setNudge(true); setShowLoyalty(true); return; } // one gentle ask, then order as guest
     setBusy(true); setError('');
     const name = customer?.name || guestName.trim() || null;
     const { data, error: err } = await supabase.rpc('place_order', {
@@ -62,8 +65,8 @@ export default function CustomerKiosk() {
     setBusy(false);
     if (err) return setError(err.message);
     const stampsAfter = customer ? customer.stamps + 1 - (rewardDiscount > 0 ? REWARD.stamps : 0) : null;
-    setPlaced({ no: data.order_no, total: data.total, name, stampsAfter, usedReward: rewardDiscount > 0 });
-    setCart([]); setPromo(null); setRedeem(false); setGuestName(''); setCustomer(null); setCartOpen(false);
+    setPlaced({ id: data.id, no: data.order_no, total: data.total, name, stampsAfter, usedReward: rewardDiscount > 0 });
+    setCart([]); setPromo(null); setRedeem(false); setGuestName(''); setCustomer(null); setCartOpen(false); setNudge(false);
   };
 
   if (placed) {
@@ -73,7 +76,8 @@ export default function CustomerKiosk() {
         <div className="anim-wiggle mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FADCDF]" style={{ animationDelay: '.3s' }}><Check className="h-8 w-8 text-[#E8744F]" /></div>
         <p className="text-xs font-bold uppercase tracking-widest text-[#6B6259]">Order placed</p>
         <h2 className="my-2 font-serif text-6xl font-black">#{placed.no}</h2>
-        <p className="text-sm">{placed.name ? `Thanks, ${placed.name}! ` : ''}Please pay <b>{inr(placed.total)}</b> at the counter. We'll call your number when it's ready.</p>
+        <p className="text-sm">{placed.name ? `Thanks, ${placed.name}! ` : ''}Please pay <b>{inr(placed.total)}</b> at the counter now — we start making it once paid.</p>
+        <OrderTracker id={placed.id} />
         {left != null && (
           <p className="mt-4 rounded-xl bg-[#FADCDF] p-3 text-sm font-bold">
             {placed.usedReward ? '🎉 Enjoy your free soda! ' : ''}
@@ -97,7 +101,9 @@ export default function CustomerKiosk() {
           <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#FADCDF]">Welcome to</p>
           <h2 className="font-serif text-3xl font-black md:text-5xl pr-12">Pop <span className="text-[#E8744F]">&amp;</span> Pour</h2>
           <p className="mt-2 max-w-md text-sm text-[#FBF5EA]/80">Sparkling sodas, milk teas, boba & matcha — made fresh at the counter. Pick your drink, we'll call your number.</p>
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#FBF5EA]/15 px-3 py-1 text-xs font-bold"><Sparkles className="h-3.5 w-3.5 text-[#E8744F]" /> Every {REWARD.stamps}th drink is on us</p>
+          <button onClick={() => setShowLoyalty(true)} className="anim-bump mt-4 inline-flex items-center gap-2 rounded-full bg-[#E8744F] px-4 py-2 text-sm font-black text-white shadow-lg transition hover:bg-[#D4623F]">
+            <Sparkles className="h-4 w-4" /> Every {REWARD.stamps}th drink FREE · tap to join
+          </button>
         </div>
 
         <div className="mb-5 flex gap-2 overflow-x-auto pb-1">
@@ -162,8 +168,12 @@ export default function CustomerKiosk() {
             <div className="rounded-xl bg-[#FADCDF] p-3 text-xs">
               <div className="flex items-center justify-between font-bold">
                 <span className="flex items-center gap-1"><Award className="h-4 w-4 text-[#E8744F]" />{customer.name} · {customer.stamps} stamp{customer.stamps === 1 ? '' : 's'}</span>
-                <button onClick={() => { setCustomer(null); setRedeem(false); }}>Sign out</button>
+                <span className="flex gap-3">
+                  <button onClick={() => setShowOrders(true)} className="flex items-center gap-1"><History className="h-3.5 w-3.5" /> My orders</button>
+                  <button onClick={() => { setCustomer(null); setRedeem(false); }}>Sign out</button>
+                </span>
               </div>
+              <Stamps n={customer.stamps} dark />
               {canRedeem ? (
                 <>
                   <label className="mt-2 flex items-center gap-2 font-bold">
@@ -178,8 +188,10 @@ export default function CustomerKiosk() {
             </div>
           ) : (
             <>
-              <button onClick={() => setShowLoyalty(true)} className="flex w-full items-center justify-center gap-1 rounded-xl border border-dashed border-[#E8744F] py-2 text-xs font-bold text-[#E8744F]">
-                <Award className="h-4 w-4" /> Earn loyalty stamps
+              <button onClick={() => setShowLoyalty(true)} className="w-full rounded-2xl bg-gradient-to-br from-[#E8744F] to-[#F5A08A] p-4 text-left text-white shadow-md transition hover:-translate-y-0.5">
+                <p className="flex items-center gap-1.5 text-base font-black"><Award className="h-5 w-5" /> Get your {REWARD.stamps}th drink FREE</p>
+                <Stamps n={0} />
+                <p className="mt-2 text-xs font-bold opacity-90">Just your mobile number · no PIN, no app · tap to join</p>
               </button>
               <input value={guestName} onChange={(e) => setGuestName(e.target.value)} placeholder="Name for the order (optional)" className={cls.input} />
             </>
@@ -192,17 +204,30 @@ export default function CustomerKiosk() {
             <Row label="Total" value={inr(total)} bold />
           </div>
           {error && <p className="text-xs font-bold text-[#C0392B]">{error}</p>}
-          <button disabled={!cart.length || busy} onClick={placeOrder} className={`${cls.btnCoral} w-full`}>
+          <button disabled={!cart.length || busy} onClick={() => placeOrder(false)} className={`${cls.btnCoral} w-full`}>
             {busy ? 'Placing…' : `Place order · ${inr(total)}`}
           </button>
-          <p className="text-center text-[11px] text-[#6B6259]">Pay by cash or UPI at the counter</p>
+          <p className="text-center text-[11px] text-[#6B6259]">Pay by cash or UPI at the counter when you place the order</p>
         </div>
       </aside>
 
-      {showLoyalty && <LoyaltyModal onClose={() => setShowLoyalty(false)} onDone={(c) => { setCustomer(c); setShowLoyalty(false); }} />}
+      {showLoyalty && <LoyaltyModal onClose={() => setShowLoyalty(false)} onDone={(c) => { setCustomer(c); setShowLoyalty(false); }}
+        onSkip={nudge && cart.length ? () => { setShowLoyalty(false); placeOrder(true); } : null} />}
+      {showOrders && customer && <MyOrders customer={customer} onClose={() => setShowOrders(false)} />}
     </div>
   );
 }
+
+// 8 stamp circles — filled ones show progress to the free drink
+const Stamps = ({ n, dark }) => (
+  <div className="mt-2 flex gap-1.5">
+    {Array.from({ length: REWARD.stamps }, (_, i) => (
+      <span key={i} className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] ${i < Math.min(n, REWARD.stamps) ? 'bg-[#1F3B2C] text-[#FBF5EA]' : dark ? 'bg-white/70' : 'bg-white/30'}`}>
+        {i === REWARD.stamps - 1 ? '🎁' : i < n ? '✓' : ''}
+      </span>
+    ))}
+  </div>
+);
 
 const Row = ({ label, value, bold }) => (
   <div className={`flex justify-between ${bold ? 'text-base font-black' : 'text-[#6B6259]'}`}><span>{label}</span><span>{value}</span></div>
@@ -272,11 +297,86 @@ function PromoBox({ promo, setPromo, subtotal }) {
   );
 }
 
-function LoyaltyModal({ onClose, onDone }) {
-  const [mode, setMode] = useState('login');
-  const [name, setName] = useState('');
+const STEPS = [
+  ['new', 'Waiting for payment', '💳'], ['preparing', 'Being made', '🧋'], ['ready', 'Ready — collect at the counter', '🔔'], ['completed', 'Collected. Enjoy!', '🎉'],
+];
+const stepIdx = (st) => STEPS.findIndex(([k]) => k === st);
+
+function StatusBadge({ status, paid }) {
+  const i = stepIdx(status);
+  if (status === 'cancelled') return <span className="rounded-full bg-[#EEE] px-2 py-0.5 text-[11px] font-bold">Cancelled</span>;
+  const label = status === 'new' && paid ? 'Paid · in queue' : STEPS[i]?.[1] || status;
+  return <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${status === 'completed' ? 'bg-[#1F3B2C] text-[#FBF5EA]' : status === 'ready' ? 'bg-[#E6F2EC]' : 'bg-[#FCEBD2]'}`}>{STEPS[i]?.[2]} {label}</span>;
+}
+
+// Live status of the order just placed — polls every 5 s until collected/cancelled.
+function OrderTracker({ id }) {
+  const [o, setO] = useState(null);
+  useEffect(() => {
+    if (!id) return;
+    let done = false;
+    const load = () => supabase.rpc('order_status', { p_id: id }).then(({ data }) => { if (data) { setO(data); done = ['completed', 'cancelled'].includes(data.status); } });
+    load();
+    const t = setInterval(() => { if (!done) load(); }, 5000);
+    return () => clearInterval(t);
+  }, [id]);
+  if (!o) return null;
+  const cur = stepIdx(o.status);
+  return (
+    <div className="mt-5 text-left">
+      <p className={cls.label}>Order status</p>
+      <ol className="space-y-1.5">
+        {STEPS.map(([k, label, emoji], i) => (
+          <li key={k} className={`flex items-center gap-2 text-sm ${i < cur ? 'text-[#6B6259] line-through' : i === cur ? 'font-black' : 'text-[#6B6259]/60'}`}>
+            <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${i <= cur ? 'bg-[#E8744F] text-white' : 'bg-[#F4EBE1]'}`}>{i < cur ? '✓' : emoji}</span>{label}
+          </li>
+        ))}
+      </ol>
+      {o.status === 'cancelled' && <p className="mt-2 text-sm font-bold text-[#C0392B]">This order was cancelled — please ask at the counter.</p>}
+    </div>
+  );
+}
+
+// Logged-in customer's order history with live status — polls every 6 s while open.
+function MyOrders({ customer, onClose }) {
+  const [orders, setOrders] = useState(null);
+  useEffect(() => {
+    const load = () => supabase.rpc('customer_orders', { p_customer_id: customer.id }).then(({ data }) => data && setOrders(data));
+    load();
+    const t = setInterval(load, 6000);
+    return () => clearInterval(t);
+  }, [customer.id]);
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F3B2C]/60 p-4 backdrop-blur-sm" onClick={onClose}>
+      <div onClick={(e) => e.stopPropagation()} className={`${cls.card} anim-pop flex max-h-[85vh] w-full max-w-md flex-col p-5`}>
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="font-serif text-xl font-bold">My orders</h3>
+          <button onClick={onClose}><X className="h-5 w-5" /></button>
+        </div>
+        <p className="mb-3 text-xs text-[#6B6259]">{customer.name} · {customer.stamps} stamp{customer.stamps === 1 ? '' : 's'} · {REWARD.stamps} = {REWARD.label}</p>
+        <ul className="divide-y divide-[#F2DED5] overflow-y-auto">
+          {orders == null && <li className="py-6 text-center text-sm text-[#6B6259]">Loading…</li>}
+          {orders?.length === 0 && <li className="py-6 text-center text-sm text-[#6B6259]">No orders yet — this one will be your first!</li>}
+          {orders?.map((o) => (
+            <li key={o.id} className="py-3">
+              <div className="flex items-center justify-between">
+                <span className="font-serif text-lg font-bold">#{o.order_no}</span>
+                <StatusBadge status={o.status} paid={o.paid} />
+              </div>
+              <p className="text-xs text-[#6B6259]">{new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} · {fmtTime(o.created_at)} · {inr(o.total)}</p>
+              <p className="mt-1 text-xs">{o.items.map((it) => `${it.qty}× ${it.name}${it.size === 'L' ? ' (L)' : ''}`).join(', ')}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function LoyaltyModal({ onClose, onDone, onSkip }) {
   const [phone, setPhone] = useState('');
-  const [pin, setPin] = useState('');
+  const [isNew, setIsNew] = useState(false);
+  const [name, setName] = useState('');
   const [birthday, setBirthday] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -284,35 +384,38 @@ function LoyaltyModal({ onClose, onDone }) {
   const submit = async (e) => {
     e.preventDefault(); setError('');
     if (!/^\d{10}$/.test(phone)) return setError('Enter a 10-digit mobile number');
-    if (!/^\d{4}$/.test(pin)) return setError('PIN must be 4 digits');
-    if (mode === 'register' && !name.trim()) return setError('Enter your name');
+    if (isNew && !name.trim()) return setError('Enter your name');
     setBusy(true);
-    const { data, error: err } = mode === 'login'
-      ? await supabase.rpc('customer_login', { p_phone: phone, p_pin: pin })
-      : await supabase.rpc('customer_register', { p_name: name.trim(), p_phone: phone, p_pin: pin, p_birthday: birthday || null });
+    const { data, error: err } = isNew
+      ? await supabase.rpc('customer_register', { p_name: name.trim(), p_phone: phone, p_birthday: birthday || null })
+      : await supabase.rpc('customer_login', { p_phone: phone });
     setBusy(false);
     if (err) return setError(err.message);
+    if (!data) return setIsNew(true); // number not registered yet → ask for a name
     onDone(data);
   };
 
-  const tabCls = (m) => `flex-1 rounded-xl py-2 text-xs font-bold ${mode === m ? 'bg-[#1F3B2C] text-[#FBF5EA]' : 'bg-[#FADCDF]'}`;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F3B2C]/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className={`${cls.card} anim-pop w-full max-w-sm space-y-4 p-6`}>
-        <h3 className="text-center font-serif text-xl font-bold">Loyalty stamps</h3>
-        <p className="text-center text-xs text-[#6B6259]">1 stamp per order · {REWARD.stamps} stamps = {REWARD.label}</p>
-        <div className="flex gap-2">
-          <button type="button" className={tabCls('login')} onClick={() => setMode('login')}>I have an account</button>
-          <button type="button" className={tabCls('register')} onClick={() => setMode('register')}>I'm new here</button>
+        <div className="text-center">
+          <div className="anim-wiggle mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-[#FADCDF] text-2xl">🎁</div>
+          <h3 className="font-serif text-2xl font-black">{onSkip ? 'Earn a stamp on this order?' : `Every ${REWARD.stamps}th drink is FREE`}</h3>
+          <p className="mt-1 text-xs text-[#6B6259]">1 stamp per order · {REWARD.stamps} stamps = {REWARD.label} · birthday treat 🎂</p>
         </div>
-        {mode === 'register' && <div><label className={cls.label}>Name</label><input value={name} onChange={(e) => setName(e.target.value)} className={cls.input} /></div>}
-        <div><label className={cls.label}>Mobile number</label><input inputMode="numeric" maxLength={10} value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))} className={cls.input} /></div>
-        <div><label className={cls.label}>{mode === 'register' ? 'Create a 4-digit PIN' : '4-digit PIN'}</label><input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))} className={cls.input} /></div>
-        {mode === 'register' && <div><label className={cls.label}>Birthday (optional · birthday treat 🎂)</label><input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} className={cls.input} /></div>}
+        <div><label className={cls.label}>Mobile number</label><input autoFocus inputMode="numeric" maxLength={10} value={phone} onChange={(e) => { setPhone(e.target.value.replace(/\D/g, '')); setIsNew(false); }} className={cls.input} /></div>
+        {isNew && (
+          <>
+            <p className="rounded-xl bg-[#FADCDF] p-2 text-center text-xs font-bold">New here? Welcome 👋 Just tell us your name.</p>
+            <div><label className={cls.label}>Name</label><input autoFocus value={name} onChange={(e) => setName(e.target.value)} className={cls.input} /></div>
+            <div><label className={cls.label}>Birthday (optional · birthday treat 🎂)</label><input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} className={cls.input} /></div>
+          </>
+        )}
         {error && <p className="text-xs font-bold text-[#C0392B]">{error}</p>}
-        <button type="submit" disabled={busy} className={`${cls.btn} w-full`}>{busy ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Create account'}</button>
-        <p className="text-center text-[11px] text-[#6B6259]">Forgot your PIN? Ask the barista to reset it.</p>
-        <button type="button" onClick={onClose} className="w-full text-xs font-bold text-[#6B6259]">Cancel</button>
+        <button type="submit" disabled={busy} className={`${cls.btn} w-full`}>{busy ? 'Please wait…' : isNew ? 'Create account' : 'Continue'}</button>
+        {onSkip
+          ? <button type="button" onClick={onSkip} className="w-full text-xs font-bold text-[#6B6259]">No thanks, order as guest</button>
+          : <button type="button" onClick={onClose} className="w-full text-xs font-bold text-[#6B6259]">Cancel</button>}
       </form>
     </div>
   );

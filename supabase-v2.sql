@@ -95,69 +95,7 @@ begin
   update menu_items set sold_out = p_sold_out where id = p_id;
 end $$;
 
--- Register now takes an optional birthday
-drop function if exists customer_register(text, text, text);
-create or replace function customer_register(p_name text, p_phone text, p_pin text, p_birthday date default null) returns json
-language plpgsql security definer set search_path = public as $$
-declare c customers;
-begin
-  if p_pin !~ '^\d{4}$' then raise exception 'PIN must be 4 digits'; end if;
-  if exists (select 1 from customers where phone = p_phone) then raise exception 'This number is already registered. Please log in.'; end if;
-  insert into customers (name, phone, pin_hash, birthday) values (p_name, p_phone, crypt(p_pin, gen_salt('bf')), p_birthday) returning * into c;
-  return json_build_object('id', c.id, 'name', c.name, 'phone', c.phone, 'stamps', c.stamps);
-end $$;
-
--- Orders: prices, promo and reward are recomputed from the database; the browser's numbers are ignored.
--- Reward: 8 stamps = one free Sparkling Soda (cheapest sparkling soda in the cart).
-drop function if exists place_order(jsonb);
-create or replace function place_order(p jsonb) returns json
-language plpgsql security definer set search_path = public as $$
-declare
-  it jsonb; mi menu_items; v_unit numeric; v_add numeric; v_names text[]; v_qty int; v_size text; v_line numeric;
-  v_sub numeric := 0; v_items jsonb := '[]'; v_promo promos; v_pd numeric := 0; v_rd numeric := 0;
-  v_cust customers; v_free numeric; v_total numeric; v_no bigint;
-begin
-  if coalesce(jsonb_array_length(p->'items'), 0) = 0 then raise exception 'Cart is empty'; end if;
-  if nullif(p->>'customer_id', '') is not null then
-    select * into v_cust from customers where id = (p->>'customer_id')::uuid;
-  end if;
-
-  for it in select * from jsonb_array_elements(p->'items') loop
-    select * into mi from menu_items where id = it->>'id' and cat <> 'addon';
-    if not found then raise exception 'Unknown item %', it->>'id'; end if;
-    if mi.sold_out then raise exception '% is sold out', mi.name; end if;
-    v_size := coalesce(it->>'size', 'R');
-    v_qty := greatest(coalesce((it->>'qty')::int, 1), 1);
-    v_unit := case when v_size = 'L' then mi.price_l else mi.price_r end;
-    if v_unit is null then raise exception 'Size % not available for %', v_size, mi.name; end if;
-    select coalesce(sum(price_r), 0), coalesce(array_agg(name order by sort), '{}') into v_add, v_names
-      from menu_items where cat = 'addon' and id in (select jsonb_array_elements_text(coalesce(it->'addons', '[]')));
-    v_line := (v_unit + v_add) * v_qty;
-    v_sub := v_sub + v_line;
-    if mi.cat = 'sparkling' then v_free := least(coalesce(v_free, v_unit), v_unit); end if;
-    v_items := v_items || jsonb_build_object('id', mi.id, 'name', mi.name, 'cat', mi.cat, 'size', v_size,
-      'addons', to_jsonb(v_names), 'qty', v_qty, 'unit', v_unit, 'line_total', v_line);
-  end loop;
-
-  if nullif(p->>'promo_code', '') is not null then
-    select * into v_promo from promos where code = upper(p->>'promo_code') and active;
-    if not found then raise exception 'Invalid or expired promo code'; end if;
-    if v_sub < v_promo.min_order then raise exception 'Minimum order ₹% for this code', v_promo.min_order; end if;
-    v_pd := least(v_sub, case when v_promo.type = 'percent' then v_sub * v_promo.value / 100 else v_promo.value end);
-  end if;
-
-  if coalesce((p->>'reward_redeemed')::boolean, false) then
-    if v_cust.id is null or v_cust.stamps < 8 then raise exception 'Not enough stamps for a free drink'; end if;
-    if v_free is null then raise exception 'Add a Sparkling Soda to use your free drink'; end if;
-    v_rd := least(v_free, v_sub - v_pd);
-  end if;
-
-  v_total := greatest(0, round(v_sub - v_pd - v_rd));
-  insert into orders (customer_id, customer_name, customer_phone, items, subtotal, discount, promo_code, reward_redeemed, total)
-  values (v_cust.id, coalesce(v_cust.name, nullif(p->>'customer_name', '')), v_cust.phone, v_items, v_sub, v_pd + v_rd, v_promo.code, v_rd > 0, v_total)
-  returning order_no into v_no;
-  return json_build_object('order_no', v_no, 'total', v_total, 'stamps', v_cust.stamps);
-end $$;
+-- customer_register / place_order live in supabase-v3.sql (mobile-only login, no PIN)
 
 -- 1 stamp per completed order; a redeemed reward costs 8 stamps
 create or replace function complete_order(p_order_id uuid) returns void
@@ -174,4 +112,4 @@ begin
   end if;
 end $$;
 
-grant execute on function claim_barista, set_barista_pin, set_sold_out, customer_register, place_order, complete_order to anon, authenticated;
+grant execute on function claim_barista, set_barista_pin, set_sold_out, complete_order to anon, authenticated;
